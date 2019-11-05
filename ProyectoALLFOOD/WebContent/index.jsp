@@ -20,7 +20,7 @@
                 <h1>ALLFOOD</h1>
             </div>
             <div class="col-md-1">
-                <input type="submit" class="btn btn-outline-primary">
+                <input type="submit" value="Iniciar Sesion" class="btn btn-outline-success">
             </div>
         </div>
     </header>
