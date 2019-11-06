@@ -1,6 +1,6 @@
 <%@ include file="importacion_head.jsp" %>
 <body>
-	    <!-- cabezera--->
+	    <!-- cabezera de la pagina--->
     <div class="contenedor">
     <header>
         <div class="contenedor-header row justify-content-between align-items-center">
