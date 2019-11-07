@@ -136,5 +136,3 @@ insert into chef values (null,nom_servico,cod_chef,cod_comida,descripcion,precio
 end @@
 
 delimiter ;
-call RegistrarServicio('','74g5','Mario','Fernandez',25,'974652001',198);
-select*from Servicio;

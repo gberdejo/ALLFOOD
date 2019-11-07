@@ -1,11 +1,47 @@
+.fondo-cliente .fondo-chef{
+	
+	width:100%;
+	height:100vh;
+	position:relative;
+}
+.fondo-cliente::before{
+	content:"";
+	width:100%;
+	height:100%;
+	top:0;
+	left:0;
+	background-image:url(../img/fondo-cliente.jpg)!important;
+	background-size:cover;
+	position:absolute;
+	background-attachment: fixed;
+	z-index:-2;
+}
+.fondo-cliente::after{
+	content:"";
+	width:100%;
+	height:100%;
+	top:0;
+	left:0;
+	background-color:black;
+	position:absolute;
+	opacity:0.5;	
+	z-index:-1;
+}
+
 header{
 	width:100%;
 	height:90px;
-	background-color: #81359A;
 	
 }
 .publicacion{
 	height:250px;
 	background-color: #DAB0E7;
 	border-bottom:2px solid black;
+}
+.enlace{
+	color:white!important;
+	text-decoration: none;
+}
+.enlace:hover {
+  text-decoration: none!important;
 }

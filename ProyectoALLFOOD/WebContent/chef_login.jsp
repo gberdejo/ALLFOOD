@@ -1,13 +1,11 @@
-<%@ include file="importacion_head.jsp" %>
+<%@  include file="importacion_head.jsp" %>
 <body>
-	
-	
-<div class="fondo-cliente">
+<div class="fondo-chef">
 		<div class="container w-50 ">
 		
 		<div class="row align-items-center" style="height:100vh;">
 			<div class="col-12">
-				<h1 class="text-white text-center">Inicio de Sesion como Cliente</h1>
+				<h1 class="text-white text-center">Inicio de Sesion como Chef</h1>
 				<form action="ServletLogin" >
 			  <div class="form-group">
 			    <label for="exampleInputEmail1" class="text-white">Email address</label>
@@ -37,12 +35,15 @@
 			  			<a class="enlace" href="index.jsp"><button class="btn btn-primary btn-block">Registrate</button></a>
 			  		</div>
 			  </div>
-			  <a class="enlace"  href="chef_login.jsp"><button class="btn btn-info btn-block p-3 mt-5">Iniciar Sesion como Chef</button></a>
+			  <a class="enlace"  href="usuario_login.jsp"><button class="btn btn-info btn-block p-3 mt-5">Iniciar Sesion como Cliente</button></a>
 			</div>
 		</div>
 			
 		</div>
 </div>
+
+
+
 <%@ include file="importacion_js.jsp" %>
 </body>
 </html>

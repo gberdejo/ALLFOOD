@@ -7,8 +7,9 @@
             <div class="col-md-3">
                 <h1>ALLFOOD</h1>
             </div>
-            <div class="col-md-1">
-                <input type="submit"  value="Iniciar Sesion" class="btn btn-outline-success">
+            <div class="col-md-2">
+            	<a href="usuario_login.jsp"><buttom class="btn btn-outline-success">Iniciar Sesion</buttom></a>
+                
             </div>
         </div>
     </header>
@@ -16,15 +17,12 @@
     <section class="contenendor-buscador">
         <div class="row subcontenedor-buscador   justify-content-center">
             <div class="col-md-6 align-self-center ">
-                <h2 class="display-2 ">Encuentra tu servicio ideal</h2>
-                <h5>Busca entre cientos de profesionales de la cocina</h4>
-                    <form action="#" class="caja-buscador d-flex justify-content-between">
-                        <input type="text" class="buscador" placeholder="Escribe tu ocación">
-                        <input type="submit" class="btn btn-outline-success" value="Buscar">
-                    </form>
+                <h2 class="display-2 text-center">Encuentra tu servicio ideal</h2>
+                <h3 class="text-center">Busca entre cientos de profesionales de la cocina</h4>
             </div>
         </div>
     </section>
+    
     <!--- como se usa -->
     <section class="my-md-5 container">
         <h2 class="text-center">¿Como funciona?</h2>
