@@ -28,19 +28,19 @@ public class MySqlClienteDAO implements ClienteDAO{
 	}
 
 	@Override
-	public Cliente ValidarCliente(String usuario, String contraseña) {
+	public Cliente ValidarCliente(String usuario, String password) {
 		Cliente cliente = null;
 		try {
 			con = MysqlBDConexion.getConexion();
 			call = con.prepareCall("call ValidarCliente(?,?)");
 			call.setString(1, usuario);
-			call.setString(2, contraseña);
+			call.setString(2, password);
 			rs = call.executeQuery();
 			while(rs.next()){
 				cliente = new Cliente();
 				cliente.setCod_cli(rs.getInt(1));
 				cliente.setUsuario(rs.getString(2));
-				cliente.setContraseña(rs.getString(3));
+				cliente.setPassword(rs.getString(3));
 				cliente.setNom_cli(rs.getString(4));
 				cliente.setApe_cli(rs.getString(5));
 				cliente.setEdad(rs.getInt(6));
