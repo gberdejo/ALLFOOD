@@ -2,6 +2,8 @@ package Entidades;
 
 public class Chef {
 private int cod_chef;
+private String usuario;
+private String password;
 private String nom_chef;
 private String ape_chef;
 private int edad;
@@ -13,6 +15,18 @@ public int getCod_chef() {
 }
 public void setCod_chef(int cod_chef) {
 	this.cod_chef = cod_chef;
+}
+public String getUsuario() {
+	return usuario;
+}
+public void setUsuario(String usuario) {
+	this.usuario = usuario;
+}
+public String getPassword() {
+	return password;
+}
+public void setPassword(String password) {
+	this.password = password;
 }
 public String getNom_chef() {
 	return nom_chef;
