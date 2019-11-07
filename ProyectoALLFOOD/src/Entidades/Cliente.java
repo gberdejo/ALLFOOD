@@ -2,6 +2,8 @@ package Entidades;
 
 public class Cliente {
 private int cod_cli;
+private String usuario;
+private String contraseña;
 private String nom_cli;
 private String ape_cli;
 private int edad;
@@ -43,6 +45,18 @@ public double getSaldo_cli() {
 }
 public void setSaldo_cli(double saldo_cli) {
 	this.saldo_cli = saldo_cli;
+}
+public String getUsuario() {
+	return usuario;
+}
+public void setUsuario(String usuario) {
+	this.usuario = usuario;
+}
+public String getContraseña() {
+	return contraseña;
+}
+public void setContraseña(String contraseña) {
+	this.contraseña = contraseña;
 }
 
 
