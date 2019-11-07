@@ -21,13 +21,13 @@ public class ServletLogin extends HttpServlet {
 	 */
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String usuario = request.getParameter("usuario");
-		String contraseña = request.getParameter("password");
+		String password = request.getParameter("password");
 		ClienteFabrica cliFabrica = ClienteFabrica.ElegirBaseDatos(ClienteFabrica.MYSQL);
 		ClienteDAO clienteDAO = cliFabrica.getClienteDAO();
 		
 		Cliente cliente = null;
 		try {
-			cliente = clienteDAO.ValidarCliente(usuario, contraseña);
+			cliente = clienteDAO.ValidarCliente(usuario, password);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
