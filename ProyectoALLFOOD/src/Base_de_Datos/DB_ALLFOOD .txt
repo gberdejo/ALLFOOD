@@ -77,6 +77,15 @@ insert into chef values (null,usuario,contaseña,nom_chef,ape_chef,edad_chef,cel
 end @@
 
 delimiter ;
+
+delimiter @@
+create procedure ValidarChef(usuario varchar(20),
+contraseña varchar(4))
+begin
+select * from Chef where usuario = usuario and contaseña = contraseña;
+end @@
+delimiter ;
+call ValidarChef ('Pepe','14g5');
 call RegistrarChef('Pepe','14g5','Pedro','Ramos',35,'986574123','Av.Los Jardines 1547',200);
 select*from chef;
 
@@ -123,18 +132,36 @@ select*from Comida;
 
 /* -Registrar SERVICIO - */
 delimiter @@
+
 create procedure RegistrarServicio
 (
 nom_servico varchar(50),
 cod_chef int,
-cod_comida int,
+cod_comida int ,
 descripcion varchar(200),
-precio_persona decimal ,
+precio_persona decimal,
 fec_publicacion varchar(50))
 begin
-insert into chef values (null,nom_servico,cod_chef,cod_comida,descripcion,precio_persona,fec_publicacion);
+insert into servicio values (null,nom_servico,cod_chef,cod_comida ,descripcion ,precio_persona ,fec_publicacion );
 end @@
-
 delimiter ;
-call RegistrarServicio('','74g5','Mario','Fernandez',25,'974652001',198);
+
+call RegistrarServicio('Pedido Especial',1,1,'Disfruta de nuestro especial:bla bla bla',10,'02-12-2018');
 select*from Servicio;
+
+/*Registrar Pedido
+delimiter @@
+create procedure RegistrarPedido
+(
+cod_cli int,
+cod_servicio int,
+cant_personas int,
+fec_compra varchar(50),
+fec_entrega varchar(50) ,
+pago_total decimal,
+valoracion INT)
+begin
+insert into pedido(1,1,20,'08-04-2019',)
+end@@
+delimiter ;
+*/
