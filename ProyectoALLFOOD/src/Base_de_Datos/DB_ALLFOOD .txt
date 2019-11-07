@@ -146,11 +146,11 @@ insert into servicio values (null,nom_servico,cod_chef,cod_comida ,descripcion ,
 end @@
 delimiter ;
 
-
 call RegistrarServicio('Pedido Especial',1,1,'Disfruta de nuestro especial:bla bla bla',10,'02-12-2018');
 select*from Servicio;
 
-/*Registrar Pedido
+/*Registrar Pedido*/
+
 delimiter @@
 create procedure RegistrarPedido
 (
@@ -162,9 +162,9 @@ fec_entrega varchar(50) ,
 pago_total decimal,
 valoracion INT)
 begin
-insert into pedido(1,1,20,'08-04-2019',)
+insert into pedido values (null,cod_cli,cod_servicio,cant_personas,fec_compra,fec_entrega,pago_total,valoracion);
 end@@
 delimiter ;
-*/
 
-
+call RegistrarPedido(1,1,20,'08-04-2019','10-06-2019',500,4);
+select*from pedido;

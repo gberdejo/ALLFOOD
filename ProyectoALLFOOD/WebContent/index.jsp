@@ -133,9 +133,9 @@
             <div class="col-md-4">
                 <img src="img/img2.jpg" class="img-fluid" alt="">
             </div>
-            <div class="col-md-6">
+            <div class="col-md-8">
                 <h2>¿Quieres prestar tus servicios en la plataforma?</h2>
-                <input class="btn btn-outline-primary" type="submit" value="Regístrate como Aliado">
+                <a class="enlace"  href="chef_login.jsp"><button class="btn btn-outline-success  p-3 ">Registrate como Chef</button></a>
             </div>
         </div>
     </section>

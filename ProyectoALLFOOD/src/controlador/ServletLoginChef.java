@@ -40,13 +40,13 @@ public class ServletLoginChef extends HttpServlet {
 		
 		if (chef == null) {
 			request.setAttribute("MENSASE", "El Usuario '"+usuario+"' no existe");
-			request.getRequestDispatcher("/usuario_login.jsp").forward(request, response);
+			request.getRequestDispatcher("/chef_login.jsp").forward(request, response);
 			
 		}else{
 			HttpSession sesion = request.getSession();
 			
-			sesion.setAttribute("USUARIO",chef);
-			request.getRequestDispatcher("/usuario_pagina.jsp").forward(request, response);
+			sesion.setAttribute("CHEF",chef);
+			request.getRequestDispatcher("/chef_pagina.jsp").forward(request, response);
 		}
 			
 		
