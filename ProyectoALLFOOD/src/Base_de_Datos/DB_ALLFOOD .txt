@@ -1,4 +1,5 @@
-﻿CREATE DATABASE ALLFOOD;
+﻿drop DATABASE ALLFOOD;
+CREATE DATABASE ALLFOOD;
 
 USE ALLFOOD;
 
@@ -89,6 +90,24 @@ call ValidarChef ('Pepe','14g5');
 call RegistrarChef('Pepe','14g5','Pedro','Ramos',35,'986574123','Av.Los Jardines 1547',200);
 select*from chef;
 
+/*en listar chef no le estoy poniendo el saldo*/
+/*ListarChef*/
+/*delimiter @@
+create procedure ListarChef
+(cod_chef int,
+nom_chef varchar(50),
+ape_chef varchar(50),
+edad_chef int,
+celular_chef varchar(9) ,
+direccion varchar(50))
+begin
+select cod_chef,nom_chef,ape_chef,edad_chef,celular_chef,direccion from Chef;
+end@@
+delimiter ;
+call ListarChef(1,'Pepe','Ramos',25,'986574123','Av.Los Jardines 1547')
+)*/
+
+
 /* -Registrar Cliente - */
 delimiter @@
 create procedure RegistrarCliente
@@ -116,6 +135,25 @@ call RegistrarCliente('Pastel','74g5','Mario','Fernandez',25,'974652001',198);
 call RegistrarCliente('eli','el12','Mario','Fernandez',25,'974652001',198);
 select*from Cliente;
 
+/*no puse la contraseña ni el usuario en listarcliente*/
+/*Listar Cliente*/
+/*delimiter @@
+create procedure ListarCliente
+(
+cod_cli int ,
+nom_cli varchar(50),
+ape_cli varchar(50),
+edad_cli int ,
+celular_cli varchar(9),
+saldo_cli decimal
+)
+begin
+select cod_cli,nom_cli,ape_cli,
+edad_cli,celular_cli,saldo_cli from cliente;
+end@@
+delimiter ;
+call ListarCliente(1,'Mario','Fernandez',25,'974652001',198);*/
+
 /* -Registrar Comida- */
 delimiter @@
 create procedure RegistrarComida
@@ -130,9 +168,22 @@ call RegistrarComida('Aji de gallina');
 call RegistrarComida('Anticucho');
 select*from Comida;
 
-/* -Registrar SERVICIO - */
-delimiter @@
 
+
+/*ListarComida*/
+/*delimiter @@
+create procedure ListarComida
+(
+cod_comida int,
+nom_comida varchar(50))
+begin
+select cod_comida,nom_comida from comida;
+end @@
+delimiter;
+call ListarComida(1,'aji de gallina');
+delimiter;*/
+
+/* -Registrar SERVICIO - */
 create procedure RegistrarServicio
 (
 nom_servico varchar(50),
@@ -142,7 +193,7 @@ descripcion varchar(200),
 precio_persona decimal,
 fec_publicacion varchar(50))
 begin
-insert into servicio values (null,nom_servico,cod_chef,cod_comida ,descripcion ,precio_persona ,fec_publicacion );
+insert into servicio values (null,nom_servico,cod_chef,cod_comida ,descripcion ,precio_persona ,fec_publicacion )
 end @@
 delimiter ;
 
