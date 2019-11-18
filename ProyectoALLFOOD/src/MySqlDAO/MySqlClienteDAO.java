@@ -3,6 +3,7 @@ package MySqlDAO;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.List;
 
 import DAO.ClienteDAO;
@@ -49,8 +50,36 @@ public class MySqlClienteDAO implements ClienteDAO{
 
 	@Override
 	public List<Cliente> listarChef(Cliente listarCli) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Cliente> lista = new ArrayList<Cliente>();
+		Cliente listarcli=null;
+		try {
+			con=MysqlBDConexion.getConexion();
+			call= con.prepareCall("call ListarCliente");
+			rs=call.executeQuery();
+			while(rs.next()){
+				listarcli=new Cliente();
+				listarcli.setNom_cli(rs.getString(1));
+				listarcli.setApe_cli(rs.getString(2));
+				listarcli.setEdad(rs.getInt(3));
+				listarcli.setCelular_cli(rs.getString(4));
+				lista.add(listarcli);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally{
+			try {
+				if(con !=null)con.close();
+				if(call !=null)call.close();
+				if(rs !=null)rs.close();
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+		
+		
+		
+		return lista;
 	}
 
 	@Override
