@@ -3,7 +3,6 @@ package DAO;
 import java.util.List;
 
 import Entidades.Chef;
-import Entidades.Cliente;
 
 public interface ChefDAO {
 	public abstract Chef ValidarChef(String usuario,String password);

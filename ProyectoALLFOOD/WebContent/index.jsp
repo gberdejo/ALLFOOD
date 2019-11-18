@@ -5,7 +5,7 @@
 
         <!--Navbar -->
         <div>
-            <nav class="mb-1 navbar navbar-expand-lg navbar-dark light-green darken-2 fixed-top scrolling-navbar">
+            <nav class="mb-1 navbar navbar-expand-lg navbar-dark light-green darken-1 fixed-top scrolling-navbar">
                 <a class="navbar-brand" href="#">ALLFOOD</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse"
                     data-target="#navbarSupportedContent-4" aria-controls="navbarSupportedContent-4"
@@ -15,7 +15,7 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent-4">
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item ">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" href="usuario-registra.jsp">
                                 <i class="fas fa-user-plus"></i> Registrate
                                 <span class="sr-only">(current)</span>
                             </a>
@@ -268,7 +268,7 @@
             </div>
         </section>
         <!-- Footer -->
-<footer class="page-footer font-small light-green darken-2">
+<footer class="page-footer font-small light-green darken-1">
 
   <!-- Footer Elements -->
   <div class="container">
