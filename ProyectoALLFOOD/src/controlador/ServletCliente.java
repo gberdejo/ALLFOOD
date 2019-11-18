@@ -18,6 +18,37 @@ public class ServletCliente extends HttpServlet {
 
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		String tipo = request.getParameter("tipo");
+		if(tipo.equalsIgnoreCase("login")){
+			login(request,response);
+		}else if(tipo.equalsIgnoreCase("registro")){
+			registro(request,response);
+		}
+	}
+	private void registro(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+		ClienteFabrica cliFabrica = ClienteFabrica.ElegirBaseDatos(ClienteFabrica.MYSQL);
+		ClienteDAO clienteDAO = cliFabrica.getClienteDAO();
+		Cliente cli = new Cliente();
+		cli.setUsuario(request.getParameter("usuario"));
+		cli.setPassword(request.getParameter("password"));
+		cli.setNom_cli(request.getParameter("nombre"));
+		cli.setApe_cli(request.getParameter("apellido"));
+		cli.setEdad(Integer.parseInt("edad"));
+		cli.setCelular_cli(request.getParameter("celular"));
+		cli.setSaldo_cli(Double.parseDouble(request.getParameter("saldo")));
+		int salida= -1;
+		try {
+			salida = clienteDAO.RegistrarCliente(cli);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		if(salida > 0){
+			request.setAttribute("MENSAJE", "Error al Registrar");
+			request.getRequestDispatcher("/usuario_usuario.jsp").forward(request, null);
+			
+		}else{
+			request.getRequestDispatcher("/usuario_login.jsp").forward(request, null);
+		}
+		
 	}
 	protected void login(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String usuario = request.getParameter("usuario");
@@ -33,7 +64,7 @@ public class ServletCliente extends HttpServlet {
 		}
 		
 		if (cliente == null) {
-			request.setAttribute("MENSASE", "El Usuario '"+usuario+"' no existe");
+			request.setAttribute("MENSASE", "El Usuario  no existe");
 			request.getRequestDispatcher("/usuario_login.jsp").forward(request, response);
 			
 		}else{

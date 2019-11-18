@@ -8,14 +8,15 @@
     <p class="h4 mb-4">Registro</p>
 	<!-- User and password -->
 		<!-- user -->
-		
+		<% String texto =(String) request.getAttribute("MENSAJE"); %>
+			<span class="text-muted" ><%=texto %></span>
 			<div class="form-group">
-			<input type="text" class="form-control" placeholder="Usuario">
+			<input type="text" name="usuario" class="form-control" placeholder="Usuario">
 			
 			</div>
 		<!-- Password -->
 			<div class="form-group">
-	    	<input type="password"  class="form-control" placeholder="Contraseña" aria-describedby="defaultRegisterFormPasswordHelpBlock">
+	    	<input type="password" name="password"  class="form-control" placeholder="Contraseña" aria-describedby="defaultRegisterFormPasswordHelpBlock">
 	    	<small  class="form-text text-left text-muted mb-4">
 	        	Colocar la contraseña
 	    	</small>
@@ -23,23 +24,26 @@
 	    
 		<div class="form-group">
 		    <!-- First name -->
-	            <input type="text"  class="form-control" placeholder="Nombres">
+	            <input type="text" name="nombre" class="form-control" placeholder="Nombres">
 	    </div>
 	    <div class="form-group">
 	    	<!-- Last name -->
-	            <input type="text" class="form-control" placeholder="Apellidos">
+	            <input type="text" name="apellido" class="form-control" placeholder="Apellidos">
 		   
 	    </div>
 		
 	    <div class="form-row mb-3">
 	        <div class="col">
-	        	<input type="number"  class="form-control" placeholder="Edad" min="18">
+	        	<input type="number" name="edad" class="form-control" placeholder="Edad" min="18">
 	            
 	        </div>
 	        <div class="col">
-	         <input type="text" class="form-control" placeholder="Numero de celular" aria-describedby="defaultRegisterFormPhoneHelpBlock">
+	         <input type="text" name="celular" class="form-control" placeholder="Numero de celular" aria-describedby="defaultRegisterFormPhoneHelpBlock">
 	   
 	           
+	        </div>
+	        <div class="col">
+	        	<input type="number" name="saldo" placeholder="colocar saldo" class="form-control">
 	        </div>
 	    </div>
 	
