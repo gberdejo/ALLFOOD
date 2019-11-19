@@ -7,7 +7,6 @@ import java.util.List;
 
 import DAO.ChefDAO;
 import Entidades.Chef;
-import Entidades.Cliente;
 import utilitarios.MysqlBDConexion;
 
 public class MySqlChefDAO implements ChefDAO{

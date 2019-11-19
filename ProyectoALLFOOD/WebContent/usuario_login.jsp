@@ -8,7 +8,9 @@
 		<div class="row align-items-center" style="height:100vh;">
 			<div class="col-12">
 				<h1 class="text-white text-center">Inicio de Sesion como Cliente</h1>
-				<form action="ServletLogin" >
+				<form action="ServletCliente" >
+				<input type="hidden" name="tipo" value="login" >
+				
 			  <div class="form-group">
 			    <label for="exampleInputEmail1" class="text-white">Email address</label>
 			    <input type="text" name="usuario" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="User">

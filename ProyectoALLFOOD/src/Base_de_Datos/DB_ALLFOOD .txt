@@ -1,4 +1,4 @@
-﻿﻿DROP DATABASE ALLFOOD;
+
 CREATE DATABASE ALLFOOD;
 
 USE ALLFOOD;
@@ -255,3 +255,225 @@ cod int,fecha timestamp null default current_timestamp
 drop table migorda;
 insert into migorda2 values (1);
 
+=======
+﻿drop DATABASE ALLFOOD;
+CREATE DATABASE ALLFOOD;
+
+USE ALLFOOD;
+
+
+CREATE TABLE CLIENTE
+(
+cod_cli int NOT NULL auto_increment PRIMARY KEY,
+usuario varchar(20) not null,
+contaseña varchar(4) not null,
+nom_cli varchar(50) NOT NULL,
+ape_cli varchar(50) NOT NULL,
+edad_cli int NOT NULL,
+celular_cli varchar(9) NOT NULL,
+saldo_cli decimal NOT NULL
+);
+
+CREATE TABLE CHEF
+(
+cod_chef int NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+usuario varchar(20) not null,
+contaseña varchar(4) not null,
+nom_chef varchar(50)NOT NULL,
+ape_chef varchar(50)NOT NULL,
+edad_chef int NOT NULL,
+celular_chef varchar(9) NOT NULL,
+direccion varchar(50) NOT NULL,
+saldo_chef decimal NOT NULL
+);
+
+
+CREATE TABLE COMIDA
+(
+cod_comida int NOT NULL auto_increment PRIMARY KEY,
+nom_comida varchar(50)NOT NULL
+);
+
+CREATE TABLE SERVICIO
+(
+cod_servicio int NOT NULL auto_increment PRIMARY KEY,
+nom_servico varchar(50) NOT NULL,
+cod_chef int NOT NULL,
+cod_comida int NOT NULL ,
+descripcion varchar(200)NOT NULL,
+precio_persona decimal NOT NULL,
+fec_publicacion varchar(50),
+CONSTRAINT FOREIGN KEY fk_COD_CHEF (cod_chef) REFERENCES CHEF (cod_chef),
+CONSTRAINT FOREIGN KEY fk_COD_COMIDA (cod_comida) REFERENCES COMIDA (cod_comida)
+);
+
+CREATE TABLE PEDIDO
+(
+cod_pedido int not null auto_increment primary key,
+cod_cli int NOT NULL ,
+cod_servicio int NOT NULL,
+cant_personas int NOT NULL,
+fec_compra varchar(50) not null,
+fec_entrega varchar(50) not null,
+pago_total decimal not null,
+valoracion INT CHECK (valoracion >=1 and valoracion <=5),
+CONSTRAINT FOREIGN KEY fk_COD_CLI (cod_cli) REFERENCES CLIENTE (cod_cli),
+CONSTRAINT FOREIGN KEY fk_COD_SERVICIO(cod_servicio) REFERENCES SERVICIO (cod_servicio)
+);
+/* -Registrar Chef - */
+delimiter @@
+create procedure RegistrarChef
+(usuario varchar(20),
+contaseña varchar(4),
+nom_chef varchar(50),
+ape_chef varchar(50),
+edad_chef int,
+celular_chef varchar(9),
+direccion varchar(50),
+saldo_chef decimal)
+begin
+insert into chef values (null,usuario,contaseña,nom_chef,ape_chef,edad_chef,celular_chef,direccion,saldo_chef);
+end @@
+
+delimiter ;
+
+delimiter @@
+create procedure ValidarChef(usuario varchar(20),
+contraseña varchar(4))
+begin
+select * from Chef where usuario = usuario and contaseña = contraseña;
+end @@
+delimiter ;
+call ValidarChef ('Pepe','14g5');
+call RegistrarChef('Pepe','14g5','Pedro','Ramos',35,'986574123','Av.Los Jardines 1547',200);
+select*from chef;
+
+/*en listar chef no le estoy poniendo el saldo*/
+/*ListarChef*/
+/*delimiter @@
+create procedure ListarChef
+(cod_chef int,
+nom_chef varchar(50),
+ape_chef varchar(50),
+edad_chef int,
+celular_chef varchar(9) ,
+direccion varchar(50))
+begin
+select cod_chef,nom_chef,ape_chef,edad_chef,celular_chef,direccion from Chef;
+end@@
+delimiter ;
+call ListarChef(1,'Pepe','Ramos',25,'986574123','Av.Los Jardines 1547')
+)*/
+
+
+/* -Registrar Cliente - */
+delimiter @@
+create procedure RegistrarCliente
+(usuario varchar(20),
+contaseña varchar(4),/* era contraseña XD*/
+nom_cli varchar(50),
+ape_cli varchar(50),
+edad_cli  int,
+celular_cli  varchar(9),
+saldo_cli  decimal)
+begin
+insert into cliente values (null,usuario,contaseña,nom_cli ,ape_cli ,edad_cli ,celular_cli ,saldo_cli );
+end @@
+delimiter ;
+/* validacion  del cliente*/
+delimiter @@
+create procedure ValidarCliente(usuario varchar(20),
+contraseña varchar(4))
+begin
+select * from cliente where usuario = usuario and contaseña = contraseña;
+end @@
+delimiter ;
+call ValidarCliente ('Pastel','74g5');
+call RegistrarCliente('Pastel','74g5','Mario','Fernandez',25,'974652001',198);
+call RegistrarCliente('eli','el12','Mario','Fernandez',25,'974652001',198);
+select*from Cliente;
+
+/*no puse la contraseña ni el usuario en listarcliente*/
+/*Listar Cliente*/
+/*delimiter @@
+create procedure ListarCliente
+(
+cod_cli int ,
+nom_cli varchar(50),
+ape_cli varchar(50),
+edad_cli int ,
+celular_cli varchar(9),
+saldo_cli decimal
+)
+begin
+select cod_cli,nom_cli,ape_cli,
+edad_cli,celular_cli,saldo_cli from cliente;
+end@@
+delimiter ;
+call ListarCliente(1,'Mario','Fernandez',25,'974652001',198);*/
+
+/* -Registrar Comida- */
+delimiter @@
+create procedure RegistrarComida
+(
+nom_comida varchar(50))
+begin
+insert into comida values (null,nom_comida);
+end @@
+
+delimiter ;
+call RegistrarComida('Aji de gallina');
+call RegistrarComida('Anticucho');
+select*from Comida;
+
+
+
+/*ListarComida*/
+/*delimiter @@
+create procedure ListarComida
+(
+cod_comida int,
+nom_comida varchar(50))
+begin
+select cod_comida,nom_comida from comida;
+end @@
+delimiter;
+call ListarComida(1,'aji de gallina');
+delimiter;*/
+
+/* -Registrar SERVICIO - */
+create procedure RegistrarServicio
+(
+nom_servico varchar(50),
+cod_chef int,
+cod_comida int ,
+descripcion varchar(200),
+precio_persona decimal,
+fec_publicacion varchar(50))
+begin
+insert into servicio values (null,nom_servico,cod_chef,cod_comida ,descripcion ,precio_persona ,fec_publicacion )
+end @@
+delimiter ;
+
+call RegistrarServicio('Pedido Especial',1,1,'Disfruta de nuestro especial:bla bla bla',10,'02-12-2018');
+select*from Servicio;
+
+/*Registrar Pedido*/
+
+delimiter @@
+create procedure RegistrarPedido
+(
+cod_cli int,
+cod_servicio int,
+cant_personas int,
+fec_compra varchar(50),
+fec_entrega varchar(50) ,
+pago_total decimal,
+valoracion INT)
+begin
+insert into pedido values (null,cod_cli,cod_servicio,cant_personas,fec_compra,fec_entrega,pago_total,valoracion);
+end@@
+delimiter ;
+
+call RegistrarPedido(1,1,20,'08-04-2019','10-06-2019',500,4);
+select*from pedido;
