@@ -25,29 +25,29 @@ public class ServletCliente extends HttpServlet {
 		}
 	}
 	private void registro(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+		
 		ClienteFabrica cliFabrica = ClienteFabrica.ElegirBaseDatos(ClienteFabrica.MYSQL);
 		ClienteDAO clienteDAO = cliFabrica.getClienteDAO();
 		Cliente cli = new Cliente();
-		cli.setUsuario(request.getParameter("usuario"));
-		cli.setPassword(request.getParameter("password"));
-		cli.setNom_cli(request.getParameter("nombre"));
-		cli.setApe_cli(request.getParameter("apellido"));
-		cli.setEdad(Integer.parseInt("edad"));
-		cli.setCelular_cli(request.getParameter("celular"));
-		cli.setSaldo_cli(Double.parseDouble(request.getParameter("saldo")));
-		int salida= -1;
+		
 		try {
-			salida = clienteDAO.RegistrarCliente(cli);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		if(salida > 0){
-			request.setAttribute("MENSAJE", "Error al Registrar");
-			request.getRequestDispatcher("/usuario_usuario.jsp").forward(request, null);
+			cli.setUsuario(request.getParameter("usuario"));
+			cli.setPassword(request.getParameter("password"));
+			cli.setNom_cli(request.getParameter("nombre"));
+			cli.setApe_cli(request.getParameter("apellido"));
+			cli.setEdad(Integer.parseInt(request.getParameter("edad")));
+			cli.setCelular_cli(request.getParameter("celular"));
+			cli.setSaldo_cli(Double.parseDouble(request.getParameter("saldo")));
 			
-		}else{
-			request.getRequestDispatcher("/usuario_login.jsp").forward(request, null);
+			clienteDAO.RegistrarCliente(cli);
+			request.setAttribute("MENSAJE", "Error al Registrar");
+			request.getRequestDispatcher("/usuario_login.jsp").forward(request, response);
+			
+		} catch (Exception e) {
+			request.getRequestDispatcher("/usuario_registra.jsp").forward(request, response);
 		}
+		
+	
 		
 	}
 	protected void login(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

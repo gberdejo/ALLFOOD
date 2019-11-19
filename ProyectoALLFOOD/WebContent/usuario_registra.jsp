@@ -3,7 +3,7 @@
 <div class="container">	
 	<section>
 		<!-- Default form register -->
-<form class="text-center border border-light p-5" action="#!">
+<form class="text-center border border-light p-5" action="ServletCliente">
 <input type="hidden" name="tipo" value="registro" >
     <p class="h4 mb-4">Registro</p>
 	<!-- User and password -->
