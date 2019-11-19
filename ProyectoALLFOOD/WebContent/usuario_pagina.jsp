@@ -1,5 +1,6 @@
 <%@ include file="importacion_head.jsp" %>
 <body>
+<%@ include file="usuario_validacion.jsp" %>
 <div >
 	<!--Navbar -->
 <nav class="mb-1 navbar navbar-expand-lg navbar-dark light-green darken-2 fixed-top scrolling-navbar">

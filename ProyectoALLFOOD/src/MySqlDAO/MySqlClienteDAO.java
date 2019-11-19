@@ -28,7 +28,17 @@ public class MySqlClienteDAO implements ClienteDAO{
 			call.setInt(5, registraCli.getEdad());
 			call.setString(6,registraCli.getCelular_cli());
 			call.setDouble(7, registraCli.getSaldo_cli());
+			
+			System.out.println(
+			registraCli.getUsuario()+","+
+			registraCli.getPassword()+","+
+			registraCli.getNom_cli()+","+
+			registraCli.getApe_cli()+","+
+			registraCli.getEdad()+","+
+			registraCli.getCelular_cli()+","+
+			registraCli.getSaldo_cli());
 			salida=call.executeUpdate();
+			System.out.println("==>"+salida);
 		} catch (Exception e) {
 				e.printStackTrace();
 			}finally {
