@@ -1,45 +1,41 @@
 <%@  include file="importacion_head.jsp" %>
 <body>
-<div class="fondo-chef">
-		<div class="container w-50 ">
-		
-		<div class="row align-items-center" style="height:100vh;">
-			<div class="col-12">
-				<h1 class="text-white text-center">Inicio de Sesion como Chef</h1>
-				<form action="ServletChef" >
-			  <div class="form-group">
-			    <label for="exampleInputEmail1" class="text-white">Email address</label>
-			    <input type="text" name="usuario" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="User">
-			    <% String mensaje = (String) request.getAttribute("MENSASE");
+<div class="container">
+	<form class="text-center border border-light p-5" action="ServletChef">
+	<input type="hidden" name="tipo" value="login" >
+    <p class="h4 mb-4">Inicio de Sesion como Chef</p>
+
+	 <% String mensaje = (String) request.getAttribute("MENSASE");
 			    	if(mensaje != null){	
 			    		%>
-			    <small  class="form-text text-muted"><%=mensaje %></small>
-			    <%} %>
-			  </div>
-			  <div class="form-group">
-			    <label for="exampleInputPassword1"class="text-white">Contraseña</label>
-			    <input type="password" name="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-			  </div>
-			  <div class="form-group">
-			  <button type="submit" class="btn btn-success btn-block p-2">Entrar</button>
-			  </div>
-			  <div class="form-group">
-			  
-			  </div>
-			</form>
-			<div class="row justify-content-between">
-			  		<div class="col-6">
-			  			<a class="enlace" href="index.jsp"><button class="btn btn-primary btn-block">Home</button></a>
-			  		</div>
-			  		<div class="col-6">
-			  			<a class="enlace" href="index.jsp"><button class="btn btn-primary btn-block">Registrate</button></a>
-			  		</div>
-			  </div>
-			  <a class="enlace"  href="usuario_login.jsp"><button class="btn btn-info btn-block p-3 mt-5">Iniciar Sesion como Cliente</button></a>
-			</div>
-		</div>
-			
-		</div>
+	<small  class="form-text text-muted"><%=mensaje %></small>
+	<%} %>
+    <!-- Email -->
+    <input type="text" name="usuario" class="form-control mb-4" aria-describedby="emailHelp" placeholder="User">
+    <!-- Password -->
+    <input type="password" name="password" id="defaultLoginFormPassword" class="form-control mb-4" placeholder="Password">
+
+    
+
+    <!-- Sign in button -->
+    <button class="btn btn-info btn-block my-4" type="submit">Entrar</button>
+
+    <!-- Register -->
+    <p>¿No eres un Cliente aún?
+        <a href="chef_registro.jsp">Regístrate</a>
+    </p>
+
+    <!-- Social login -->
+    <p>or sign in with:</p>
+
+    <a href="#" class="mx-2" role="button"><i class="fab fa-facebook-f light-blue-text"></i></a>
+    <a href="#" class="mx-2" role="button"><i class="fab fa-twitter light-blue-text"></i></a>
+    <a href="#" class="mx-2" role="button"><i class="fab fa-linkedin-in light-blue-text"></i></a>
+    <a href="#" class="mx-2" role="button"><i class="fab fa-github light-blue-text"></i></a>
+
+</form>
+	
+		
 </div>
 
 

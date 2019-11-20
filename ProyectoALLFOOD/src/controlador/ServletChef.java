@@ -62,20 +62,21 @@ public class ServletChef extends HttpServlet {
 		Chef chef = null;
 		try {
 			chef = chefDAO.ValidarChef(usuario, password);
+			if (chef == null) {
+				request.setAttribute("MENSASE", "El Usuario '"+usuario+"' no existe");
+				request.getRequestDispatcher("/chef_login.jsp").forward(request, response);
+				
+			}else{
+				HttpSession sesion = request.getSession();
+				
+				sesion.setAttribute("USUARIOCHEF",chef);
+				request.getRequestDispatcher("/chef_pagina.jsp").forward(request, response);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
-		if (chef == null) {
-			request.setAttribute("MENSASE", "El Usuario '"+usuario+"' no existe");
-			request.getRequestDispatcher("/chef_login.jsp").forward(request, response);
-			
-		}else{
-			HttpSession sesion = request.getSession();
-			
-			sesion.setAttribute("CHEF",chef);
-			request.getRequestDispatcher("/chef_pagina.jsp").forward(request, response);
-		}
+		
 	}
 
 }

@@ -1,7 +1,4 @@
 <%@ include file="importacion_head.jsp" %>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
-</head>
 <body>
 <div class="container">
 <form class="text-center border border-light p-5" action="ServletChef">
@@ -65,7 +62,7 @@
     <!-- Terms of service -->
     <p>Al hacer click en
         <em>Registrarse</em> tu aceptas nuestros
-        <a href="" target="_blank">términos de servicio</a>
+        <a class="text-primary" target="_blank">términos de servicio</a>
 
 </form>
 </div>

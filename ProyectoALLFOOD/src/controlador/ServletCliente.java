@@ -78,7 +78,7 @@ public class ServletCliente extends HttpServlet {
 			}else{
 				HttpSession sesion = request.getSession();
 				
-				sesion.setAttribute("USUARIO",cliente);
+				sesion.setAttribute("USUARIOCLIENTE",cliente);
 				request.getRequestDispatcher("/usuario_pagina.jsp").forward(request, response);
 			}
 			

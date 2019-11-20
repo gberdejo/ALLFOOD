@@ -3,7 +3,7 @@
 <div class="container">
 	<section>
 		<!-- Default form login -->
-<form class="text-center border border-light p-5" action="ServletCliente">
+	<form class="text-center border border-light p-5" action="ServletCliente">
 	<input type="hidden" name="tipo" value="login" >
     <p class="h4 mb-4">Inicio de Sesion como Cliente</p>
 

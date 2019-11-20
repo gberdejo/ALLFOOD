@@ -9,9 +9,9 @@
 	<!-- User and password -->
 		<!-- usuario -->
 		<% String texto =(String) request.getAttribute("MENSAJEREGISTRO"); 
-		
-		%>
-			<span class="text-muted" ><%=texto %></span>
+			if(texto != null){%>
+			<span class="text-muted" ><%=texto%></span>
+			<%}%>
 			<div class="form-group">
 			<input type="text" name="usuario" class="form-control" placeholder="Usuario">
 			
