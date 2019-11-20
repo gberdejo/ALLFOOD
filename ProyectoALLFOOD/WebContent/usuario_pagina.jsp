@@ -40,7 +40,10 @@
           aria-labelledby="navbarDropdownMenuLink-55">
           <a class="dropdown-item" href="#">Perfil</a>
           <a class="dropdown-item" href="#">Cartera</a>
-          <a class="dropdown-item" href="index.jsp">Salir</a>
+          <form action="ServletCliente">
+          	<input type="hidden" name="tipo" value="salir">
+          	<a class="dropdown-item"> <button type="submit">Salir</button> </a>
+          </form>
         </div>
       </li>
     </ul>

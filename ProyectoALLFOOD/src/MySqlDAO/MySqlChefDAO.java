@@ -17,11 +17,11 @@ public class MySqlChefDAO implements ChefDAO{
 	int salida = -1;
 	
 	@Override
-	public int RegistrarChef(Chef registraChef) {
+	public void RegistrarChef(Chef registraChef) {
 
 		try {
 			con = MysqlBDConexion.getConexion();
-			call = con.prepareCall("call RegistrarCliente(?,?,?,?,?,?,?,?)");
+			call = con.prepareCall("call RegistrarCliente(?,?,?,?,?,?,?)");
 			call.setString(1,registraChef.getUsuario());
 			call.setString(2,registraChef.getPassword());
 			call.setString(3,registraChef.getNom_chef());
@@ -29,12 +29,12 @@ public class MySqlChefDAO implements ChefDAO{
 			call.setInt(5,registraChef.getEdad());
 			call.setString(6,registraChef.getCelular());
 			call.setString(7, registraChef.getDieccion());
-			call.setDouble(8,registraChef.getSaldo_chef());
-			
-			salida=call.executeUpdate();
+			call.executeUpdate();
+			System.out.println(call);
 		} catch (Exception e) {
+			
 				e.printStackTrace();
-			}finally {
+		}finally {
 				try {
 					if(con != null) con.close();
 					if(call != null) call.close();
@@ -43,13 +43,7 @@ public class MySqlChefDAO implements ChefDAO{
 					e2.printStackTrace();
 				}
 			
-			// TODO: handle exception
 		}
-			
-		
-	
-		return 0;
-	
 	}
 
 	@Override

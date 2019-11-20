@@ -22,7 +22,17 @@ public class ServletCliente extends HttpServlet {
 			login(request,response);
 		}else if(tipo.equalsIgnoreCase("registro")){
 			registro(request,response);
+		}else if(tipo.equalsIgnoreCase("salir")){
+			salir(request,response);
 		}
+	}
+	private void salir(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+		HttpSession sesion = request.getSession();
+		
+		sesion.invalidate();
+		request.setAttribute("MENSAJESALIR", "SESION EXPERADA");
+		request.getRequestDispatcher("/index.jsp").forward(request, response);
+		
 	}
 	private void registro(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		
@@ -40,10 +50,11 @@ public class ServletCliente extends HttpServlet {
 			cli.setSaldo_cli(Double.parseDouble(request.getParameter("saldo")));
 			
 			clienteDAO.RegistrarCliente(cli);
-			request.setAttribute("MENSAJE", "Error al Registrar");
+			
 			request.getRequestDispatcher("/usuario_login.jsp").forward(request, response);
 			
 		} catch (Exception e) {
+			request.setAttribute("MENSAJEREGISTRO", "Error al intentar Registrarse :C");
 			request.getRequestDispatcher("/usuario_registra.jsp").forward(request, response);
 		}
 		
@@ -59,20 +70,22 @@ public class ServletCliente extends HttpServlet {
 		Cliente cliente = null;
 		try {
 			cliente = clienteDAO.ValidarCliente(usuario, password);
+			
+			if (cliente == null) {
+				request.setAttribute("MENSASE", "El Usuario o Contraseña no existen");
+				request.getRequestDispatcher("/usuario_login.jsp").forward(request, response);
+				
+			}else{
+				HttpSession sesion = request.getSession();
+				
+				sesion.setAttribute("USUARIO",cliente);
+				request.getRequestDispatcher("/usuario_pagina.jsp").forward(request, response);
+			}
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
-		if (cliente == null) {
-			request.setAttribute("MENSASE", "El Usuario  no existe");
-			request.getRequestDispatcher("/usuario_login.jsp").forward(request, response);
-			
-		}else{
-			HttpSession sesion = request.getSession();
-			
-			sesion.setAttribute("USUARIO",cliente);
-			request.getRequestDispatcher("/usuario_pagina.jsp").forward(request, response);
-		}
 			
 		
 		

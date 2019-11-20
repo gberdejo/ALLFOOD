@@ -262,7 +262,7 @@
                 </div>
                 <div class="col-md-5">
                     <h2>¿Quieres prestar tus servicios en la plataforma?</h2>
-                    <a class="enlace" href="chef_login.jsp"><button class="btn btn-outline-success  p-3 ">Registrate
+                    <a class="enlace" href="chef_registro.jsp"><button class="btn btn-outline-success  p-3 ">Registrate
                             como Chef</button></a>
                 </div>
             </div>
