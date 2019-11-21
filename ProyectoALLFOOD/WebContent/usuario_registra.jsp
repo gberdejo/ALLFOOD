@@ -8,10 +8,15 @@
     <p class="h4 mb-4">Registro de Cliente</p>
 	<!-- User and password -->
 		<!-- usuario -->
-		<% String texto =(String) request.getAttribute("MENSAJEREGISTRO"); 
+		<% String texto =(String) request.getAttribute("MENSAJEREGISTRO");
+			String UsuarioConocido = (String) request.getAttribute("USUARIOCONOCIDO");
 			if(texto != null){%>
 			<span class="text-muted" ><%=texto%></span>
 			<%}%>
+			
+			<!--  <% if(UsuarioConocido != null){%>
+			<span class="text-muted" ><%=UsuarioConocido%></span>
+			<%}%>-->
 			<div class="form-group">
 			<input type="text" name="usuario" class="form-control" placeholder="Usuario">
 			

@@ -52,14 +52,11 @@ public class MySqlClienteDAO implements ClienteDAO{
 			
 			// TODO: handle exception
 		}
-			
-		
-	
 		return 0;
 	}
 
 	@Override
-	public List<Cliente> listarChef(Cliente listarCli) {
+	public List<Cliente> listarCliente() {
 		List<Cliente> lista = new ArrayList<Cliente>();
 		Cliente listarcli=null;
 		try {
@@ -68,10 +65,14 @@ public class MySqlClienteDAO implements ClienteDAO{
 			rs=call.executeQuery();
 			while(rs.next()){
 				listarcli=new Cliente();
-				listarcli.setNom_cli(rs.getString(1));
-				listarcli.setApe_cli(rs.getString(2));
-				listarcli.setEdad(rs.getInt(3));
-				listarcli.setCelular_cli(rs.getString(4));
+				listarcli.setCod_cli(rs.getInt(1));
+				listarcli.setUsuario(rs.getString(2));
+				listarcli.setPassword(rs.getString(3));
+				listarcli.setNom_cli(rs.getString(4));
+				listarcli.setApe_cli(rs.getString(5));
+				listarcli.setEdad(rs.getInt(6));
+				listarcli.setCelular_cli(rs.getString(7));
+				listarcli.setSaldo_cli(rs.getDouble(8));
 				lista.add(listarcli);
 			}
 			
@@ -86,9 +87,6 @@ public class MySqlClienteDAO implements ClienteDAO{
 				e2.printStackTrace();
 			}
 		}
-		
-		
-		
 		return lista;
 	}
 
