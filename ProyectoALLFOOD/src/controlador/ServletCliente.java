@@ -64,12 +64,17 @@ public class ServletCliente extends HttpServlet {
 				}
 			}
 			if(respuesta == 0){
-				clienteDAO.RegistrarCliente(cli);
-				request.getRequestDispatcher("/usuario_login.jsp").forward(request, response);
+				try {
+					
+					clienteDAO.RegistrarCliente(cli);
+					request.getRequestDispatcher("/usuario_login.jsp").forward(request, response);
+				} catch (Exception e) {
+					request.getRequestDispatcher("/usuario_registra.jsp").forward(request, response);
+				
+				}
 			}else{
 				request.setAttribute("USUARIOCONOCIDO", "Colocar otro nombre de usuario");
 				request.getRequestDispatcher("/usuario_registra.jsp").forward(request, response);
-				
 			}
 			
 		
