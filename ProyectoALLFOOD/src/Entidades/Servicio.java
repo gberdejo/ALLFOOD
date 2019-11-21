@@ -4,7 +4,9 @@ public class Servicio {
 private int cod_servicio;
 private String nom_servico;
 private int cod_chef;
+
 private int cod_comida;
+
 private String descripcion;
 private double precio_persona;
 private String fec_publicacion;
