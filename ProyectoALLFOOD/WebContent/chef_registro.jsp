@@ -1,32 +1,23 @@
 <%@ include file="importacion_head.jsp" %>
 <body>
-<div class="container">	
-	<section>
-		<!-- Default form register -->
-<form class="text-center border border-light p-5" action="ServletCliente">
+<div class="container">
+<form class="text-center border border-light p-5" action="ServletChef">
 <input type="hidden" name="tipo" value="registro" >
-    <p class="h4 mb-4">Registro de Cliente</p>
+    <p class="h4 mb-4">Registro de Chef</p>
 	<!-- User and password -->
 		<!-- usuario -->
 		<% String texto =(String) request.getAttribute("MENSAJEREGISTRO");
-			String UsuarioConocido = (String) request.getAttribute("USUARIOCONOCIDO");
-			if(texto != null){%>
-			<span class="text-muted" ><%=texto%></span>
-			<%}%>
-			
-			<!--  <% if(UsuarioConocido != null){%>
-			<span class="text-muted" ><%=UsuarioConocido%></span>
-			<%}%>-->
+			if(texto != null){
+			%>
+			<span class="text-muted" ><%=texto %></span>
+			<% }%>
 			<div class="form-group">
 			<input type="text" name="usuario" class="form-control" placeholder="Usuario">
-			
 			</div>
 		<!-- contraseña -->
-			<div class="form-group">
+			<div class="form-group mb-5">
 	    	<input type="password" name="password"  class="form-control" placeholder="Contraseña" aria-describedby="defaultRegisterFormPasswordHelpBlock">
-	    	<small  class="form-text text-left text-muted mb-4">
-	        	Colocar la contraseña
-	    	</small>
+	    	<small  class="form-text text-left text-muted "></small>
 			</div>
 	    
 		<div class="form-group">
@@ -49,10 +40,10 @@
 	   
 	           
 	        </div>
-	        <div class="col">
-	        	<input type="number" name="saldo" placeholder="colocar saldo" class="form-control">
-	        </div>
 	    </div>
+	    <div class="form-group">
+	        	<input type="text" name="direccion" placeholder="Dirección" class="form-control">
+	     </div>
 	
 
     <!-- Sign up button -->
@@ -71,14 +62,12 @@
     <!-- Terms of service -->
     <p>Al hacer click en
         <em>Registrarse</em> tu aceptas nuestros
-        <a href="" target="_blank">términos de servicio</a>
+        <a class="text-primary" target="_blank">términos de servicio</a>
 
 </form>
-<!-- Default form register -->
-	</section>
-
 </div>
 
-<%@ include file="importacion_head.jsp" %>
+
+<%@ include file="importacion_js.jsp" %>
 </body>
 </html>

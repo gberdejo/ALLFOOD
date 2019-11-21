@@ -14,16 +14,37 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent-4">
                     <ul class="navbar-nav ml-auto">
-                        <li class="nav-item ">
-                            <a class="nav-link" href="usuario_registra.jsp">
+                        <li class="nav-item  dropdown">
+                        	 <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-4" data-toggle="dropdown"
+					          aria-haspopup="true" aria-expanded="false">
+					          <i class="fas fa-user-plus"></i> Registrate </a>
+					        <div class="dropdown-menu dropdown-menu-right dropdown-info" aria-labelledby="navbarDropdownMenuLink-4">
+					          <a class="dropdown-item" href="usuario_registra.jsp"> Cliente </a>
+					          <a class="dropdown-item" href="chef_registro.jsp"> Chef </a>
+					        </div>
+                            <!--  <a class="nav-link" href="usuario_registra.jsp">
                                 <i class="fas fa-user-plus"></i> Registrate
                                 <span class="sr-only">(current)</span>
-                            </a>
+                            </a>-->
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item  dropdown">
+                        	 <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-4" data-toggle="dropdown"
+					          aria-haspopup="true" aria-expanded="false">
+					          <i class="fas fa-sign-in-alt"></i> Inicia Sesión </a>
+					        <div class="dropdown-menu dropdown-menu-right dropdown-info" aria-labelledby="navbarDropdownMenuLink-4">
+					          <a class="dropdown-item" href="usuario_login.jsp"> Cliente </a>
+					          <a class="dropdown-item" href="chef_login.jsp"> Chef </a>
+					        </div>
+                            <!--  <a class="nav-link" href="usuario_registra.jsp">
+                                <i class="fas fa-user-plus"></i> Registrate
+                                <span class="sr-only">(current)</span>
+                            </a>-->
+                        </li>
+                        
+                         <!-- <li class="nav-item">
                             <a class="nav-link" href="usuario_login.jsp">
                                 <i class="fas fa-sign-in-alt"></i> Inicia Sesion </a>
-                        </li>
+                        </li>-->
                         
                     </ul>
                 </div>
@@ -262,7 +283,7 @@
                 </div>
                 <div class="col-md-5">
                     <h2>¿Quieres prestar tus servicios en la plataforma?</h2>
-                    <a class="enlace" href="chef_login.jsp"><button class="btn btn-outline-success  p-3 ">Registrate
+                    <a class="enlace" href="chef_registro.jsp"><button class="btn btn-outline-success  p-3 ">Registrate
                             como Chef</button></a>
                 </div>
             </div>
