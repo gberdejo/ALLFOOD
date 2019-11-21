@@ -1,11 +1,11 @@
-DROP DATABASE  ALLFOOD;
+﻿DROP DATABASE ALLFOOD;
 CREATE DATABASE ALLFOOD;
-USE ALLFOOD;
+USE tienda;
 CREATE TABLE CLIENTE
 (
 cod_cli int NOT NULL auto_increment PRIMARY KEY,
 usuario varchar(20) not null,
-contaseña varchar(10) not null,
+contaseÃ±a varchar(10) not null,
 nom_cli varchar(50) NOT NULL,
 ape_cli varchar(50) NOT NULL,
 edad_cli int NOT NULL,
@@ -17,7 +17,7 @@ CREATE TABLE CHEF
 (
 cod_chef int NOT NULL AUTO_INCREMENT PRIMARY KEY ,
 usuario varchar(20) not null,
-contaseña varchar(10) not null,
+contaseÃ±a varchar(10) not null,
 nom_chef varchar(50)NOT NULL,
 ape_chef varchar(50)NOT NULL,
 edad_chef int NOT NULL,
@@ -60,23 +60,23 @@ CONSTRAINT FOREIGN KEY fk_COD_SERVICIO(cod_servicio) REFERENCES SERVICIO (cod_se
 delimiter @@
 create procedure RegistrarChef
 (usuario varchar(20),
-contaseña varchar(10),
+contaseÃ±a varchar(10),
 nom_chef varchar(50),
 ape_chef varchar(50),
 edad_chef int,
 celular_chef varchar(9),
 direccion varchar(50))
 begin
-insert into chef values (null,usuario,contaseña,nom_chef,ape_chef,edad_chef,celular_chef,direccion,0.0);
+insert into chef values (null,usuario,contaseÃ±a,nom_chef,ape_chef,edad_chef,celular_chef,direccion,0.0);
 end @@
 delimiter ;
 call RegistrarChef ('cuchicu','cuchi123','cuchi','cu',20,'996006381','27 de marzo');
 call RegistrarChef('Pepe','14g5','Pedro','Ramos',35,'986574123','Av.Los Jardines 1547');
 /*validar CHEF ----------------------- */
 delimiter @@
-create procedure ValidarChef(usuario varchar(20),contraseña varchar(10))
+create procedure ValidarChef(usuario varchar(20),contraseÃ±a varchar(10))
 begin
-select * from Chef where usuario = usuario and contaseña = contraseña;
+select * from Chef where usuario = usuario and contaseÃ±a = contraseÃ±a;
 end @@
 delimiter ;
 call ValidarChef ('cuchicu','cuchi123');
@@ -87,19 +87,22 @@ select * from chef  ;
 end @@
 delimiter ;
 call ListarChef;
+
+
+
 /*CLIENTE*/
 /* -Registrar Cliente - */
 delimiter @@
 create procedure RegistrarCliente
 (usuario varchar(20),
-contraseña varchar(10),/* era contraseña XD*/
+contraseÃ±a varchar(10),/* era contraseÃ±a XD*/
 nom_cli varchar(50),
 ape_cli varchar(50),
 edad_cli  int,
 celular_cli  varchar(9),
 saldo_cli  decimal)
 begin
-insert into cliente values (null,usuario,contraseña,nom_cli ,ape_cli ,edad_cli ,celular_cli ,saldo_cli );
+insert into cliente values (null,usuario,contraseÃ±a,nom_cli ,ape_cli ,edad_cli ,celular_cli ,saldo_cli );
 end @@
 delimiter ;
 call RegistrarCliente('Pastel','74g5','Mario','Fernandez',25,'974652001',198);
@@ -107,9 +110,9 @@ call RegistrarCliente('eli','el12','Mario','Fernandez',25,'974652001',198);
 /* validacion  del cliente*/
 delimiter @@
 create procedure ValidarCliente(usuario varchar(20),
-contraseña varchar(10))
+contraseÃ±a varchar(10))
 begin
-select * from cliente where usuario = usuario and contaseña = contraseña;
+select * from cliente where usuario = usuario and contaseÃ±a = contraseÃ±a;
 end @@
 delimiter ;
 call ValidarCliente ('Pastel','74g5');
@@ -123,6 +126,8 @@ select * from cliente;
 end @@
 delimiter ;
 
+
+
 /*COMIDA*/
 /* -Registrar Comida- */
 delimiter @@
@@ -135,6 +140,9 @@ end @@
 delimiter ;
 call RegistrarComida('Aji de gallina');
 call RegistrarComida('Anticucho');
+
+
+
 
 /*SERVICIO*/
 /* -Registrar SERVICIO - */
@@ -155,13 +163,6 @@ delimiter ;
 call RegistrarServicio('Pedido Especial',1,1,'Disfruta de nuestro especial:bla bla bla',10);
 select*from Servicio;
 /*Listar Servicio*/ 
-
-/*create table tiempo(
-t1 TIMESTAMP DEFAULT CURRENT_TIMESTAMP on update current_timestamp );
-drop table tiempo;
-insert into tiempo values ();
-select * from tiempo;*/
-
 delimiter @@
 create procedure ListarServicio()
 begin
@@ -190,11 +191,13 @@ delimiter ;
 call RegistrarPedido(1,1,20,'2019-12-20 10:02:52',500,4);
 
 /*Listar pedido*/
+/*drop procedure ListarPedido;*/
 delimiter @@
 create procedure ListarPedido()
 begin
-select *  from pedido t1 
-inner join cliente t2 on t1.cod_cli=t2.cod_cli inner join servicio t3 on t1.cod_servicio=t3.cod_servicio;
+select t1.cod_pedido,t2.nom_cli,t4.nom_chef,t3.nom_servico,t1.cant_personas,t1.fecha_compra,t1.fecha_entrega,t1.pago_total from pedido t1 
+inner join cliente t2 on t1.cod_cli=t2.cod_cli inner join servicio t3 on t1.cod_servicio=t3.cod_servicio inner join chef t4 on t3.cod_chef=t4.cod_chef;
+
 end @@
 delimiter ;
 call ListarPedido;
