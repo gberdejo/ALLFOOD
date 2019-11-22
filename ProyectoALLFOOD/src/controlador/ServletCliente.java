@@ -107,7 +107,7 @@ public class ServletCliente extends HttpServlet {
 		//conectando con el chef
 		ChefFabrica cheffabrica = ChefFabrica.ElegirBaseDatos(ChefFabrica.MYSQL);
 		ChefDAO chefDAO = cheffabrica.getChefDAO();
-
+		//conectanto con los servicios
 		Cliente cliente = null;
 		try {
 			
@@ -119,7 +119,6 @@ public class ServletCliente extends HttpServlet {
 				
 			}else{
 				HttpSession sesion = request.getSession();
-				
 				sesion.setAttribute("USUARIOCLIENTE",cliente);
 				sesion.setAttribute("LISTARCHEF", chefDAO.listarChef());
 				request.getRequestDispatcher("/usuario_pagina.jsp").forward(request, response);
@@ -127,6 +126,7 @@ public class ServletCliente extends HttpServlet {
 			
 		} catch (Exception e) {
 			e.printStackTrace();
+			request.getRequestDispatcher("/usuario_login.jsp").forward(request, response);
 		}
 		
 			

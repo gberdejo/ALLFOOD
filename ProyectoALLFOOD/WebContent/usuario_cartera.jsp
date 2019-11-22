@@ -1,4 +1,4 @@
-<%@ include file="usuario_validacion.jsp" %>
+<%@ include file="usuario_validacion.jsp"%>
 <%@ include file="importacion_head.jsp" %>
 <body>
 <!--Cabezera de Cliente -->
