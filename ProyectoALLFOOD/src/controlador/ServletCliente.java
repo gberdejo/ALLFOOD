@@ -12,9 +12,11 @@ import javax.servlet.http.HttpSession;
 
 import DAO.ChefDAO;
 import DAO.ClienteDAO;
+import DAO.PedidoDAO;
 import Entidades.Cliente;
 import fabricas.ChefFabrica;
 import fabricas.ClienteFabrica;
+import fabricas.PedidoFabrica;
 
 @WebServlet("/ServletCliente")
 public class ServletCliente extends HttpServlet {
@@ -34,12 +36,20 @@ public class ServletCliente extends HttpServlet {
 	}
 	private void refrescar(HttpServletRequest request, HttpServletResponse response)  throws ServletException, IOException{
 		//conectando con el chef
-				ChefFabrica cheffabrica = ChefFabrica.ElegirBaseDatos(ChefFabrica.MYSQL);
-				ChefDAO chefDAO = cheffabrica.getChefDAO();
-				HttpSession sesion = request.getSession();
-				sesion.setAttribute("LISTARCHEF", chefDAO.listarChef());
-				request.getRequestDispatcher("/usuario_pagina.jsp").forward(request, response);
-				
+		Cliente cli = (Cliente)request.getAttribute("USUARIOCLIENTE");
+		System.out.println(cli	);
+				if(request.getAttribute("USUARIOCLIENTE") != null){
+					ChefFabrica cheffabrica = ChefFabrica.ElegirBaseDatos(ChefFabrica.MYSQL);
+					ChefDAO chefDAO = cheffabrica.getChefDAO();
+					HttpSession sesion = request.getSession();
+					sesion.setAttribute("LISTARCHEF", chefDAO.listarChef());
+					request.getRequestDispatcher("/usuario_pagina.jsp").forward(request, response);
+				}else{
+					
+					request.setAttribute("MENSASE", "El Usuario o Contraseña no existen");
+					request.getRequestDispatcher("/usuario_login.jsp").forward(request, response);
+					
+				}
 
 		
 	}
@@ -108,6 +118,10 @@ public class ServletCliente extends HttpServlet {
 		ChefFabrica cheffabrica = ChefFabrica.ElegirBaseDatos(ChefFabrica.MYSQL);
 		ChefDAO chefDAO = cheffabrica.getChefDAO();
 		//conectanto con los servicios
+		PedidoFabrica perdidoFabrica = PedidoFabrica.tipoConexion(PedidoFabrica.MYSQL);
+		PedidoDAO pedidoDAO = perdidoFabrica.getPedidoDAO();
+		
+				
 		Cliente cliente = null;
 		try {
 			
@@ -119,6 +133,7 @@ public class ServletCliente extends HttpServlet {
 				
 			}else{
 				HttpSession sesion = request.getSession();
+				
 				sesion.setAttribute("USUARIOCLIENTE",cliente);
 				sesion.setAttribute("LISTARCHEF", chefDAO.listarChef());
 				request.getRequestDispatcher("/usuario_pagina.jsp").forward(request, response);

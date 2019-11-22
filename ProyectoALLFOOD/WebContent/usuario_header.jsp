@@ -12,7 +12,8 @@
     <ul class="navbar-nav ml-auto nav-flex-icons">
       <li class="nav-item">
       <form action="ServletCliente">
-      <input type="hidden" name="tipo" value="refrescar">
+      		<input type="hidden" name="tipo" value="refrescar">
+      		<input type="hidden" name="inicio" value="<jsp:getProperty property="usuario" name="USUARIOCLIENTE"/>">
       		<button type="submit" class="btn p-1"><i class="far fa-user pr-2 fa-1x" aria-hidden="true"></i>Inicio</button>
       </form>
       <!--  
