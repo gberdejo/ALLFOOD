@@ -1,41 +1,9 @@
-<%@ include file="usuario_validacion.jsp" %>
+
 <%@ include file="importacion_head.jsp" %>
 <body>
 <div >
-	<!--Navbar -->
-<nav class="mb-1 navbar navbar-expand-lg navbar-dark light-green darken-2">
-  <a class="navbar-brand text-white" >ALLFOOD</a>
-  <button class="navbar-toggler disable" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-555"
-    aria-controls="navbarSupportedContent-555" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="navbarSupportedContent-555">
-   
-    <ul class="navbar-nav ml-auto nav-flex-icons">
-      <li class="nav-item">
-        <a class="nav-link waves-effect waves-light">1
-          <i class="fas fa-envelope"></i>
-        </a>
-      </li>
-      <li class="nav-item avatar dropdown">
-        <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-55" data-toggle="dropdown"
-          aria-haspopup="true" aria-expanded="false">
-          <img src="img/avatar.jpg" width="24px" height="24px" class="rounded-circle z-depth-0"
-            alt="avatar image">
-        </a>
-        <div class="dropdown-menu dropdown-menu-lg-right dropdown-secondary"
-          aria-labelledby="navbarDropdownMenuLink-55">
-          <a class="dropdown-item" href="#">Perfil</a>
-          <a class="dropdown-item" href="#">Cartera</a>
-          <form action="ServletCliente">
-          	<input type="hidden" name="tipo" value="salir">
-          	<a class="dropdown-item"> <button type="submit">Salir</button> </a>
-          </form>
-        </div>
-      </li>
-    </ul>
-  </div>
-</nav>
+<!--Cabezera de Cliente -->
+<%@ include file= "usuario_header.jsp" %>
 <!-- cuerpo -->
 
  <div class="container-fluid">
@@ -43,13 +11,13 @@
   <div class="col-3 px-0">
     <div class="list-group" id="list-tab" role="tablist">
       <a class="list-group-item list-group-item-action active" id="list-home-list" data-toggle="list" href="#list-home"
-        role="tab" aria-controls="home">Home</a>
+        role="tab" aria-controls="home">Notificaciones</a>
       <a class="list-group-item list-group-item-action" id="list-profile-list" data-toggle="list" href="#list-profile"
-        role="tab" aria-controls="profile">Profile</a>
+        role="tab" aria-controls="profile">Servicios</a>
       <a class="list-group-item list-group-item-action" id="list-messages-list" data-toggle="list" href="#list-messages"
-        role="tab" aria-controls="messages">Messages</a>
+        role="tab" aria-controls="messages">Chefs</a>
       <a class="list-group-item list-group-item-action" id="list-settings-list" data-toggle="list" href="#list-settings"
-        role="tab" aria-controls="settings">Settings</a>
+        role="tab" aria-controls="settings">Pedidos</a>
     </div>
   </div>
   <div class="col-9">
