@@ -6,6 +6,6 @@ import Entidades.Servicio;
 
 public interface ServicioDAO {
 	
-	public abstract int RegistrarServicio(Servicio registraServicio);
-	public abstract List<Servicio>listarServicio(Servicio listarServicio);
+	public abstract void RegistrarServicio(Servicio registraServicio);
+	public abstract List<Servicio>listarServicio( );
 }

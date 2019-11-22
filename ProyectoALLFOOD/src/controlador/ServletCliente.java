@@ -28,7 +28,20 @@ public class ServletCliente extends HttpServlet {
 			registro(request,response);
 		}else if(tipo.equalsIgnoreCase("salir")){
 			salir(request,response);
+		}else if(tipo.equalsIgnoreCase("refrescar")){
+			refrescar(request,response);
 		}
+	}
+	private void refrescar(HttpServletRequest request, HttpServletResponse response)  throws ServletException, IOException{
+		//conectando con el chef
+				ChefFabrica cheffabrica = ChefFabrica.ElegirBaseDatos(ChefFabrica.MYSQL);
+				ChefDAO chefDAO = cheffabrica.getChefDAO();
+				HttpSession sesion = request.getSession();
+				sesion.setAttribute("LISTARCHEF", chefDAO.listarChef());
+				request.getRequestDispatcher("/usuario_pagina.jsp").forward(request, response);
+				
+
+		
 	}
 	private void salir(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		HttpSession sesion = request.getSession();
@@ -64,12 +77,17 @@ public class ServletCliente extends HttpServlet {
 				}
 			}
 			if(respuesta == 0){
-				clienteDAO.RegistrarCliente(cli);
-				request.getRequestDispatcher("/usuario_login.jsp").forward(request, response);
+				try {
+					
+					clienteDAO.RegistrarCliente(cli);
+					request.getRequestDispatcher("/usuario_login.jsp").forward(request, response);
+				} catch (Exception e) {
+					request.getRequestDispatcher("/usuario_registra.jsp").forward(request, response);
+				
+				}
 			}else{
 				request.setAttribute("USUARIOCONOCIDO", "Colocar otro nombre de usuario");
 				request.getRequestDispatcher("/usuario_registra.jsp").forward(request, response);
-				
 			}
 			
 		
@@ -89,7 +107,7 @@ public class ServletCliente extends HttpServlet {
 		//conectando con el chef
 		ChefFabrica cheffabrica = ChefFabrica.ElegirBaseDatos(ChefFabrica.MYSQL);
 		ChefDAO chefDAO = cheffabrica.getChefDAO();
-
+		//conectanto con los servicios
 		Cliente cliente = null;
 		try {
 			
@@ -101,7 +119,6 @@ public class ServletCliente extends HttpServlet {
 				
 			}else{
 				HttpSession sesion = request.getSession();
-				
 				sesion.setAttribute("USUARIOCLIENTE",cliente);
 				sesion.setAttribute("LISTARCHEF", chefDAO.listarChef());
 				request.getRequestDispatcher("/usuario_pagina.jsp").forward(request, response);
@@ -109,6 +126,7 @@ public class ServletCliente extends HttpServlet {
 			
 		} catch (Exception e) {
 			e.printStackTrace();
+			request.getRequestDispatcher("/usuario_login.jsp").forward(request, response);
 		}
 		
 			
