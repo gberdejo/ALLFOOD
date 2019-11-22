@@ -70,6 +70,7 @@ public class MySqlServicioDAO implements ServicioDAO {
 				if(con !=null)con.close();
 				if(call !=null)call.close();
 				if(rs !=null)rs.close();
+
 			} catch (Exception e2) {
 				e2.printStackTrace();
 			}

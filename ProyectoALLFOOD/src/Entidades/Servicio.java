@@ -1,3 +1,4 @@
+
 package Entidades;
 
 public class Servicio {
@@ -59,8 +60,5 @@ public class Servicio {
 	public void setFec_publicacion(String fec_publicacion) {
 		this.fec_publicacion = fec_publicacion;
 	}
-	
-	
-
-
 }
+
