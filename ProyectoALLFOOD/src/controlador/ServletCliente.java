@@ -36,22 +36,14 @@ public class ServletCliente extends HttpServlet {
 	}
 	private void refrescar(HttpServletRequest request, HttpServletResponse response)  throws ServletException, IOException{
 		//conectando con el chef
-		Cliente cli = (Cliente)request.getAttribute("USUARIOCLIENTE");
-		System.out.println(cli	);
-				if(request.getAttribute("USUARIOCLIENTE") != null){
-					ChefFabrica cheffabrica = ChefFabrica.ElegirBaseDatos(ChefFabrica.MYSQL);
-					ChefDAO chefDAO = cheffabrica.getChefDAO();
-					HttpSession sesion = request.getSession();
-					sesion.setAttribute("LISTARCHEF", chefDAO.listarChef());
-					request.getRequestDispatcher("/usuario_pagina.jsp").forward(request, response);
-				}else{
-					
-					request.setAttribute("MENSASE", "El Usuario o Contrase�a no existen");
-					request.getRequestDispatcher("/usuario_login.jsp").forward(request, response);
-					
-				}
-
 		
+			ChefFabrica cheffabrica = ChefFabrica.ElegirBaseDatos(ChefFabrica.MYSQL);
+			ChefDAO chefDAO = cheffabrica.getChefDAO();
+			HttpSession sesion = request.getSession();
+			sesion.setAttribute("LISTARCHEF", chefDAO.listarChef());
+			request.getRequestDispatcher("/usuario_pagina.jsp").forward(request, response);
+			
+					
 	}
 	private void salir(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		HttpSession sesion = request.getSession();
@@ -66,47 +58,34 @@ public class ServletCliente extends HttpServlet {
 		ClienteFabrica cliFabrica = ClienteFabrica.ElegirBaseDatos(ClienteFabrica.MYSQL);
 		ClienteDAO clienteDAO = cliFabrica.getClienteDAO();
 		Cliente cli = new Cliente();
-		List<Cliente> lista = null;
+		cli.setUsuario(request.getParameter("usuario"));
+		cli.setPassword(request.getParameter("password"));
+		cli.setNom_cli(request.getParameter("nombre"));
+		cli.setApe_cli(request.getParameter("apellido"));
+		cli.setEdad(Integer.parseInt(request.getParameter("edad")));
+		cli.setCelular_cli(request.getParameter("celular"));
+		cli.setSaldo_cli(Double.parseDouble(request.getParameter("saldo")));
+		int respuesta = 1;
 		try {
-			cli.setUsuario(request.getParameter("usuario"));
-			cli.setPassword(request.getParameter("password"));
-			cli.setNom_cli(request.getParameter("nombre"));
-			cli.setApe_cli(request.getParameter("apellido"));
-			cli.setEdad(Integer.parseInt(request.getParameter("edad")));
-			cli.setCelular_cli(request.getParameter("celular"));
-			cli.setSaldo_cli(Double.parseDouble(request.getParameter("saldo")));
-			int respuesta = 0;
-			lista = clienteDAO.listarCliente();
-			for (int i = 0; i < lista.size(); i++) {
-				if(lista.get(i).getUsuario().equalsIgnoreCase(request.getParameter("usuario"))){
-					respuesta = 1;
-					System.out.println("respuesta: "+respuesta+" usuario conocido: "+lista.get(i).getUsuario());
-					break;
-				}else{
-					respuesta = 0;
-				}
-			}
-			if(respuesta == 0){
+			respuesta =clienteDAO.BuscarCliente(request.getParameter("usuario"));
+		
+		} catch (Exception e) {
+			e.getMessage();
+		}
+		if(respuesta == 0){
 				try {
-					
 					clienteDAO.RegistrarCliente(cli);
 					request.getRequestDispatcher("/usuario_login.jsp").forward(request, response);
 				} catch (Exception e) {
+					e.printStackTrace();
+					request.setAttribute("MENSAJEREGISTRO", "Error al intentar Registrarse :C");
 					request.getRequestDispatcher("/usuario_registra.jsp").forward(request, response);
-				
 				}
-			}else{
-				request.setAttribute("USUARIOCONOCIDO", "Colocar otro nombre de usuario");
-				request.getRequestDispatcher("/usuario_registra.jsp").forward(request, response);
-			}
-			
-		
-		} catch (Exception e) {
+				
+		}else{
 			request.setAttribute("MENSAJEREGISTRO", "Error al intentar Registrarse :C");
 			request.getRequestDispatcher("/usuario_registra.jsp").forward(request, response);
 		}
-		
-	
 		
 	}
 	protected void login(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -124,29 +103,22 @@ public class ServletCliente extends HttpServlet {
 				
 		Cliente cliente = null;
 		try {
-			
 			cliente = clienteDAO.ValidarCliente(usuario, password);
-			
-			if (cliente == null) {
-				request.setAttribute("MENSASE", "El Usuario o Contraseña no existen");
-				request.getRequestDispatcher("/usuario_login.jsp").forward(request, response);
-				
-			}else{
-				HttpSession sesion = request.getSession();
-				
-				sesion.setAttribute("USUARIOCLIENTE",cliente);
-				sesion.setAttribute("LISTARCHEF", chefDAO.listarChef());
-				request.getRequestDispatcher("/usuario_pagina.jsp").forward(request, response);
-			}
-			
 		} catch (Exception e) {
 			e.printStackTrace();
+		}
+		if (cliente == null) {
+			request.setAttribute("MENSASE", "El Usuario o Contraseña no existen");
 			request.getRequestDispatcher("/usuario_login.jsp").forward(request, response);
+			
+		}else{
+			HttpSession sesion = request.getSession();
+			sesion.setAttribute("USUARIOCLIENTE",cliente);
+			sesion.setAttribute("LISTARCHEF", chefDAO.listarChef());
+			request.getRequestDispatcher("/usuario_pagina.jsp").forward(request, response);
 		}
 		
-			
 		
-		
-	}
+		}
 
 }

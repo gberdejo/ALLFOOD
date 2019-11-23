@@ -68,15 +68,19 @@ end @@
 delimiter ;
 call RegistrarChef ('cuchicu','cuchi123','cuchi','cu',20,'996006381','27 de marzo');
 call RegistrarChef('Pepe','14g5','Pedro','Ramos',35,'986574123','Av.Los Jardines 1547');
+/*
 call RegistrarChef('timy','timy123','Timy','Ramos',35,'986574123','Av.Los Jardines 1547');
 call RegistrarChef('gufi','gufi123','gufi','Ramos',23,'986574123','Av.Los Jardines 1547');
+call RegistrarChef('amil','amil','Tito','Ramos',23,'986574123','Av.Los Jardines 1547');
+call RegistrarChef('torencio','amil','Tito','Ramos',23,'986574123','Av.Los Jardines 1547');/
 /*validar CHEF ----------------------- */
 delimiter @@
-create procedure ValidarChef(usuario varchar(20),contra varchar(10))
+create procedure ValidarChef(usuario1 varchar(20),contra1 varchar(10))
 begin
-select * from Chef where usuario = usuario and contra = contra;
+select * from Chef where usuario = usuario1 and contra = contra1;
 end @@
 delimiter ;
+drop procedure ValidarChef;
 call ValidarChef ('cuchicu','cuchi123');
 delimiter @@
 create procedure ListarChef()
@@ -103,15 +107,15 @@ end @@
 delimiter ;
 call RegistrarCliente('Pastel','74g5','Mario','Fernandez',25,'974652001',198);
 call RegistrarCliente('eli','el12','Mario','Fernandez',25,'974652001',198);
+select * from cliente;
 /* validacion  del cliente*/
 delimiter @@
-create procedure ValidarCliente(usuario varchar(20),contra varchar(10))
+create procedure ValidarCliente(userr varchar(20),contrase varchar(10))
 begin
-select * from cliente where usuario = usuario and contra = contra;
+select * from cliente where usuario = userr and contra = contrase;
 end @@
 delimiter ;
-call ValidarCliente ('Pastel','74g5');
-
+call ValidarCliente ('eli','el12');
 select*from Cliente;
 /*Listar Cliente*/
 delimiter @@
@@ -181,7 +185,3 @@ inner join chef t4 on t3.cod_chef=t4.cod_chef;
 end @@
 delimiter ;
 call ListarPedido;
-select * from cliente;
-select * from servicio;
-select * from chef;
-select * from pedido;

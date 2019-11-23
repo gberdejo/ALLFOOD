@@ -123,5 +123,18 @@ public class MySqlClienteDAO implements ClienteDAO{
 		}
 		return cliente;
 	}
+	@Override
+	public int BuscarCliente(String usuario){
+		int respuesta = 0;
+		for (int i = 0; i < listarCliente().size(); i++) {
+			if(listarCliente().get(i).getUsuario().equalsIgnoreCase(usuario)){
+				respuesta = 1;break;
+			}else{
+				respuesta = 0;
+			}
+		}
+		
+		return respuesta;
+	}
 
 }
