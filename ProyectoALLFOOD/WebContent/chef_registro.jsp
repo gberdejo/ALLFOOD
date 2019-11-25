@@ -1,7 +1,7 @@
 <%@ include file="importacion_head.jsp" %>
 <body>
 <div class="container">
-<form class="text-center border border-light p-5" action="ServletChef">
+<form class="text-center border border-light p-5" action="ServletChef" enctype="multipart/form-data">
 <input type="hidden" name="tipo" value="registro" >
     <p class="h4 mb-4">Registro de Chef</p>
 	<!-- User and password -->
@@ -29,6 +29,23 @@
 	            <input type="text" name="apellido" class="form-control" placeholder="Apellidos">
 		   
 	    </div>
+		
+		
+		<div class="form-group">
+			<input type="file" name="foto" class="form-control">
+		</div>
+		
+		  <div class="form-group">
+	    	<!-- presentacion -->
+	            <input type="text" name="presentacion" class="form-control" placeholder="presentacion">
+		   
+	   	 </div>
+			<!--  
+			<div class="form-group shadow-textarea">
+	  		<label for="exampleFormControlTextarea6">Shadow and placeholder</label>
+	  		<textarea class="form-control z-depth-1" name="presentacion" id="exampleFormControlTextarea6" rows="3" placeholder="Write something here..."></textarea>
+			</div>-->
+		
 		
 	    <div class="form-row mb-3">
 	        <div class="col">

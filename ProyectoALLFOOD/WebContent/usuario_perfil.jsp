@@ -4,6 +4,7 @@
     <!--Cabezera de Cliente -->
     <%@ include file= "usuario_header.jsp" %>
     <jsp:useBean id="CHEF" scope="session" class="Entidades.Chef"></jsp:useBean>
+    
     <div class="container-fluid " style="margin-top:64.8px;">
         <div class="row	anchorow align-items-center">
             <div class="fondo-perfil-cliente1"></div>
@@ -13,9 +14,17 @@
                 <img alt="" src="img/avatar.jpg" width="300px" height="300px" class="rounded-circle float-right">
             </div>
             <div class="col-md-7">
-                <h1>
-                    <jsp:getProperty property="usuario" name="CHEF" />
-                </h1>
+                
+                <c:choose>
+                	<c:when test="${usuario == null }">
+                		<h1>Colocar el nombre</h1>
+                	</c:when>
+                	<c:otherwise>
+                		<h1><jsp:getProperty property="usuario" name="CHEF" /></h1>
+                	</c:otherwise>
+                </c:choose>
+                    
+                
                 <h2><jsp:getProperty property="nom_chef" name="CHEF" /> 
                 <jsp:getProperty property="ape_chef" name="CHEF" />(<jsp:getProperty property="edad" name="CHEF" />)</h2>
                 <h4><jsp:getProperty property="dieccion" name="CHEF" /></h4>

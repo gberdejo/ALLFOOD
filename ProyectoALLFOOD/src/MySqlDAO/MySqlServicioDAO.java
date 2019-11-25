@@ -88,7 +88,7 @@ public class MySqlServicioDAO implements ServicioDAO {
 			rs = call.executeQuery();
 			while(rs.next()){
 				Servicio ser = new Servicio();
-				ser.setCod_chef(rs.getInt(1));
+				ser.setCod_servicio(rs.getInt(1));
 				ser.setNom_servico(rs.getString(2));
 				ser.setCod_chef(rs.getInt(3));
 				ser.setNombre_chef(rs.getString(4));

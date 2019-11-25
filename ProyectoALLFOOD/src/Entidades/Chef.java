@@ -1,11 +1,15 @@
 package Entidades;
 
+import java.io.InputStream;
+
 public class Chef {
 private int cod_chef;
 private String usuario;
 private String password;
 private String nom_chef;
 private String ape_chef;
+private InputStream avatar;
+private String presentacion;
 private int edad;
 private String celular;
 private String dieccion;
@@ -63,6 +67,18 @@ public double getSaldo_chef() {
 }
 public void setSaldo_chef(double saldo_chef) {
 	this.saldo_chef = saldo_chef;
+}
+public InputStream getAvatar() {
+	return avatar;
+}
+public void setAvatar(InputStream avatar) {
+	this.avatar = avatar;
+}
+public String getPresentacion() {
+	return presentacion;
+}
+public void setPresentacion(String presentacion) {
+	this.presentacion = presentacion;
 }
 
 

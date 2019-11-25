@@ -15,6 +15,7 @@ import DAO.ClienteDAO;
 import DAO.PedidoDAO;
 import DAO.ServicioDAO;
 import Entidades.Cliente;
+import Entidades.Servicio;
 import fabricas.ChefFabrica;
 import fabricas.ClienteFabrica;
 import fabricas.PedidoFabrica;
@@ -36,7 +37,13 @@ public class ServletCliente extends HttpServlet {
 			refrescar(request,response);
 		}else if(tipo.equalsIgnoreCase("perfilchef")){
 			perfilchef(request,response);
+		}else if(tipo.equalsIgnoreCase("perfilusuario")){
+			perfilcliente(request,response);
 		}
+	}
+	private void perfilcliente(HttpServletRequest request, HttpServletResponse response) {
+		// TODO Auto-generated method stub
+		
 	}
 	private void perfilchef(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		ChefFabrica cheffabrica = ChefFabrica.ElegirBaseDatos(ChefFabrica.MYSQL);
@@ -44,11 +51,12 @@ public class ServletCliente extends HttpServlet {
 		//
 		ServicioFabrica serFa = ServicioFabrica.TipoDeConexion(ServicioFabrica.MYSQL);
 		ServicioDAO serDAO = serFa.getServicioDAO();
-		
 		try {
+			String chef = request.getParameter("usuariochef");
+			System.out.println(chef);
 			HttpSession sesion = request.getSession();
-			sesion.setAttribute("CHEF", chefDAO.BuscarChefUsuario(request.getParameter("usuariochef")));
-			sesion.setAttribute("LISTACHEF", serDAO.ListarServicioChef(request.getParameter("usuariochef")));
+			sesion.setAttribute("CHEF", chefDAO.BuscarChefUsuario(chef));
+			sesion.setAttribute("LISTASERVICIOCHEF", serDAO.ListarServicioChef(chef));
 			request.getRequestDispatcher("/chef_perfil.jsp").forward(request, response);
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -7,7 +7,7 @@
         <%@ include file= "usuario_header.jsp" %>
         <!-- cuerpo -->
 
-        <div class="container-fluid">
+        <div class="container-fluid" style="margin-top:64.8px;">
             <div class="row">
                 <div class="col-3 px-0">
                     <div class="list-group" id="list-tab" role="tablist">

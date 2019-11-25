@@ -18,23 +18,27 @@ public class MySqlChefDAO implements ChefDAO{
 	int salida = -1;
 	
 	@Override
-	public void RegistrarChef(Chef registraChef) {
-
+	public boolean RegistrarChef(Chef registraChef) {
+		boolean respuesta = false;
 		try {
 			con = MysqlBDConexion.getConexion();
-			call = con.prepareCall("call RegistrarCliente(?,?,?,?,?,?,?)");
+			call = con.prepareCall("call RegistrarChef(?,?,?,?,?,?,?,?,?)");
 			call.setString(1,registraChef.getUsuario());
 			call.setString(2,registraChef.getPassword());
 			call.setString(3,registraChef.getNom_chef());
 			call.setString(4,registraChef.getApe_chef());
-			call.setInt(5,registraChef.getEdad());
-			call.setString(6,registraChef.getCelular());
-			call.setString(7, registraChef.getDieccion());
-			call.executeUpdate();
-			System.out.println(call);
-		} catch (Exception e) {
+			call.setBlob(5, registraChef.getAvatar());
+			call.setString(6, registraChef.getPresentacion());
+			call.setInt(7,registraChef.getEdad());
+			call.setString(8,registraChef.getCelular());
+			call.setString(9, registraChef.getDieccion());
 			
-				e.printStackTrace();
+			call.executeUpdate();
+			System.out.println("====>"+call);
+			respuesta = true;
+		} catch (Exception e) {
+			respuesta = false;
+			e.printStackTrace();
 		}finally {
 				try {
 					if(con != null) con.close();
@@ -45,6 +49,7 @@ public class MySqlChefDAO implements ChefDAO{
 				}
 			
 		}
+		return respuesta;
 	}
 
 	@Override

@@ -1,5 +1,5 @@
 <jsp:useBean id="USUARIOCLIENTE" scope="session" class="Entidades.Cliente"></jsp:useBean>
-<nav class="navbar navbar-expand-lg navbar-dark light-green darken-2">
+<nav class="navbar navbar-expand-lg navbar-dark light-green darken-2 fixed-top scrolling-navbar">
     <a class="navbar-brand text-white">ALLFOOD</a>
     <button class="navbar-toggler disable" type="button" data-toggle="collapse"
         data-target="#navbarSupportedContent-555" aria-controls="navbarSupportedContent-555" aria-expanded="false"
