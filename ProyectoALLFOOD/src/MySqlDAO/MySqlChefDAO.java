@@ -116,4 +116,40 @@ public class MySqlChefDAO implements ChefDAO{
 		return chef;
 	}
 
+	@Override
+	public Chef BuscarChefUsuario(String usuario) {
+		Chef chef = null;
+		try {
+			con = MysqlBDConexion.getConexion();
+			call = con.prepareCall("call BuscarChefUsuario(?)");
+			call.setString(1, usuario);
+			rs = call.executeQuery();
+			while(rs.next()){
+				chef = new Chef();
+				chef.setCod_chef(rs.getInt(1));
+				chef.setUsuario(rs.getString(2));
+				chef.setPassword(rs.getString(3));
+				chef.setNom_chef(rs.getString(4));
+				chef.setApe_chef(rs.getString(5));
+				chef.setEdad(rs.getInt(6));
+				chef.setDieccion(rs.getString(7));
+				chef.setCelular(rs.getString(8));
+				chef.setSaldo_chef(rs.getDouble(9));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				if(con != null) con.close();
+				if(call != null) call.close();
+				if(rs != null) rs.close();
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+		return chef;
+	}
+
+	
+
 }

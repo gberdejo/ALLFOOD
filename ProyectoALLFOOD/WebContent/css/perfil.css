@@ -1,0 +1,38 @@
+@CHARSET "ISO-8859-1";
+.anchorow{
+	height:400px;
+	position:relative;
+}
+.fondo-perfil-cliente1{
+	content="";
+	width:100%;
+	height:50%;
+	top:0;
+	left:0;
+	background-color:red;
+	z-index:-1;
+	position:absolute;
+	opacity:0.3;
+}
+.fondo-perfil-cliente2{
+	content="";
+	width:100%;
+	height:50%;
+	bottom:0;
+	left:0;
+	background-color:blue;
+	z-index:-2;
+	position:absolute;
+	opacity:0.3;
+}
+.fondo-perfil-cliente3{
+	content="";
+	width:100%;
+	height:100%;
+	top:0;
+	left:0;
+	background-image:url(../img/perfil.jpg);
+	z-index:-3;
+	position:absolute;
+	
+}

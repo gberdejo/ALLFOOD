@@ -10,15 +10,18 @@
 <!-- Font Awesome -->
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
 <!-- Bootstrap core CSS -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+<link href="mdb/css/bootstrap.min.css" rel="stylesheet">
 <!-- Material Design Bootstrap -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.10/css/mdb.min.css" rel="stylesheet">	
+<link href="mdb/css/mdb.min.css" rel="stylesheet">	
+<!-- Datatables  -->
+<link href="mdb/css/jquery.dataTables.min.css" rel="stylesheet">	
 
 
-
-	
+<!-- mys css  -->	
 	<link rel="stylesheet" href="css/main.css">
 	<link rel="stylesheet" href="css/usuario.css">
 	<link rel="stylesheet" href="css/chef.css">
+	<link rel="stylesheet" href="css/perfil.css">
+	
 <title>ALLFOOD</title>
 </head>

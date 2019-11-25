@@ -1,13 +1,14 @@
 package fabricas;
 
-import DAO.ChefDAO;
-import MySqlDAO.MySqlChefDAO;
+import MySqlDAO.MySqlServicioDAO;
 
 public class SubFabricaServicio extends ServicioFabrica {
 
+	
 	@Override
-	public ChefDAO getChefDAO() {
-		return new MySqlChefDAO();
+	public DAO.ServicioDAO getServicioDAO() {
+		
+		return new MySqlServicioDAO();
 	}
 
 }
