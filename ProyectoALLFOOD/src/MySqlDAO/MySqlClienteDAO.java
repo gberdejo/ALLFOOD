@@ -1,10 +1,17 @@
 package MySqlDAO;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.servlet.http.HttpServletResponse;
 
 import DAO.ClienteDAO;
 import Entidades.Cliente;
@@ -14,33 +21,29 @@ public class MySqlClienteDAO implements ClienteDAO{
 	Connection con = null;
 	CallableStatement call = null;
 	ResultSet rs = null;
-	int salida = -1;
+	
 	
 	@Override
-	public int RegistrarCliente(Cliente registraCli) {
+	public boolean RegistrarCliente(Cliente registraCli) {
+		boolean respuesta = false;
 		try {
 			con = MysqlBDConexion.getConexion();
-			call = con.prepareCall("call RegistrarCliente(?,?,?,?,?,?,?)");
+			call = con.prepareCall("call RegistrarCliente(?,?,?,?,?,?,?,?)");
 			call.setString(1, registraCli.getUsuario());
 			call.setString(2, registraCli.getPassword());
 			call.setString(3,registraCli.getNom_cli());
 			call.setString(4,registraCli.getApe_cli());
-			call.setInt(5, registraCli.getEdad());
-			call.setString(6,registraCli.getCelular_cli());
-			call.setDouble(7, registraCli.getSaldo_cli());
-			
-			System.out.println(
-			registraCli.getUsuario()+","+
-			registraCli.getPassword()+","+
-			registraCli.getNom_cli()+","+
-			registraCli.getApe_cli()+","+
-			registraCli.getEdad()+","+
-			registraCli.getCelular_cli()+","+
-			registraCli.getSaldo_cli());
-			salida=call.executeUpdate();
-			System.out.println("==>"+salida);
+			call.setBlob(5, registraCli.getAvatar());
+			call.setInt(6, registraCli.getEdad());
+			call.setString(7,registraCli.getCelular_cli());
+			call.setDouble(8, registraCli.getSaldo_cli());
+			call.executeUpdate();
+			System.out.println("MySqlCliente - RegistrarCliente ==> "+call);
+			respuesta = true;
 		} catch (Exception e) {
 				e.printStackTrace();
+				System.out.println("Fallo de sentencia Registrar");
+				respuesta = false;
 			}finally {
 				try {
 					if(con != null) con.close();
@@ -50,9 +53,9 @@ public class MySqlClienteDAO implements ClienteDAO{
 					e2.printStackTrace();
 				}
 			
-			// TODO: handle exception
+			
 		}
-		return 0;
+		return respuesta;
 	}
 
 	@Override
@@ -124,17 +127,66 @@ public class MySqlClienteDAO implements ClienteDAO{
 		return cliente;
 	}
 	@Override
-	public int BuscarCliente(String usuario){
-		int respuesta = 0;
-		for (int i = 0; i < listarCliente().size(); i++) {
-			if(listarCliente().get(i).getUsuario().equalsIgnoreCase(usuario)){
-				respuesta = 1;break;
-			}else{
-				respuesta = 0;
+	public Cliente BuscarClienteUsuario(String usuario){
+		Cliente objCliente = null;
+		try {
+			con = MysqlBDConexion.getConexion();
+			call = con.prepareCall("call BuscarClienteUsuario(?)");
+			call.setString(1, usuario);
+			rs = call.executeQuery();
+			while(rs.next()){
+				objCliente = new Cliente();
+				objCliente.setCod_cli(rs.getInt("cod_cli"));
+				objCliente.setUsuario(rs.getString("usuario"));
+				objCliente.setPassword(rs.getString("contra"));
+				objCliente.setNom_cli(rs.getString("nom_cli"));
+				objCliente.setApe_cli(rs.getString("ape_cli"));
+				objCliente.setEdad(rs.getInt("edad_cli"));
+				objCliente.setCelular_cli(rs.getString("celular_cli"));
+				objCliente.setSaldo_cli(rs.getDouble("saldo_cli"));
+			}
+			System.out.println("MySqlCliente - BuscarClienteUsuario ==> "+objCliente.getUsuario());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				if(con != null) con.close();
+				if(call != null) call.close();
+				if(rs != null) rs.close();
+			} catch (Exception e2) {
+				e2.printStackTrace();
 			}
 		}
+		return objCliente;
+	}
+
+	@Override
+	public void ListarImagen(String usuario, HttpServletResponse response) {
+		InputStream inputStream = null;
+		OutputStream outputStream = null;
+		BufferedInputStream bufferedInputStream = null;
+		BufferedOutputStream bufferedOutputStream = null;
+		PreparedStatement pre = null;
+		response.setContentType("image/*");
+		try {
+			outputStream = response.getOutputStream();
+			con= MysqlBDConexion.getConexion();
+			pre = con.prepareStatement("select * from cliente where usuario = '"+usuario+"'");
+			rs = pre.executeQuery();
+			
+			if(rs.next()) {
+				inputStream= rs.getBinaryStream(6);
+			}
+			bufferedInputStream = new BufferedInputStream(inputStream);
+			bufferedOutputStream = new BufferedOutputStream(outputStream);
+			int i = 0;
+			while((i=bufferedInputStream.read()) != -1) {
+				bufferedOutputStream.write(i);
+			}
+		} catch (Exception e) {
+			e.printStackTrace(); 
+		}
 		
-		return respuesta;
 	}
 
 }

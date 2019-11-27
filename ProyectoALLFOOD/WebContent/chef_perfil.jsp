@@ -4,13 +4,14 @@
     <!--Cabezera de Cliente -->
     <%@ include file= "usuario_header.jsp" %>
     <jsp:useBean id="CHEF" scope="session" class="Entidades.Chef"></jsp:useBean>
-    <div class="container-fluid " style="margin-top:64.8px;">
+    <div class="container-fluid ">
         <div class="row	anchorow align-items-center">
             <div class="fondo-perfil-cliente1"></div>
             <div class="fondo-perfil-cliente2"></div>
             <div class="fondo-perfil-cliente3"></div>
             <div class="offset-md-1 col-md-3">
-                <img alt="" src="img/avatar.jpg" width="300px" height="300px" class="rounded-circle float-right">
+                <img alt="Aquí se supone que va la imagen del usuario" 
+                src="ServletChef?tipo=imagen&usuario=<jsp:getProperty property="usuario" name="CHEF" />" width="300px" height="300px" class="rounded-circle float-right">
             </div>
             <div class="col-md-7">
                 <h1>
@@ -80,9 +81,7 @@
         </div>
     </div>
     <hr>
-    <div class="container">
-
-    </div>
+   
 
     <%@ include file="importacion_js.jsp" %>
 

@@ -1,13 +1,16 @@
+/* autocompletado de java ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz*/
+
 drop DATABASE ALLFOOD;
 CREATE DATABASE ALLFOOD;
 USE ALLFOOD;
 CREATE TABLE CLIENTE
 (
 cod_cli int NOT NULL auto_increment PRIMARY KEY,
-usuario varchar(20) not null,
+usuario varchar(20) unique not null,
 contra varchar(10) not null,
 nom_cli varchar(50) NOT NULL,
 ape_cli varchar(50) NOT NULL,
+avatar longblob null,
 edad_cli int NOT NULL,
 celular_cli varchar(9) NOT NULL,
 saldo_cli decimal default 0.0
@@ -16,10 +19,12 @@ saldo_cli decimal default 0.0
 CREATE TABLE CHEF
 (
 cod_chef int NOT NULL AUTO_INCREMENT PRIMARY KEY ,
-usuario varchar(20) not null,
+usuario varchar(20) unique not null unique,
 contra varchar(10) not null,
 nom_chef varchar(50)NOT NULL,
 ape_chef varchar(50)NOT NULL,
+avatar longblob null,
+presentacion varchar(100) not null,
 edad_chef int NOT NULL,
 celular_chef varchar(9) NOT NULL,
 direccion varchar(50) NOT NULL,
@@ -29,10 +34,11 @@ saldo_chef  decimal (9,2)
 CREATE TABLE SERVICIO
 (
 cod_servicio int NOT NULL auto_increment PRIMARY KEY,
-nom_servicio varchar(50) NOT NULL,
+nom_servicio varchar(50) unique NOT NULL,
 cod_chef int NOT NULL,
 platillos varchar(200) NOT NULL ,
 descripcion varchar(200)NOT NULL,
+logo longblob null,
 precio_persona decimal (9,2),
 fec_publicacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP on update current_timestamp,
 CONSTRAINT FOREIGN KEY fk_COD_CHEF (cod_chef) REFERENCES CHEF (cod_chef)
@@ -59,29 +65,32 @@ create procedure RegistrarChef
 contra varchar(10),
 nom_chef varchar(50),
 ape_chef varchar(50),
+avatar longblob ,
+presentacion varchar(100) ,
 edad_chef int,
 celular_chef varchar(9),
 direccion varchar(50))
 begin
-insert into chef values (null,usuario,contra,nom_chef,ape_chef,edad_chef,celular_chef,direccion,0.0);
+insert into chef values (null,usuario,contra,nom_chef,ape_chef,avatar,presentacion,edad_chef,celular_chef,direccion,0.0);
 end @@
 delimiter ;
-call RegistrarChef ('cuchicu','cuchi123','cuchi','cu',20,'996006381','27 de marzo');
-call RegistrarChef('Pepe','14g5','Pedro','Ramos',35,'986574123','Av.Los Jardines 1547');
+call RegistrarChef ('cuchicu','cuchi123','cuchi','cu',null,'soy mu responsable',20,'996006381','27 de marzo');
+
 /*
 call RegistrarChef('timy','timy123','Timy','Ramos',35,'986574123','Av.Los Jardines 1547');
 call RegistrarChef('gufi','gufi123','gufi','Ramos',23,'986574123','Av.Los Jardines 1547');
 call RegistrarChef('amil','amil','Tito','Ramos',23,'986574123','Av.Los Jardines 1547');
 call RegistrarChef('torencio','amil','Tito','Ramos',23,'986574123','Av.Los Jardines 1547');/
 /*validar CHEF ----------------------- */
+
 delimiter @@
 create procedure ValidarChef(usuario1 varchar(20),contra1 varchar(10))
 begin
 select * from Chef where usuario = usuario1 and contra = contra1;
 end @@
 delimiter ;
-drop procedure ValidarChef;
 call ValidarChef ('cuchicu','cuchi123');
+
 delimiter @@
 create procedure ListarChef()
 begin
@@ -89,7 +98,13 @@ select * from chef  ;
 end @@
 delimiter ;
 call ListarChef;
-
+delimiter @@
+create procedure BuscarChefUsuario(chef varchar(20))
+begin
+select * from chef where usuario = chef;
+end @@
+delimiter ;
+call BuscarChefUsuario('cuchicu');
 /*CLIENTE********************************************************************/
 /* -Registrar Cliente - */
 delimiter @@
@@ -98,15 +113,16 @@ create procedure RegistrarCliente
 contra varchar(10),
 nom_cli varchar(50),
 ape_cli varchar(50),
+avatar longblob,
 edad_cli  int,
 celular_cli  varchar(9),
 saldo_cli  decimal)
 begin
-insert into cliente values (null,usuario,contra,nom_cli ,ape_cli ,edad_cli ,celular_cli ,saldo_cli );
+insert into cliente values (null,usuario,contra,nom_cli ,ape_cli,avatar ,edad_cli ,celular_cli ,saldo_cli );
 end @@
 delimiter ;
-call RegistrarCliente('Pastel','74g5','Mario','Fernandez',25,'974652001',198);
-call RegistrarCliente('eli','el12','Mario','Fernandez',25,'974652001',198);
+call RegistrarCliente('Pastel','74g5','Mario','Fernandez',null,25,'974652001',198);
+call RegistrarCliente('eli','el12','Mario','Fernandez',null,25,'974652001',198);
 select * from cliente;
 /* validacion  del cliente*/
 delimiter @@
@@ -125,6 +141,13 @@ select * from cliente;
 end @@
 delimiter ;
 
+delimiter @@
+create procedure BuscarClienteUsuario(cliente varchar(20))
+begin 
+select * from cliente where usuario = cliente;
+end @@
+delimiter ;
+call BuscarClienteUsuario('zeref');
 /* SERVICIO  **************************************************************/
 /* -Registrar SERVICIO - */
 delimiter @@
@@ -134,14 +157,19 @@ nom_servicio varchar(50),
 cod_chef int,
 platillos varchar(200) ,
 descripcion varchar(200),
-precio_persona decimal)
+logo longblob,
+precio_persona decimal
+)
 begin
-insert into servicio (nom_servicio,cod_chef,platillos ,descripcion ,precio_persona )  
-values (nom_servicio,cod_chef,platillos ,descripcion ,precio_persona );
+insert into servicio (nom_servicio,cod_chef,platillos ,descripcion,logo ,precio_persona )  
+values (nom_servicio,cod_chef,platillos ,descripcion,logo ,precio_persona );
 end @@
 delimiter ;
-call RegistrarServicio('Almuerzo marino',1,'Ceviche, Chicharon de pota','platillos frescos con variantes de acuerd al comensal',50);
+call RegistrarServicio('Almuerzo marino',1,'Ceviche, Chicharon de pota','platillos frescos con variantes de acuerd al comensal',null,50);
+/*
 call RegistrarServicio('Pedido Especial',1,'aji de gallina, arroz con pollo','Disfruta de nuestro especial:bla bla bla',10);
+call RegistrarServicio('Pedido Especial 2',1,'aji de gallina, arroz con pollo','Disfruta de nuestro especial:bla bla bla',10);
+*/
 select * from Servicio;
 /*Listar Servicio*/ 
 delimiter @@
@@ -151,8 +179,18 @@ select t2.cod_servicio,t2.nom_servicio,t1.cod_chef,t1.nom_chef,t2.platillos,t2.d
 from  chef t1 inner join servicio t2 on t1.cod_chef=t2.cod_chef;
 end @@
 delimiter ;
-drop procedure ListarServicio;
 call ListarServicio;
+----
+delimiter @@
+create procedure ListarServicioChef(chef varchar(20))
+begin
+select t2.cod_servicio,t2.nom_servicio,t1.cod_chef,t1.nom_chef,t2.platillos,t2.descripcion,t2.precio_persona,t2.fec_publicacion 
+from  chef t1 inner join servicio t2 on t1.cod_chef=t2.cod_chef where t1.usuario = chef;
+end @@
+delimiter ;
+
+call ListarServicioChef('cuchicu');
+select * from chef
 
 /*PEDIDO*****************************************************/
 /*Registrar Pedido*/

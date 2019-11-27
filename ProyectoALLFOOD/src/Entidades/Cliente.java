@@ -1,11 +1,14 @@
 package Entidades;
 
+import java.io.InputStream;
+
 public class Cliente {
 private int cod_cli;
 private String usuario;
 private String password;
 private String nom_cli;
 private String ape_cli;
+private InputStream avatar;
 private int edad;
 private String celular_cli;
 private double saldo_cli;
@@ -57,6 +60,12 @@ public String getPassword() {
 }
 public void setPassword(String password) {
 	this.password = password;
+}
+public InputStream getAvatar() {
+	return avatar;
+}
+public void setAvatar(InputStream avatar) {
+	this.avatar = avatar;
 }
 
 

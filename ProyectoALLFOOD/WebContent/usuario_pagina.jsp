@@ -4,10 +4,10 @@
 <body>
     <div>
         <!--Cabezera de Cliente -->
-        <%@ include file= "usuario_header.jsp" %>
+        
         <!-- cuerpo -->
-
-        <div class="container-fluid" style="margin-top:64.8px;">
+ <%@include file="usuario_header.jsp" %>
+        <div class="container-fluid">
             <div class="row">
                 <div class="col-3 px-0">
                     <div class="list-group" id="list-tab" role="tablist">

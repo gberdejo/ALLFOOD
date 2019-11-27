@@ -3,7 +3,7 @@
 <div class="container">	
 	<section>
 		<!-- Default form register -->
-<form class="text-center border border-light p-5" action="ServletCliente">
+<form class="text-center border border-light p-5" action="ServletCliente" method="POST" enctype="multipart/form-data" >
 <input type="hidden" name="tipo" value="registro" >
     <p class="h4 mb-4">Registro de Cliente</p>
 	<!-- User and password -->
@@ -14,9 +14,6 @@
 			<span class="text-muted" ><%=texto%></span>
 			<%}%>
 			
-			<!--  <% if(UsuarioConocido != null){%>
-			<span class="text-muted" ><%=UsuarioConocido%></span>
-			<%}%>-->
 			<div class="form-group">
 			<input type="text" name="usuario" class="form-control" placeholder="Usuario">
 			
@@ -38,7 +35,9 @@
 	            <input type="text" name="apellido" class="form-control" placeholder="Apellidos">
 		   
 	    </div>
-		
+		<div class="form-group">
+			<input type="file" name="imagen" placeholder="Elegir una imagen">
+		</div>
 	    <div class="form-row mb-3">
 	        <div class="col">
 	        	<input type="number" name="edad" class="form-control" placeholder="Edad" min="18">

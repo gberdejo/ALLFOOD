@@ -91,7 +91,7 @@ public class ServletChef extends HttpServlet {
 		objchef.setEdad(edad);
 		objchef.setDieccion(direccion);
 		objchef.setCelular(celular);
-			if(chefDAO.RegistrarChef(objchef) == true){
+			if(chefDAO.RegistrarChef(objchef)){
 				request.getRequestDispatcher("/chef_login.jsp").forward(request, response);
 			}else{
 				request.setAttribute("MENSAJE", "Error al intentar Registrarse :C");
