@@ -1,10 +1,17 @@
 package MySqlDAO;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.servlet.http.HttpServletResponse;
 
 import DAO.ChefDAO;
 import Entidades.Chef;
@@ -34,11 +41,12 @@ public class MySqlChefDAO implements ChefDAO{
 			call.setString(9, registraChef.getDieccion());
 			
 			call.executeUpdate();
-			System.out.println("====>"+call);
+			System.out.println("MySqlChef - RegistrarChef ==> "+call);
 			respuesta = true;
 		} catch (Exception e) {
 			respuesta = false;
 			e.printStackTrace();
+			
 		}finally {
 				try {
 					if(con != null) con.close();
@@ -60,17 +68,19 @@ public class MySqlChefDAO implements ChefDAO{
 			call = con.prepareCall("call ListarChef");
 			rs = call.executeQuery();
 			while(rs.next()){
-				Chef ch = new Chef();
-				ch.setCod_chef(rs.getInt(1));
-				ch.setUsuario(rs.getString(2));
-				ch.setPassword(rs.getString(3));
-				ch.setNom_chef(rs.getString(4));
-				ch.setApe_chef(rs.getString(5));
-				ch.setEdad(rs.getInt(6));
-				ch.setCelular(rs.getString(7));
-				ch.setDieccion(rs.getString(8));
-				ch.setSaldo_chef(rs.getDouble(9));
-				lista.add(ch);
+				Chef objchef = new Chef();
+				objchef.setCod_chef(rs.getInt(1));
+				objchef.setUsuario(rs.getString(2));
+				objchef.setPassword(rs.getString(3));
+				objchef.setNom_chef(rs.getString(4));
+				objchef.setApe_chef(rs.getString(5));
+				objchef.setAvatar(rs.getBinaryStream(6));
+				objchef.setPresentacion(rs.getString(7));
+				objchef.setEdad(rs.getInt(8));
+				objchef.setCelular(rs.getString(9));
+				objchef.setDieccion(rs.getString(10));
+				objchef.setSaldo_chef(rs.getDouble(11));
+				lista.add(objchef);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -101,7 +111,7 @@ public class MySqlChefDAO implements ChefDAO{
 				objchef.setUsuario(rs.getString("usuario"));
 				objchef.setPassword(rs.getString("contra"));
 			}
-			System.out.println("MySqlChef: "+objchef.getCod_chef()+", "+objchef.getUsuario()+", "+objchef.getPassword());
+			System.out.println("MySqlChef - ValidarChef ==> "+objchef.getCod_chef()+", "+objchef.getUsuario()+", "+objchef.getPassword());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}finally {
@@ -118,24 +128,26 @@ public class MySqlChefDAO implements ChefDAO{
 
 	@Override
 	public Chef BuscarChefUsuario(String usuario) {
-		Chef chef = null;
+		Chef objchef = null;
 		try {
 			con = MysqlBDConexion.getConexion();
 			call = con.prepareCall("call BuscarChefUsuario(?)");
 			call.setString(1, usuario);
 			rs = call.executeQuery();
 			while(rs.next()){
-				chef = new Chef();
-				chef.setCod_chef(rs.getInt(1));
-				chef.setUsuario(rs.getString(2));
-				chef.setPassword(rs.getString(3));
-				chef.setNom_chef(rs.getString(4));
-				chef.setApe_chef(rs.getString(5));
-				chef.setEdad(rs.getInt(6));
-				chef.setDieccion(rs.getString(7));
-				chef.setCelular(rs.getString(8));
-				chef.setSaldo_chef(rs.getDouble(9));
+				objchef = new Chef();
+				objchef.setCod_chef(rs.getInt(1));
+				objchef.setUsuario(rs.getString(2));
+				objchef.setPassword(rs.getString(3));
+				objchef.setNom_chef(rs.getString(4));
+				objchef.setApe_chef(rs.getString(5));
+				objchef.setEdad(rs.getInt(6));
+				objchef.setDieccion(rs.getString(7));
+				objchef.setCelular(rs.getString(8));
+				objchef.setSaldo_chef(rs.getDouble(9));
 			}
+			System.out.println("MySqlChef - BuscarChefUsuario ==> "+objchef.getCod_chef()+", "+objchef.getUsuario()+", "+objchef.getPassword());
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}finally {
@@ -147,7 +159,36 @@ public class MySqlChefDAO implements ChefDAO{
 				e2.printStackTrace();
 			}
 		}
-		return chef;
+		return objchef;
+	}
+
+	@Override
+	public void ListarImagen(String usuario, HttpServletResponse response) {
+		InputStream inputStream = null;
+		OutputStream outputStream = null;
+		BufferedInputStream bufferedInputStream = null;
+		BufferedOutputStream bufferedOutputStream = null;
+		PreparedStatement pre = null;
+		response.setContentType("image/*");
+		try {
+			outputStream = response.getOutputStream();
+			con= MysqlBDConexion.getConexion();
+			pre = con.prepareStatement("select * from chef where usuario = '"+usuario+"'");
+			rs = pre.executeQuery();
+			
+			if(rs.next()) {
+				inputStream= rs.getBinaryStream(6);
+			}
+			bufferedInputStream = new BufferedInputStream(inputStream);
+			bufferedOutputStream = new BufferedOutputStream(outputStream);
+			int i = 0;
+			while((i=bufferedInputStream.read()) != -1) {
+				bufferedOutputStream.write(i);
+			}
+		} catch (Exception e) {
+			e.printStackTrace(); 
+		}
+		
 	}
 
 	

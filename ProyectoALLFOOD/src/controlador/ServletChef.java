@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -13,14 +14,17 @@ import javax.servlet.http.Part;
 
 
 import DAO.ChefDAO;
+import DAO.ServicioDAO;
 import Entidades.Chef;
 import fabricas.ChefFabrica;
+import fabricas.ServicioFabrica;
 
 
 /**
  * Servlet implementation class ServletLoginChef
  */
 @WebServlet("/ServletChef")
+@MultipartConfig
 public class ServletChef extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -31,46 +35,63 @@ public class ServletChef extends HttpServlet {
 			login(request,response);
 		}else if(tipo.equalsIgnoreCase("registro")){
 			registro(request,response);
+		}else if(tipo.equalsIgnoreCase("imagen")){
+			imagen(request,response);
+		}else if(tipo.equalsIgnoreCase("perfil")){
+			perfil(request,response);
 		}
+	}
+
+	private void perfil(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+		ChefFabrica chefFabrica = ChefFabrica.ElegirBaseDatos(ChefFabrica.MYSQL);
+		ChefDAO chefDAO = chefFabrica.getChefDAO();
+		//
+		ServicioFabrica serFa = ServicioFabrica.TipoDeConexion(ServicioFabrica.MYSQL);
+		ServicioDAO serDAO = serFa.getServicioDAO();
+		
+		String chef = request.getParameter("chef");
+		System.out.println(chef);
+		HttpSession sesion = request.getSession();
+		sesion.setAttribute("CHEF", chefDAO.BuscarChefUsuario(chef));
+		sesion.setAttribute("LISTASERVICIOCHEF", serDAO.ListarServicioChef(chef));
+		request.getRequestDispatcher("/chef_perfil.jsp").forward(request, response);
+		
+		
+	}
+	private void imagen(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+		ChefFabrica chefFabrica = ChefFabrica.ElegirBaseDatos(ChefFabrica.MYSQL);
+		ChefDAO chefDAO = chefFabrica.getChefDAO();
+		String usuario=request.getParameter("usuario");
+		chefDAO.ListarImagen(usuario, response);
+		
 	}
 
 
 	private void registro(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		ChefFabrica chefFabrica = ChefFabrica.ElegirBaseDatos(ChefFabrica.MYSQL);
 		ChefDAO chefDAO = chefFabrica.getChefDAO();
-		Chef chef = new Chef();
+		Chef objchef = new Chef();
 		String usuario = request.getParameter("usuario");
 		String password = request.getParameter("password");
 		String nombre = request.getParameter("nombre");
 		String apellido = request.getParameter("apellido");
-		Part archivo = request.getPart("foto");
-		InputStream foto = archivo.getInputStream();
+		Part par = request.getPart("imagen");
+		InputStream inputStream = par.getInputStream();
 		String presentacion = request.getParameter("presentacion");
 		int edad = Integer.parseInt(request.getParameter("edad"));
 		String direccion = request.getParameter("direccion");
 		String celular = request.getParameter("celular");
 		
-		System.out.println(""
-				+ "Usuario: "+usuario+", "
-				+ "password: "+password+", "
-				+"nombre: "+nombre+", "
-				+"apellido: "+apellido+", "
-				+"presentacion: "+presentacion+", "
-				+"edad: "+edad+", "
-				+"celular: "+celular+", "
-				+"direccion: "+direccion
-				);
-		
-			chef.setUsuario(usuario);
-			chef.setPassword(password);
-			chef.setNom_chef(nombre);
-			chef.setApe_chef(apellido);
-			chef.setAvatar(foto);
-			chef.setPresentacion(presentacion);
-			chef.setEdad(edad);
-			chef.setDieccion(direccion);
-			chef.setCelular(celular);
-			if(chefDAO.RegistrarChef(chef) == true){
+		objchef.setUsuario(usuario);
+		objchef.setPassword(password);
+		objchef.setNom_chef(nombre);
+		objchef.setApe_chef(apellido);
+		objchef.setAvatar(inputStream);
+		objchef.setPresentacion(presentacion);
+		objchef.setEdad(edad);
+		objchef.setDieccion(direccion);
+		objchef.setCelular(celular);
+			if(chefDAO.RegistrarChef(objchef) == true){
 				request.getRequestDispatcher("/chef_login.jsp").forward(request, response);
 			}else{
 				request.setAttribute("MENSAJE", "Error al intentar Registrarse :C");

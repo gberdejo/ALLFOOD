@@ -1,7 +1,7 @@
 <%@ include file="importacion_head.jsp" %>
 <body>
 <div class="container">
-<form class="text-center border border-light p-5" action="ServletChef" enctype="multipart/form-data">
+<form class="text-center border border-light p-5" action="ServletChef" method="POST" enctype="multipart/form-data">
 <input type="hidden" name="tipo" value="registro" >
     <p class="h4 mb-4">Registro de Chef</p>
 	<!-- User and password -->
@@ -32,7 +32,7 @@
 		
 		
 		<div class="form-group">
-			<input type="file" name="foto" class="form-control">
+			<input type="file" name="imagen" class="form-control">
 		</div>
 		
 		  <div class="form-group">

@@ -31,11 +31,9 @@
                                     <div class="col-md-4 mb-5">
 
                                         <div class="card">
-                                            <!-- Card image -->
+                                            <!-- Card <img src="servletperfil?accion=Imagen&codigo=${dato.codigo}" width="250px" height="250px"> image -->
                                             <div class="view overlay">
-                                                <img class="card-img-top"
-                                                    src="https://mdbootstrap.com/img/Mockups/Lightbox/Thumbnail/img%20(67).jpg"
-                                                    alt="Card image cap">
+                                                <img src="ServletChef?tipo=imagen&usuario=${x.usuario}" height="300px">
                                                 <a href="#!">
                                                     <div class="mask rgba-white-slight"></div>
                                                 </a>
@@ -46,7 +44,7 @@
                                                     <p class="card-text">Some quick example text to build on the card
                                                         title and make up the bulk of the card's content.</p>
                                                     <a
-                                                        href="ServletCliente?tipo=perfilchef&usuariochef=${ x.usuario}">Conócelo</a>
+                                                        href="ServletChef?tipo=perfil&chef=${x.usuario}">Conócelo</a>
                                             </div>
                                         </div>
                                     </div>
