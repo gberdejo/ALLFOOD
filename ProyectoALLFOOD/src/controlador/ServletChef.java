@@ -82,27 +82,27 @@ public class ServletChef extends HttpServlet {
 
 
 	private void login(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-		String usuario = request.getParameter("usuario");
-		String password = request.getParameter("password");
 		ChefFabrica chefFabrica = ChefFabrica.ElegirBaseDatos(ChefFabrica.MYSQL);
 		ChefDAO chefDAO = chefFabrica.getChefDAO();
 		
-		Chef chef = null;
-		
-			chef = chefDAO.ValidarChef(usuario, password);
-			if (chef == null) {
-				request.setAttribute("MENSASE", "El Usuario '"+usuario+"' no existe");
-				request.getRequestDispatcher("/chef_login.jsp").forward(request, response);
+		Chef objchef = null;
+		try {
+			String usuario = request.getParameter("usuario");
+			String password = request.getParameter("password");
+			objchef = chefDAO.ValidarChef(usuario, password);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+			
+		if (objchef == null) {
+			request.setAttribute("MENSASE", "El Usuario no existe");
+			request.getRequestDispatcher("/chef_login.jsp").forward(request, response);
 				
-			}else{
-				HttpSession sesion = request.getSession();
-				
-				sesion.setAttribute("USUARIOCHEF",chef);
-				request.getRequestDispatcher("/chef_pagina.jsp").forward(request, response);
-			}
-	
-		
-		
+		}else{
+			HttpSession sesion = request.getSession();
+			sesion.setAttribute("USUARIOCHEF",objchef);
+			request.getRequestDispatcher("/chef_pagina.jsp").forward(request, response);
+		}
 	}
 
 }

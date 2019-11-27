@@ -88,25 +88,20 @@ public class MySqlChefDAO implements ChefDAO{
 
 	@Override
 	public Chef ValidarChef(String usuario, String password) {
-		Chef chef = null;
+		Chef objchef = null;
 		try {
 			con = MysqlBDConexion.getConexion();
-			call = con.prepareCall("call ValidarChef(?,?)");
+			call = con.prepareCall("call ValidarChef (?,?)");
 			call.setString(1, usuario);
 			call.setString(2, password);
 			rs = call.executeQuery();
 			while(rs.next()){
-				chef = new Chef();
-				chef.setCod_chef(rs.getInt(1));
-				chef.setUsuario(rs.getString(2));
-				chef.setPassword(rs.getString(3));
-				chef.setNom_chef(rs.getString(4));
-				chef.setApe_chef(rs.getString(5));
-				chef.setEdad(rs.getInt(6));
-				chef.setDieccion(rs.getString(7));
-				chef.setCelular(rs.getString(8));
-				chef.setSaldo_chef(rs.getDouble(9));
+				objchef = new Chef();
+				objchef.setCod_chef(rs.getInt("cod_chef"));
+				objchef.setUsuario(rs.getString("usuario"));
+				objchef.setPassword(rs.getString("contra"));
 			}
+			System.out.println("MySqlChef: "+objchef.getCod_chef()+", "+objchef.getUsuario()+", "+objchef.getPassword());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}finally {
@@ -118,7 +113,7 @@ public class MySqlChefDAO implements ChefDAO{
 				e2.printStackTrace();
 			}
 		}
-		return chef;
+		return objchef;
 	}
 
 	@Override
