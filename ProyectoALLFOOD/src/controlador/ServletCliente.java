@@ -48,7 +48,8 @@ public class ServletCliente extends HttpServlet {
 	private void imagen(HttpServletRequest request, HttpServletResponse response) {
 		ClienteFabrica cliFabrica = ClienteFabrica.ElegirBaseDatos(ClienteFabrica.MYSQL);
 		ClienteDAO clienteDAO = cliFabrica.getClienteDAO();
-		clienteDAO.ListarImagen(request.getParameter("usuario"), response);
+		String nombreUsuario =request.getParameter("usuario");
+		clienteDAO.ListarImagen(nombreUsuario, response);
 		
 	}
 	private void perfil(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
@@ -113,9 +114,12 @@ public class ServletCliente extends HttpServlet {
 		//conectando con el chef
 		ChefFabrica cheffabrica = ChefFabrica.ElegirBaseDatos(ChefFabrica.MYSQL);
 		ChefDAO chefDAO = cheffabrica.getChefDAO();
-		//conectanto con los servicios
+		//conectanto con los pedido
 		PedidoFabrica perdidoFabrica = PedidoFabrica.tipoConexion(PedidoFabrica.MYSQL);
 		PedidoDAO pedidoDAO = perdidoFabrica.getPedidoDAO();
+		//conectando con el servicio
+		ServicioFabrica servicioFabnrica = ServicioFabrica.TipoDeConexion(ServicioFabrica.MYSQL);
+		ServicioDAO servicioDAO = servicioFabnrica.getServicioDAO();
 		
 		Cliente cliente = null;
 				
@@ -133,6 +137,8 @@ public class ServletCliente extends HttpServlet {
 		}else{
 			HttpSession sesion = request.getSession();
 			sesion.setAttribute("USUARIOCLIENTE",cliente);
+			//ENVIANDO LA LISTA DE SERVICIO PEDIDOS CHEFS
+			sesion.setAttribute("LISTASERVICIO", servicioDAO.listarServicio());
 			sesion.setAttribute("LISTARCHEF", chefDAO.listarChef());
 			request.getRequestDispatcher("/usuario_pagina.jsp").forward(request, response);
 		}

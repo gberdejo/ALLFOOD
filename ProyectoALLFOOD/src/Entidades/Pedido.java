@@ -2,6 +2,7 @@ package Entidades;
 
 public class Pedido {
 private int cod_pedido;
+private String cod_cliente;
 private String nom_cli;
 private String nom_chef;
 private String nom_servicio;
