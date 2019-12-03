@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
+import com.sun.xml.internal.fastinfoset.sax.SAXDocumentSerializer;
 
 import DAO.ChefDAO;
 import DAO.ServicioDAO;
@@ -27,7 +28,11 @@ import fabricas.ServicioFabrica;
 @MultipartConfig
 public class ServletChef extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
+	ChefFabrica chefFabrica = ChefFabrica.ElegirBaseDatos(ChefFabrica.MYSQL);
+	ChefDAO chefDAO = chefFabrica.getChefDAO();
+	//
+	ServicioFabrica servicioFabnrica = ServicioFabrica.TipoDeConexion(ServicioFabrica.MYSQL);
+	ServicioDAO servicioDAO = servicioFabnrica.getServicioDAO();
 	
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String tipo = request.getParameter("tipo");
@@ -39,13 +44,16 @@ public class ServletChef extends HttpServlet {
 			imagen(request,response);
 		}else if(tipo.equalsIgnoreCase("perfil")){
 			perfil(request,response);
+		}else if(tipo.equalsIgnoreCase("salir")){
+			salir(request,response);
 		}
 	}
-
+	private void salir(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
+		HttpSession sesion = request.getSession();
+		sesion.invalidate();
+		request.getRequestDispatcher("/index.jsp").forward(request, response);
+	}
 	private void perfil(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-		ChefFabrica chefFabrica = ChefFabrica.ElegirBaseDatos(ChefFabrica.MYSQL);
-		ChefDAO chefDAO = chefFabrica.getChefDAO();
-		//
 		ServicioFabrica serFa = ServicioFabrica.TipoDeConexion(ServicioFabrica.MYSQL);
 		ServicioDAO serDAO = serFa.getServicioDAO();
 		
@@ -55,21 +63,13 @@ public class ServletChef extends HttpServlet {
 		sesion.setAttribute("CHEF", chefDAO.BuscarChefUsuario(chef));
 		sesion.setAttribute("LISTASERVICIOCHEF", serDAO.ListarServicioChef(chef));
 		request.getRequestDispatcher("/chef_perfil.jsp").forward(request, response);
-		
-		
 	}
 	private void imagen(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-		ChefFabrica chefFabrica = ChefFabrica.ElegirBaseDatos(ChefFabrica.MYSQL);
-		ChefDAO chefDAO = chefFabrica.getChefDAO();
 		String usuario=request.getParameter("usuario");
 		chefDAO.ListarImagen(usuario, response);
-		
 	}
-
-
 	private void registro(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		ChefFabrica chefFabrica = ChefFabrica.ElegirBaseDatos(ChefFabrica.MYSQL);
-		ChefDAO chefDAO = chefFabrica.getChefDAO();
+		
 		Chef objchef = new Chef();
 		String usuario = request.getParameter("usuario");
 		String password = request.getParameter("password");
@@ -97,15 +97,8 @@ public class ServletChef extends HttpServlet {
 				request.setAttribute("MENSAJE", "Error al intentar Registrarse :C");
 				request.getRequestDispatcher("/chef_registro.jsp").forward(request, response);
 			}
-		
-		
 	}
-
-
 	private void login(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-		ChefFabrica chefFabrica = ChefFabrica.ElegirBaseDatos(ChefFabrica.MYSQL);
-		ChefDAO chefDAO = chefFabrica.getChefDAO();
-		
 		Chef objchef = null;
 		try {
 			String usuario = request.getParameter("usuario");
@@ -121,6 +114,8 @@ public class ServletChef extends HttpServlet {
 				
 		}else{
 			HttpSession sesion = request.getSession();
+			sesion.setAttribute("LISTASERVICIO", servicioDAO.listarServicio());
+			sesion.setAttribute("LISTACHEF", chefDAO.listarChef());
 			sesion.setAttribute("USUARIOCHEF",objchef);
 			request.getRequestDispatcher("/chef_pagina.jsp").forward(request, response);
 		}

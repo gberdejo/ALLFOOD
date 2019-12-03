@@ -2,9 +2,6 @@
 <%@ include file="importacion_head.jsp" %>
 
 <body>
-    <div>
-        <!--Cabezera de Cliente -->
-        
         <!-- cuerpo -->
  <%@include file="usuario_header.jsp" %>
         <div class="container-fluid">
@@ -163,7 +160,6 @@
             </div>
 
         </div>
-    </div>
 <%@ include file="importacion_js.jsp" %>
 </body>
 

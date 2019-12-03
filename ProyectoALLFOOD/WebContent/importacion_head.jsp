@@ -24,4 +24,5 @@
 	<link rel="stylesheet" href="css/perfil.css">
 	
 <title>ALLFOOD</title>
+<link rel="icon"  type="image/png" href="img/baker.png">
 </head>
