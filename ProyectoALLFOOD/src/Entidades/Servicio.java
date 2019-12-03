@@ -1,6 +1,8 @@
 
 package Entidades;
 
+import java.io.InputStream;
+
 public class Servicio {
 	
 	private int cod_servicio;
@@ -9,6 +11,7 @@ public class Servicio {
 	private String nombre_chef;
 	private String platillos;
 	private String descripcion;
+	private InputStream logo;
 	private double precio_persona;
 	private String fec_publicacion;
 	
@@ -60,5 +63,12 @@ public class Servicio {
 	public void setFec_publicacion(String fec_publicacion) {
 		this.fec_publicacion = fec_publicacion;
 	}
+	public InputStream getLogo() {
+		return logo;
+	}
+	public void setLogo(InputStream logo) {
+		this.logo = logo;
+	}
+	
 }
 

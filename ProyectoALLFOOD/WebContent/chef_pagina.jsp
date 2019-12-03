@@ -1,11 +1,10 @@
 <%@ include file="chef_validacion.jsp" %>
 <%@ include file="importacion_head.jsp" %>
-
 <body>
     <!--Navbar -->
-  <%@ include file="usuario_header.jsp" %>
+    <%@ include file="usuario_header.jsp" %>
     <!--/.Navbar -->
-    
+
     <div class="container-fluid" style="margin-top:79px;">
         <div class="row">
             <div class="col-md-9">
@@ -26,74 +25,178 @@
                         <div class="tab-content" id="nav-tabContent">
                             <div class="tab-pane fade show active" id="list-home" role="tabpanel"
                                 aria-labelledby="list-home-list">
-                                  <h2>Ultimos Servicios</h2>
-                            <div class="row">
-                            	<c:forEach items="${LISTASERVICIO}" var="s">
-                            	<div class="col-md-4 mb-5">
-                            		 <!-- Card -->
-									<div class="card">
-									
-									  <!-- Card image -->
-									  <div class="view overlay">
-									    <img class="card-img-top" src="https://mdbootstrap.com/img/Photos/Others/food.jpg" alt="Card image cap">
-									    <a>
-									      <div class="mask rgba-white-slight"></div>
-									    </a>
-									  </div>
-									  <!-- Card content -->
-									  <div class="card-body">
-									
-									    <!-- Title -->
-									    <h4 class="card-title">${s.nom_servico}</h4>
-									    <hr>
-									    <h5 class="card-subtitle"><i class="fab fa-free-code-camp"></i> ${s.nombre_chef}</h5>
-									    <!-- <i class="fas fa-utensils"></i>,<i class="fas fa-pepper-hot"></i> -->
-									    <!-- Text -->
-									    <span>${s.platillos}</span>
-									    <p class="card-text">${s.descripcion}</p>
-									
-									  </div>
-									</div>
-									<!-- Card -->
-                            	</div>
-                            	</c:forEach>
-                            </div>
-                             <h2>Ultimos Chef Registrados</h2>
-                            <div class="row">
-                                <c:forEach items="${LISTACHEF}" var="x">
-                                    <div class="col-md-4 mb-5">
-                                        <div class="card">
-                                            <!-- Card <img src="servletperfil?accion=Imagen&codigo=${dato.codigo}" width="250px" height="250px"> image -->
-                                            <div class="view overlay">
-                                                <img src="ServletChef?tipo=imagen&usuario=${x.usuario}" height="300px">
-                                                <a href="#!">
-                                                    <div class="mask rgba-white-slight"></div>
-                                                </a>
+                                <h2>Ultimos Servicios</h2>
+                                <div class="row">
+                                    <c:forEach items="${LISTASERVICIO}" var="s">
+                                        <div class="col-md-4 mb-5">
+                                            <!-- Card -->
+                                            <div class="card">
+
+                                                <!-- Card image -->
+                                                <div class="view overlay">
+                                                    <img class="card-img-top"
+                                                        src="https://mdbootstrap.com/img/Photos/Others/food.jpg"
+                                                        alt="Card image cap">
+                                                    <a>
+                                                        <div class="mask rgba-white-slight"></div>
+                                                    </a>
+                                                </div>
+                                                <!-- Card content -->
+                                                <div class="card-body">
+
+                                                    <!-- Title -->
+                                                    <h4 class="card-title">${s.nom_servico}</h4>
+                                                    <hr>
+                                                    <h5 class="card-subtitle"><i class="fab fa-free-code-camp"></i>
+                                                        ${s.nombre_chef}</h5>
+                                                    <!-- <i class="fas fa-utensils"></i>,<i class="fas fa-pepper-hot"></i> -->
+                                                    <!-- Text -->
+                                                    <span>${s.platillos}</span>
+                                                    <p class="card-text">${s.descripcion}</p>
+
+                                                </div>
                                             </div>
-                                            <div class="card-body">
-                                                <h4 class=S"card-title">${x.usuario}</h4>
-                                                <h5 class="card-subtitle">${x.nom_chef} ${x.ape_chef}(${x.edad}) </h3>
-                                                    <p class="card-text">Some quick example text to build on the card
-                                                        title and make up the bulk of the card's content.</p>
-                                                    <a
-                                                        href="ServletChef?tipo=perfil&chef=${x.usuario}">Conócelo</a>
+                                            <!-- Card -->
+                                        </div>
+                                    </c:forEach>
+                                </div>
+                                <h2>Ultimos Chef Registrados</h2>
+                                <div class="row">
+                                    <c:forEach items="${LISTACHEF}" var="x">
+                                        <div class="col-md-4 mb-5">
+                                            <div class="card">
+                                                <!-- Card <img src="servletperfil?accion=Imagen&codigo=${dato.codigo}" width="250px" height="250px"> image -->
+                                                <div class="view overlay">
+                                                    <img src="ServletChef?tipo=imagen&usuario=${x.usuario}"
+                                                        height="300px">
+                                                    <a href="#!">
+                                                        <div class="mask rgba-white-slight"></div>
+                                                    </a>
+                                                </div>
+                                                <div class="card-body">
+                                                    <h4 class=S"card-title">${x.usuario}</h4>
+                                                    <h5 class="card-subtitle">${x.nom_chef} ${x.ape_chef}(${x.edad})
+                                                        </h3>
+                                                        <p class="card-text">Some quick example text to build on the
+                                                            card
+                                                            title and make up the bulk of the card's content.</p>
+                                                        <a href="ServletChef?tipo=perfil&chef=${x.usuario}">Conócelo</a>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </c:forEach>
-                            </div>
+                                    </c:forEach>
+                                </div>
                             </div>
                             <div class="tab-pane fade" id="list-profile" role="tabpanel"
                                 aria-labelledby="list-profile-list">
-                                Cupidatat quis ad sint excepteur laborum in esse qui. Et excepteur consectetur ex nisi
-                                eu do cillum ad
-                                laborum. Mollit et eu officia dolore sunt Lorem culpa qui commodo velit ex amet id ex.
-                                Officia anim
-                                incididunt laboris deserunt anim aute dolor incididunt veniam aute dolore do
-                                exercitation. Dolor nisi
-                                culpa ex ad irure in elit eu dolore. Ad laboris ipsum reprehenderit irure non commodo
-                                enim culpa
-                                commodo veniam incididunt veniam ad.
+                                <!-- Inicio -->
+                                <div class="row">
+                                    <div class="col-3 pr-0">
+                                        <div class="list-group" id="list-tab" role="tablist">
+                                            <a class="list-group-item list-group-item-action active" id="list-home-list"
+                                                data-toggle="list" href="#list-CrearServicio" role="tab"
+                                                aria-controls="home">Home</a>
+                                            <a class="list-group-item list-group-item-action" id="list-profile-list"
+                                                data-toggle="list" href="#list-ListarServicio" role="tab"
+                                                aria-controls="profile">Profile</a>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-9">
+                                        <div class="tab-content" id="nav-tabContent">
+                                            <div class="tab-pane fade show active" id="list-CrearServicio" role="tabpanel" aria-labelledby="list-home-list">
+                                                <!-- Registrar Servicio -->
+                                                <div class="row justify-content-center">
+                                                	<div class="col-md-auto">
+                                                	
+                                                <!-- Material form register -->
+                                                <div class="card">
+
+                                                    <h5 class="card-header info-color white-text text-center py-4">
+                                                        <strong>Crear un nuevo Servicio</strong>
+                                                    </h5>
+
+                                                    <!--Card content-->
+                                                    <div class="card-body px-lg-5 pt-0">
+
+                                                        <!-- Form -->
+                                                        <form class="text-center" id="formularioServicio" style="color: #757575;" action="ServletChef" method="POST" enctype="multipart/form-data">
+															<input type="hidden" name="tipo" value="registraServicio">
+															<input type="hidden" name="codigoChef" value="${USUARIOCHEF.cod_chef}">
+															
+															
+                                                            <div class="md-form">
+                                                                <input type="text" id="NombreServicio" name="nombreser"
+                                                                    class="form-control"
+                                                                    aria-describedby="materialRegisterFormPhoneHelpBlock">
+                                                                <label for="NombreServicio">Nombre del Servicio</label>
+                                                                <small id="NombreServicio" class="form-text text-muted mb-4">
+                                                                    Colocar un nombre muy atractivo para los clientes
+                                                                </small>
+                                                            </div>
+                                                            <div class="md-form">
+                                                                <input type="text" id="PlatillosServicio"
+                                                                    class="form-control" name="platillos"
+                                                                    aria-describedby="materialRegisterFormPhoneHelpBlock">
+                                                                <label for="PlatillosServicio">Platillos del Servicio</label>
+                                                                <small id="PlatillosServicio" class="form-text text-muted mb-4">
+                                                                    Colocar un nombre muy atractivo para los clientes
+                                                                </small>
+                                                            </div>
+                                                            
+                                                            <div class="md-form">
+															  <textarea id="form7" class="md-textarea form-control" name="descipcionser" rows="3"></textarea>
+															  <label for="form7">Descripción del Servicio</label>
+															</div>
+
+                                                            <!-- E-mail -->
+															 <div class="input-group">
+															  <div class="input-group-prepend">
+															    <span class="input-group-text" id="inputGroupFileAddon01">Cargar</span>
+															  </div>
+															  <div class="custom-file">
+															    <input type="file" class="custom-file-input" name="imagenser" id="inputGroupFile01"
+															      aria-describedby="inputGroupFileAddon01">
+															    <label class="custom-file-label" for="inputGroupFile01">Imagen</label>
+															  </div>
+															</div>
+
+                                                            <!-- Password -->
+                                                            <div class="md-form">
+															  <input type="number" id="numberExample" name="precioser" class="form-control">
+															  <label for="numberExample">Precio por persona</label>
+															</div>
+                                                            <!-- Terms of service -->
+                                                            <button class="btn aqua-gradient" type="submit">Guardar</button>
+
+                                                        </form>
+                                                        <!-- Form -->
+
+                                                    </div>
+
+                                                </div>
+                                                </div>
+                                                </div>
+                                                <!-- Material form register -->
+                                            </div>
+                                            <div class="tab-pane fade" id="list-ListarServicio" role="tabpanel"
+                                                aria-labelledby="list-profile-list">
+                                                Cupidatat quis ad sint excepteur laborum in esse qui. Et excepteur
+                                                consectetur ex nisi eu do cillum ad
+                                                laborum. Mollit et eu officia dolore sunt Lorem culpa qui commodo velit
+                                                ex amet id ex. Officia anim
+                                                incididunt laboris deserunt anim aute dolor incididunt veniam aute
+                                                dolore do exercitation. Dolor nisi
+                                                culpa ex ad irure in elit eu dolore. Ad laboris ipsum reprehenderit
+                                                irure non commodo enim culpa
+                                                commodo veniam incididunt veniam ad.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <!-- fin -->
                             </div>
                             <div class="tab-pane fade" id="list-messages" role="tabpanel"
                                 aria-labelledby="list-messages-list">
@@ -147,32 +250,32 @@
                             data-parent="#accordionEx">
                             <div class="card-body">
                                 <div class="row">
-                                <c:forEach items="${LISTACHEF}" var="che">
-                                	 <div class="col-md-12 mb-3">
-                                        <!-- Card -->
-                                        <div class="card">
-                                            <!-- Card image -->
-                                            <div class="view overlay">
-                                            
-                                                <img class="card-img-top"
-                                                    src="ServletChef?tipo=imagen&usuario=${che.usuario}"
-                                                    alt="Card image cap">
-                                                <a href="index.jsp">
-                                                    <div class="mask rgba-white-slight"></div>
-                                                </a>
+                                    <c:forEach items="${LISTACHEF}" var="che">
+                                        <div class="col-md-12 mb-3">
+                                            <!-- Card -->
+                                            <div class="card">
+                                                <!-- Card image -->
+                                                <div class="view overlay">
+
+                                                    <img class="card-img-top"
+                                                        src="ServletChef?tipo=imagen&usuario=${che.usuario}"
+                                                        alt="Card image cap">
+                                                    <a href="index.jsp">
+                                                        <div class="mask rgba-white-slight"></div>
+                                                    </a>
+                                                </div>
+                                                <div class="card-body p-2">
+                                                    <!-- Name -->
+                                                    <h4 class="card-title">${che.usuario}</h4>
+                                                    <hr>
+                                                    <!-- Quotation -->
+                                                    <span><i class="fas fa-quote-left"></i>${che.presentacion}</span>
+                                                </div>
                                             </div>
-                                            <div class="card-body p-2">
-                                                <!-- Name -->
-										    <h4 class="card-title">${che.usuario}</h4>
-										    <hr>
-										    <!-- Quotation -->
-										    <span><i class="fas fa-quote-left"></i>${che.presentacion}</span>
-                                            </div>
+                                            <!-- Card -->
                                         </div>
-                                        <!-- Card -->
-                                    </div>
-                                </c:forEach>
-                                   
+                                    </c:forEach>
+
                                 </div>
                             </div>
                         </div>
@@ -197,7 +300,7 @@
                         <div id="collapseTwo2" class="collapse" role="tabpanel" aria-labelledby="headingTwo2"
                             data-parent="#accordionEx">
                             <div class="card-body">
-                              
+
                             </div>
                         </div>
 
@@ -246,6 +349,14 @@
         </div>
     </div>
     <%@ include file="importacion_js.jsp" %>
+    <script>
+    /*
+    	$(document).ready(function(){
+    		$('#formularioServicio').click(function(){
+    			(this).preventDefault();
+    		},false);
+    	});*/
+    </script>
 </body>
 
 </html>

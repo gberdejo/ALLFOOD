@@ -17,6 +17,7 @@ import com.sun.xml.internal.fastinfoset.sax.SAXDocumentSerializer;
 import DAO.ChefDAO;
 import DAO.ServicioDAO;
 import Entidades.Chef;
+import Entidades.Servicio;
 import fabricas.ChefFabrica;
 import fabricas.ServicioFabrica;
 
@@ -33,6 +34,7 @@ public class ServletChef extends HttpServlet {
 	//
 	ServicioFabrica servicioFabnrica = ServicioFabrica.TipoDeConexion(ServicioFabrica.MYSQL);
 	ServicioDAO servicioDAO = servicioFabnrica.getServicioDAO();
+	Servicio servicio = new Servicio();
 	
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String tipo = request.getParameter("tipo");
@@ -46,7 +48,28 @@ public class ServletChef extends HttpServlet {
 			perfil(request,response);
 		}else if(tipo.equalsIgnoreCase("salir")){
 			salir(request,response);
+		}else if(tipo.equalsIgnoreCase("registraServicio")){
+			registraServicio(request,response);
 		}
+	}
+	private void registraServicio(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException  {
+		Part part = request.getPart("imagenser");
+		InputStream imagen = part.getInputStream();
+		servicio.setNom_servico(request.getParameter("nombreser"));
+		servicio.setCod_chef(Integer.parseInt(request.getParameter("codigoChef")));
+		servicio.setPlatillos(request.getParameter("platillos"));
+		servicio.setDescripcion(request.getParameter("descipcionser"));
+		servicio.setLogo(imagen);
+		servicio.setPrecio_persona(Double.parseDouble(request.getParameter("precioser")));
+		HttpSession session = request.getSession();
+		if(servicioDAO.RegistrarServicio(servicio)){
+			session.setAttribute("MENSAJEREGISTROSERVICIO", "El servicio se ha Registrado satisfactoriamente");
+			System.out.println("Se registro");
+			request.getRequestDispatcher("/chef_pagina.jsp").forward(request, response);
+		}else{
+			session.setAttribute("MENSAJEREGISTROSERVICIO", "El servicio no se ha registrado");
+		}
+		
 	}
 	private void salir(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
 		HttpSession sesion = request.getSession();

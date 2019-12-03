@@ -1,10 +1,17 @@
 package MySqlDAO;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.servlet.http.HttpServletResponse;
 
 import DAO.ServicioDAO;
 import Entidades.Servicio;
@@ -19,19 +26,23 @@ public class MySqlServicioDAO implements ServicioDAO {
 	int salida = -1;
 	
 	@Override
-	public void RegistrarServicio(Servicio registraServicio) {
+	public boolean RegistrarServicio(Servicio registraServicio) {
+		boolean respuesta = false;
 		try {
-			//(nom_servicio,cod_chef,platillos ,descripcion ,precio_persona)
 			con=MysqlBDConexion.getConexion();
-			call=con.prepareCall("call RegistraServicio(?,?,?,?,?,?)");
+										
+			call=con.prepareCall("call RegistrarServicio(?,?,?,?,?,?)");
 			call.setString(1,registraServicio.getNom_servico());
 			call.setInt(2,registraServicio.getCod_chef());
 			call.setString(3,registraServicio.getPlatillos());
 			call.setString(4,registraServicio.getDescripcion());
-			call.setDouble(5,registraServicio.getPrecio_persona());
-			System.out.println("===> "+call);
+			call.setBlob(5, registraServicio.getLogo());
+			call.setDouble(6,registraServicio.getPrecio_persona());
+			System.out.println("MySqlServicio - RegistrarServicio ==> "+call);
+			respuesta= true;
 		} catch (Exception e) {
 			e.printStackTrace();
+			respuesta= false;
 		}finally {
 			try {
 				if(con !=null)con.close();
@@ -41,9 +52,8 @@ public class MySqlServicioDAO implements ServicioDAO {
 				e2.printStackTrace();
 			}
 		}
-		
+		return respuesta;
 	}
-
 	@Override
 	public List<Servicio> listarServicio() {
 		List<Servicio> lista = new ArrayList<Servicio>();
@@ -62,6 +72,7 @@ public class MySqlServicioDAO implements ServicioDAO {
 				ser.setPrecio_persona(rs.getDouble(7));
 				ser.setFec_publicacion(rs.getString(8));
 				lista.add(ser);
+				System.out.println("MySqlServicio - listarServicio ==> "+ser.getCod_servicio()+" - "+ser.getNom_servico());
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -97,6 +108,8 @@ public class MySqlServicioDAO implements ServicioDAO {
 				ser.setPrecio_persona(rs.getDouble(7));
 				ser.setFec_publicacion(rs.getString(8));
 				lista.add(ser);
+				System.out.println("MySqlServicio - listarServicio ==> "+ser.getCod_servicio()+" - "+ser.getNom_servico());
+
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -111,6 +124,35 @@ public class MySqlServicioDAO implements ServicioDAO {
 			}
 		}
 		return lista;
+	}
+
+	@Override
+	public void ListarImagen(Servicio servicio, HttpServletResponse response) {
+		InputStream inputStream = null;
+		OutputStream outputStream = null;
+		BufferedInputStream bufferedInputStream = null;
+		BufferedOutputStream bufferedOutputStream = null;
+		PreparedStatement pre = null;
+		response.setContentType("image/*");
+		try {
+			outputStream = response.getOutputStream();
+			con= MysqlBDConexion.getConexion();
+			pre = con.prepareStatement("select * from servicio where usuario = '"+servicio+"'");
+			rs = pre.executeQuery();
+			
+			if(rs.next()) {
+				inputStream= rs.getBinaryStream(6);
+			}
+			bufferedInputStream = new BufferedInputStream(inputStream);
+			bufferedOutputStream = new BufferedOutputStream(outputStream);
+			int i = 0;
+			while((i=bufferedInputStream.read()) != -1) {
+				bufferedOutputStream.write(i);
+			}
+		} catch (Exception e) {
+			e.printStackTrace(); 
+		}
+		
 	}
 
 }

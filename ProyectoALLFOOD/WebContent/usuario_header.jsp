@@ -1,5 +1,6 @@
 <!-- objeto del cliente -->
 <jsp:useBean id="USUARIOCLIENTE" scope="session" class="Entidades.Cliente"></jsp:useBean>
+<jsp:useBean id="USUARIOCHEF" scope="session" class="Entidades.Chef"></jsp:useBean>
 <c:choose>
 	<c:when test ="${USUARIOCLIENTE.usuario == null}">
 			    <!--Navbar -->
@@ -29,6 +30,7 @@
                         aria-haspopup="true" aria-expanded="false">
                         <img src="https://mdbootstrap.com/img/Photos/Avatars/avatar-2.jpg"
                             class="rounded-circle z-depth-0" width="35px" height="35px" alt="avatar image">
+                            ${USUARIOCHEF.usuario }
                     </a>
                     <div class="dropdown-menu dropdown-menu-lg-right dropdown-secondary"
                         aria-labelledby="navbarDropdownMenuLink-55">
