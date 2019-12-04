@@ -14,11 +14,10 @@
                             <a class="list-group-item list-group-item-action active" id="list-home-list"
                                 data-toggle="list" href="#list-home" role="tab" aria-controls="home">Home</a>
                             <a class="list-group-item list-group-item-action" id="list-profile-list" data-toggle="list"
-                                href="#list-profile" role="tab" aria-controls="profile">Profile</a>
+                                href="#list-profile" role="tab" aria-controls="profile">Servicio</a>
                             <a class="list-group-item list-group-item-action" id="list-messages-list" data-toggle="list"
                                 href="#list-messages" role="tab" aria-controls="messages">Messages</a>
-                            <a class="list-group-item list-group-item-action" id="list-settings-list" data-toggle="list"
-                                href="#list-settings" role="tab" aria-controls="settings">Settings</a>
+                         
                         </div>
                     </div>
                     <div class="col-10">
@@ -90,39 +89,37 @@
                             <div class="tab-pane fade" id="list-profile" role="tabpanel"
                                 aria-labelledby="list-profile-list">
                                 <!-- Inicio -->
-                                <div class="row">
-                                    <div class="col-3 pr-0">
-                                        <div class="list-group" id="list-tab" role="tablist">
-                                            <a class="list-group-item list-group-item-action active" id="list-home-list"
-                                                data-toggle="list" href="#list-CrearServicio" role="tab"
-                                                aria-controls="home">Home</a>
-                                            <a class="list-group-item list-group-item-action" id="list-profile-list"
-                                                data-toggle="list" href="#list-ListarServicio" role="tab"
-                                                aria-controls="profile">Profile</a>
+                              
+                             <h2 class="text-center text-primary">Mis Servicios</h2>
+                             <h4>Publicar un nuevo servicio: <a href="servicio.jsp" class="btn btn-outline-default waves-effect">New</a></h4>
+                              <hr>
+                              <h4 class="mt-md-3">Lista de mis Servicios:</h4>
+                               <table id="tableProducto" class="table table-striped table-bordered " style="width:100%">
+                            <thead>
+                                <th>Codigo de Servicio</th>
+                                <th>Nombre de Servicio</th>
+                                <th>Platillos</th>
+                                <th>Descripcion</th>
+                                <th>Precio por Persona</th>
+                                <th>Fecha de Publicación</th>
+                                
+                            </thead>
+                            <tbody>
+                            <c:forEach items="${LISTASERVICIOCHEF}" var="c">
+                            	<tr>
+                                    <td>${c.cod_servicio}</td>
+                                    <td>${c.nom_servico}</td>
+                                    <td>${c.platillos}</td>
+                                    <td>${c.descripcion}</td>
+                                    <td>${c.precio_persona}</td>
+                                    <td>${c.fec_publicacion}</td>
+                                </tr>
+                            </c:forEach>
+                                
+                                
+                            </tbody>
 
-                                        </div>
-                                    </div>
-                                    <div class="col-9">
-                                        <div class="tab-content" id="nav-tabContent">
-                                            <div class="tab-pane fade show active" id="list-CrearServicio" role="tabpanel" aria-labelledby="list-home-list">
-                                         
-                                                <!-- Material form register -->
-                                            </div>
-                                            <div class="tab-pane fade" id="list-ListarServicio" role="tabpanel"
-                                                aria-labelledby="list-profile-list">
-                                                Cupidatat quis ad sint excepteur laborum in esse qui. Et excepteur
-                                                consectetur ex nisi eu do cillum ad
-                                                laborum. Mollit et eu officia dolore sunt Lorem culpa qui commodo velit
-                                                ex amet id ex. Officia anim
-                                                incididunt laboris deserunt anim aute dolor incididunt veniam aute
-                                                dolore do exercitation. Dolor nisi
-                                                culpa ex ad irure in elit eu dolore. Ad laboris ipsum reprehenderit
-                                                irure non commodo enim culpa
-                                                commodo veniam incididunt veniam ad.
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                        </table>
 
 
                                 <!-- fin -->
@@ -139,19 +136,6 @@
                                 deserunt.
                                 Consectetur et fugiat anim do eiusmod aliquip nulla laborum elit adipisicing pariatur
                                 cillum.
-                            </div>
-                            <div class="tab-pane fade" id="list-settings" role="tabpanel"
-                                aria-labelledby="list-settings-list">
-                                Irure enim occaecat labore sit qui aliquip reprehenderit amet velit. Deserunt ullamco ex
-                                elit nostrud
-                                ut dolore nisi officia magna sit occaecat laboris sunt dolor. Nisi eu minim cillum
-                                occaecat aute est
-                                cupidatat aliqua labore aute occaecat ea aliquip sunt amet. Aute mollit dolor ut
-                                exercitation irure
-                                commodo non amet consectetur quis amet culpa. Quis ullamco nisi amet qui aute irure eu.
-                                Magna labore
-                                dolor quis ex labore id nostrud deserunt dolor eiusmod eu pariatur culpa mollit in
-                                irure.
                             </div>
                         </div>
                     </div>

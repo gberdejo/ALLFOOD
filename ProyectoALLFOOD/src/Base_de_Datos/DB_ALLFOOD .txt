@@ -1,5 +1,4 @@
 /* autocompletado de java ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz*/
-
 drop DATABASE ALLFOOD;
 CREATE DATABASE ALLFOOD;
 USE ALLFOOD;
@@ -57,6 +56,7 @@ direccion_entrega varchar(50) not null,
 CONSTRAINT FOREIGN KEY fk_COD_CLI (cod_cli) REFERENCES CLIENTE (cod_cli),
 CONSTRAINT FOREIGN KEY fk_COD_SERVICIO(cod_servicio) REFERENCES SERVICIO (cod_servicio)
 );
+select * from pedido;
 /*CHEF*/
 /* -Registrar Chef ------------------- */
 delimiter @@
@@ -166,11 +166,13 @@ values (nom_servicio,cod_chef,platillos ,descripcion,logo ,precio_persona );
 end @@
 delimiter ;
 call RegistrarServicio('Almuerzo marino',1,'Ceviche, Chicharon de pota','platillos frescos con variantes de acuerd al comensal',null,50);
-/*
-call RegistrarServicio('Pedido Especial',1,'aji de gallina, arroz con pollo','Disfruta de nuestro especial:bla bla bla',10);
-call RegistrarServicio('Pedido Especial 2',1,'aji de gallina, arroz con pollo','Disfruta de nuestro especial:bla bla bla',10);
-*/
-select * from Servicio;
+
+call RegistrarServicio('Pedido Especial',1,'aji de gallina, arroz con pollo','Disfruta de nuestro especial:bla bla bla',null,10);
+call RegistrarServicio('Pedido Especial 2',1,'aji de gallina, arroz con pollo','Disfruta de nuestro especial:bla bla bla',null,10);
+call RegistrarServicio('Pedido Especial 3',1,'aji de gallina, arroz con pollo','Disfruta de nuestro especial:bla bla bla',null,10);
+call RegistrarServicio('Pedido Especial 4',1,'aji de gallina, arroz con pollo','Disfruta de nuestro especial:bla bla bla',null,10);
+
+
 /*Listar Servicio*/ 
 delimiter @@
 create procedure ListarServicio()
@@ -179,7 +181,15 @@ select t2.cod_servicio,t2.nom_servicio,t1.cod_chef,t1.nom_chef,t2.platillos,t2.d
 from  chef t1 inner join servicio t2 on t1.cod_chef=t2.cod_chef;
 end @@
 delimiter ;
-call ListarServicio;
+----
+delimiter @@
+create procedure ListarServicioUltimos()
+begin
+select t2.cod_servicio,t2.nom_servicio,t1.cod_chef,t1.nom_chef,t2.platillos,t2.descripcion,t2.precio_persona,t2.fec_publicacion 
+from  chef t1 inner join servicio t2 on t1.cod_chef=t2.cod_chef order by cod_servicio desc limit 6;
+end @@
+delimiter ;
+call ListarServicioUltimos;
 ----
 delimiter @@
 create procedure ListarServicioChef(chef varchar(20))
@@ -188,8 +198,6 @@ select t2.cod_servicio,t2.nom_servicio,t1.cod_chef,t1.nom_chef,t2.platillos,t2.d
 from  chef t1 inner join servicio t2 on t1.cod_chef=t2.cod_chef where t1.usuario = chef;
 end @@
 delimiter ;
-
-call ListarServicioChef('cuchicu');
 select * from chef
 
 /*PEDIDO*****************************************************/

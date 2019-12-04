@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
+import com.sun.org.apache.bcel.internal.generic.IndexedInstruction;
 import com.sun.xml.internal.fastinfoset.sax.SAXDocumentSerializer;
 
 import DAO.ChefDAO;
@@ -28,6 +29,7 @@ import fabricas.ServicioFabrica;
 @WebServlet("/ServletChef")
 @MultipartConfig
 public class ServletChef extends HttpServlet {
+	
 	private static final long serialVersionUID = 1L;
 	ChefFabrica chefFabrica = ChefFabrica.ElegirBaseDatos(ChefFabrica.MYSQL);
 	ChefDAO chefDAO = chefFabrica.getChefDAO();
@@ -52,7 +54,17 @@ public class ServletChef extends HttpServlet {
 			registraServicio(request,response);
 		}else if(tipo.equalsIgnoreCase("imagenServicio")){
 			imagenServicio(request,response);
+		}else if(tipo.equalsIgnoreCase("inicio")){
+			inicio(request,response);
 		}
+	}
+	private void inicio(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+		String usuariochef  = request.getParameter("chef");
+		HttpSession sesion = request.getSession();
+		sesion.setAttribute("LISTASERVICIOCHEF", servicioDAO.ListarServicioChef(usuariochef));
+		sesion.setAttribute("LISTASERVICIO", servicioDAO.ListarServicioUltimos());
+		request.getRequestDispatcher("/chef_pagina.jsp").forward(request, response);
+		
 	}
 	private void registraServicio(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException  {
 		Part part = request.getPart("imagenser");
@@ -62,6 +74,8 @@ public class ServletChef extends HttpServlet {
 		String platillos = request.getParameter("platillos");
 		String descripcion =request.getParameter("descripcionser");
 		double precio = Double.parseDouble(request.getParameter("precioser"));
+		String usuariochef = request.getParameter("usuariochef");
+		
 		System.out.println(
 		"Servlet - nombre de servicio :"+nombreSer+","+codigochef+","+platillos+","
 		+descripcion+","+imagen+","+precio);
@@ -74,8 +88,10 @@ public class ServletChef extends HttpServlet {
 		servicio.setPrecio_persona(precio);
 		HttpSession session = request.getSession();
 		if(servicioDAO.RegistrarServicio(servicio)){
+			HttpSession sesion = request.getSession();
+			sesion.setAttribute("LISTASERVICIOCHEF", servicioDAO.ListarServicioChef(usuariochef));
+			sesion.setAttribute("LISTASERVICIO", servicioDAO.ListarServicioUltimos());
 			request.getRequestDispatcher("/chef_pagina.jsp").forward(request, response);
-			System.out.println("Se registro");
 		}else{
 			request.getRequestDispatcher("/servicio.jsp").forward(request, response);
 			session.setAttribute("MENSAJEREGISTROSERVICIO", "El servicio no se ha registrado");
@@ -138,9 +154,10 @@ public class ServletChef extends HttpServlet {
 	}
 	private void login(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		Chef objchef = null;
+		String usuario = request.getParameter("usuario");
+		String password = request.getParameter("password");
+		
 		try {
-			String usuario = request.getParameter("usuario");
-			String password = request.getParameter("password");
 			objchef = chefDAO.ValidarChef(usuario, password);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -152,6 +169,7 @@ public class ServletChef extends HttpServlet {
 				
 		}else{
 			HttpSession sesion = request.getSession();
+			sesion.setAttribute("LISTASERVICIOCHEF", servicioDAO.ListarServicioChef(usuario));
 			sesion.setAttribute("LISTASERVICIO", servicioDAO.ListarServicioUltimos());
 			sesion.setAttribute("LISTACHEF", chefDAO.listarChef());
 			sesion.setAttribute("USUARIOCHEF",objchef);

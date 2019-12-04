@@ -21,6 +21,7 @@
                     method="POST" enctype="multipart/form-data">
                     <input type="hidden" name="tipo" value="registraServicio">
                     <input type="hidden" name="codigoChef" value="${USUARIOCHEF.cod_chef}">
+                    <input type="hidden" name="usuariochef" value="${USUARIOCHEF.usuario}">
                     <div class="md-form">
                         <input type="text" id="NombreServicio" name="nombreser" class="form-control"
                             aria-describedby="materialRegisterFormPhoneHelpBlock">
