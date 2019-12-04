@@ -21,13 +21,14 @@
             </ul>
             <ul class="navbar-nav ml-auto nav-flex-icons">
                 <li class="nav-item">
-                    <a class="nav-link waves-effect waves-light">1
+                    <a href="chef_pagina.jsp" class="nav-link waves-effect waves-light">1
                         <i class="fas fa-envelope"></i>
                     </a>
                 </li>
                 <li class="nav-item avatar dropdown">
-                    <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-55" data-toggle="dropdown"
+                    <a  class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-55" data-toggle="dropdown"
                         aria-haspopup="true" aria-expanded="false">
+                        
                         <img src="https://mdbootstrap.com/img/Photos/Avatars/avatar-2.jpg"
                             class="rounded-circle z-depth-0" width="35px" height="35px" alt="avatar image">
                             ${USUARIOCHEF.usuario }
@@ -35,6 +36,7 @@
                     <div class="dropdown-menu dropdown-menu-lg-right dropdown-secondary"
                         aria-labelledby="navbarDropdownMenuLink-55">
                         <a class="dropdown-item" href="#">Perfil</a>
+                        <a class="dropdown-item" href="servicio.jsp">Mis Servicios</a>
                         <a class="dropdown-item" href="#">Cartera</a>
                         <a class="dropdown-item" href="ServletChef?tipo=salir">Salir</a>
                     </div>

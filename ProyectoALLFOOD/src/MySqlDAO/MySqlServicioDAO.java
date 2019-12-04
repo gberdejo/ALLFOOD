@@ -30,7 +30,6 @@ public class MySqlServicioDAO implements ServicioDAO {
 		boolean respuesta = false;
 		try {
 			con=MysqlBDConexion.getConexion();
-										
 			call=con.prepareCall("call RegistrarServicio(?,?,?,?,?,?)");
 			call.setString(1,registraServicio.getNom_servico());
 			call.setInt(2,registraServicio.getCod_chef());
@@ -38,6 +37,7 @@ public class MySqlServicioDAO implements ServicioDAO {
 			call.setString(4,registraServicio.getDescripcion());
 			call.setBlob(5, registraServicio.getLogo());
 			call.setDouble(6,registraServicio.getPrecio_persona());
+			call.executeUpdate();
 			System.out.println("MySqlServicio - RegistrarServicio ==> "+call);
 			respuesta= true;
 		} catch (Exception e) {
@@ -127,7 +127,7 @@ public class MySqlServicioDAO implements ServicioDAO {
 	}
 
 	@Override
-	public void ListarImagen(Servicio servicio, HttpServletResponse response) {
+	public void ListarImagen(String servicio, HttpServletResponse response) {
 		InputStream inputStream = null;
 		OutputStream outputStream = null;
 		BufferedInputStream bufferedInputStream = null;
@@ -137,7 +137,7 @@ public class MySqlServicioDAO implements ServicioDAO {
 		try {
 			outputStream = response.getOutputStream();
 			con= MysqlBDConexion.getConexion();
-			pre = con.prepareStatement("select * from servicio where usuario = '"+servicio+"'");
+			pre = con.prepareStatement("select * from servicio where nom_servicio = '"+servicio+"'");
 			rs = pre.executeQuery();
 			
 			if(rs.next()) {
@@ -151,8 +151,51 @@ public class MySqlServicioDAO implements ServicioDAO {
 			}
 		} catch (Exception e) {
 			e.printStackTrace(); 
+		} finally {
+			try {
+				if(con !=null)con.close();
+				if(pre !=null)pre.close();
+				if(rs !=null)rs.close();
+
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
 		}
 		
+	}
+	@Override
+	public List<Servicio> ListarServicioUltimos() {
+		List<Servicio> lista = new ArrayList<Servicio>();
+		try {
+			con=MysqlBDConexion.getConexion();
+			call = con.prepareCall("call ListarServicioUltimos");
+			rs = call.executeQuery();
+			while(rs.next()){
+				Servicio ser = new Servicio();
+				ser.setCod_chef(rs.getInt(1));
+				ser.setNom_servico(rs.getString(2));
+				ser.setCod_chef(rs.getInt(3));
+				ser.setNombre_chef(rs.getString(4));
+				ser.setPlatillos(rs.getString(5));
+				ser.setDescripcion(rs.getString(6));
+				ser.setPrecio_persona(rs.getDouble(7));
+				ser.setFec_publicacion(rs.getString(8));
+				lista.add(ser);
+				System.out.println("MySqlServicio - listarServicio ==> "+ser.getCod_servicio()+" - "+ser.getNom_servico());
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				if(con !=null)con.close();
+				if(call !=null)call.close();
+				if(rs !=null)rs.close();
+
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+		return lista;
 	}
 
 }

@@ -50,23 +50,34 @@ public class ServletChef extends HttpServlet {
 			salir(request,response);
 		}else if(tipo.equalsIgnoreCase("registraServicio")){
 			registraServicio(request,response);
+		}else if(tipo.equalsIgnoreCase("imagenServicio")){
+			imagenServicio(request,response);
 		}
 	}
 	private void registraServicio(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException  {
 		Part part = request.getPart("imagenser");
 		InputStream imagen = part.getInputStream();
-		servicio.setNom_servico(request.getParameter("nombreser"));
-		servicio.setCod_chef(Integer.parseInt(request.getParameter("codigoChef")));
-		servicio.setPlatillos(request.getParameter("platillos"));
-		servicio.setDescripcion(request.getParameter("descipcionser"));
+		String nombreSer = request.getParameter("nombreser");
+		int codigochef = Integer.parseInt(request.getParameter("codigoChef"));
+		String platillos = request.getParameter("platillos");
+		String descripcion =request.getParameter("descripcionser");
+		double precio = Double.parseDouble(request.getParameter("precioser"));
+		System.out.println(
+		"Servlet - nombre de servicio :"+nombreSer+","+codigochef+","+platillos+","
+		+descripcion+","+imagen+","+precio);
+		
+		servicio.setNom_servico(nombreSer);
+		servicio.setCod_chef(codigochef);
+		servicio.setPlatillos(platillos);
+		servicio.setDescripcion(descripcion);
 		servicio.setLogo(imagen);
-		servicio.setPrecio_persona(Double.parseDouble(request.getParameter("precioser")));
+		servicio.setPrecio_persona(precio);
 		HttpSession session = request.getSession();
 		if(servicioDAO.RegistrarServicio(servicio)){
-			session.setAttribute("MENSAJEREGISTROSERVICIO", "El servicio se ha Registrado satisfactoriamente");
-			System.out.println("Se registro");
 			request.getRequestDispatcher("/chef_pagina.jsp").forward(request, response);
+			System.out.println("Se registro");
 		}else{
+			request.getRequestDispatcher("/servicio.jsp").forward(request, response);
 			session.setAttribute("MENSAJEREGISTROSERVICIO", "El servicio no se ha registrado");
 		}
 		
@@ -90,6 +101,10 @@ public class ServletChef extends HttpServlet {
 	private void imagen(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		String usuario=request.getParameter("usuario");
 		chefDAO.ListarImagen(usuario, response);
+	}
+	private void imagenServicio(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+		String servicio=request.getParameter("servicio");
+		servicioDAO.ListarImagen(servicio, response);
 	}
 	private void registro(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
@@ -137,7 +152,7 @@ public class ServletChef extends HttpServlet {
 				
 		}else{
 			HttpSession sesion = request.getSession();
-			sesion.setAttribute("LISTASERVICIO", servicioDAO.listarServicio());
+			sesion.setAttribute("LISTASERVICIO", servicioDAO.ListarServicioUltimos());
 			sesion.setAttribute("LISTACHEF", chefDAO.listarChef());
 			sesion.setAttribute("USUARIOCHEF",objchef);
 			request.getRequestDispatcher("/chef_pagina.jsp").forward(request, response);
