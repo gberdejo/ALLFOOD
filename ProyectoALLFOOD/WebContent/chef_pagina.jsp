@@ -30,29 +30,21 @@
                                         <div class="col-md-4 mb-5">
                                             <!-- Card -->
                                             <div class="card">
-
-                                                <!-- Card image -->
                                                 <div class="view overlay">
                                                     <img class="card-img-top"
-                                                        src="ServletChef?tipo=imagenServicio&servicio=${s.nom_servico}"
+                                                        src="ServletChef?tipo=imagenServicio&servicio=${s.nom_servicio}"
                                                         alt="Card image cap">
                                                     <a>
                                                         <div class="mask rgba-white-slight"></div>
                                                     </a>
                                                 </div>
-                                                <!-- Card content -->
                                                 <div class="card-body">
-
-                                                    <!-- Title -->
-                                                    <h4 class="card-title">${s.nom_servico}</h4>
+                                                    <h4 class="card-title">${s.nom_servicio}</h4>
                                                     <hr>
                                                     <h5 class="card-subtitle"><i class="fab fa-free-code-camp"></i>
                                                         ${s.nombre_chef}</h5>
-                                                    <!-- <i class="fas fa-utensils"></i>,<i class="fas fa-pepper-hot"></i> -->
-                                                    <!-- Text -->
                                                     <span>${s.platillos}</span>
                                                     <p class="card-text">${s.descripcion}</p>
-
                                                 </div>
                                             </div>
                                             <!-- Card -->
@@ -63,25 +55,24 @@
                                 <div class="row">
                                     <c:forEach items="${LISTACHEF}" var="x">
                                         <div class="col-md-4 mb-5">
+                                            <!-- Card -->
                                             <div class="card">
-                                                <!-- Card <img src="servletperfil?accion=Imagen&codigo=${dato.codigo}" width="250px" height="250px"> image -->
                                                 <div class="view overlay">
-                                                    <img src="ServletChef?tipo=imagen&usuario=${x.usuario}"
-                                                        height="300px">
-                                                    <a href="#!">
+                                                    <img class="card-img-top"
+                                                        src="ServletChef?tipo=imagen&usuario=${x.usuario}"
+                                                        alt="Card image cap">
+                                                    <a href="ServletChef?tipo=perfil&chef=${x.usuario}">
                                                         <div class="mask rgba-white-slight"></div>
                                                     </a>
                                                 </div>
                                                 <div class="card-body">
-                                                    <h4 class=S"card-title">${x.usuario}</h4>
-                                                    <h5 class="card-subtitle">${x.nom_chef} ${x.ape_chef}(${x.edad})
-                                                        </h3>
-                                                        <p class="card-text">Some quick example text to build on the
-                                                            card
-                                                            title and make up the bulk of the card's content.</p>
-                                                        <a href="ServletChef?tipo=perfil&chef=${x.usuario}">Conócelo</a>
+                                                    <h4 class="card-title">${x.usuario}</h4>
+                                                    <h5 class="card-subtitle"><i class="fab fa-free-code-camp"></i>
+                                                        ${x.nom_chef} ${x.ape_chef}(${x.edad})</h5>
+                                                    <p class="card-text"><i class="fas fa-quote-left"></i>${x.presentacion}</p>
                                                 </div>
                                             </div>
+                                            <!-- Card -->
                                         </div>
                                     </c:forEach>
                                 </div>
@@ -108,7 +99,7 @@
                             <c:forEach items="${LISTASERVICIOCHEF}" var="c">
                             	<tr>
                                     <td>${c.cod_servicio}</td>
-                                    <td>${c.nom_servico}</td>
+                                    <td>${c.nom_servicio}</td>
                                     <td>${c.platillos}</td>
                                     <td>${c.descripcion}</td>
                                     <td>${c.precio_persona}</td>
@@ -143,120 +134,7 @@
             </div>
             <div class="col-md-3 px-0">
                 <!--Accordion wrapper-->
-                <div class="accordion md-accordion" id="accordionEx" role="tablist" aria-multiselectable="true">
-
-                    <!-- Accordion card -->
-                    <div class="card">
-
-                        <!-- Card header -->
-                        <div class="card-header" role="tab" id="headingOne1">
-                            <a data-toggle="collapse" data-parent="#accordionEx" href="#collapseOne1"
-                                aria-expanded="true" aria-controls="collapseOne1">
-                                <h5 class="mb-0">
-                                    Top 5 de CHEFS <i class="fas fa-angle-down rotate-icon"></i>
-                                </h5>
-                            </a>
-                        </div>
-
-                        <!-- Card body -->
-                        <div id="collapseOne1" class="collapse show" role="tabpanel" aria-labelledby="headingOne1"
-                            data-parent="#accordionEx">
-                            <div class="card-body">
-                                <div class="row">
-                                    <c:forEach items="${LISTACHEF}" var="che">
-                                        <div class="col-md-12 mb-3">
-                                            <!-- Card -->
-                                            <div class="card">
-                                                <!-- Card image -->
-                                                <div class="view overlay">
-
-                                                    <img class="card-img-top"
-                                                        src="ServletChef?tipo=imagen&usuario=${che.usuario}"
-                                                        alt="Card image cap">
-                                                    <a href="index.jsp">
-                                                        <div class="mask rgba-white-slight"></div>
-                                                    </a>
-                                                </div>
-                                                <div class="card-body p-2">
-                                                    <!-- Name -->
-                                                    <h4 class="card-title">${che.usuario}</h4>
-                                                    <hr>
-                                                    <!-- Quotation -->
-                                                    <span><i class="fas fa-quote-left"></i>${che.presentacion}</span>
-                                                </div>
-                                            </div>
-                                            <!-- Card -->
-                                        </div>
-                                    </c:forEach>
-
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                    <!-- Accordion card -->
-
-                    <!-- Accordion card -->
-                    <div class="card">
-
-                        <!-- Card header -->
-                        <div class="card-header" role="tab" id="headingTwo2">
-                            <a class="collapsed" data-toggle="collapse" data-parent="#accordionEx" href="#collapseTwo2"
-                                aria-expanded="false" aria-controls="collapseTwo2">
-                                <h5 class="mb-0">
-                                    Collapsible Group Item #2 <i class="fas fa-angle-down rotate-icon"></i>
-                                </h5>
-                            </a>
-                        </div>
-
-                        <!-- Card body -->
-                        <div id="collapseTwo2" class="collapse" role="tabpanel" aria-labelledby="headingTwo2"
-                            data-parent="#accordionEx">
-                            <div class="card-body">
-
-                            </div>
-                        </div>
-
-                    </div>
-                    <!-- Accordion card -->
-
-                    <!-- Accordion card -->
-                    <div class="card">
-
-                        <!-- Card header -->
-                        <div class="card-header" role="tab" id="headingThree3">
-                            <a class="collapsed" data-toggle="collapse" data-parent="#accordionEx"
-                                href="#collapseThree3" aria-expanded="false" aria-controls="collapseThree3">
-                                <h5 class="mb-0">
-                                    Collapsible Group Item #3 <i class="fas fa-angle-down rotate-icon"></i>
-                                </h5>
-                            </a>
-                        </div>
-
-                        <!-- Card body -->
-                        <div id="collapseThree3" class="collapse" role="tabpanel" aria-labelledby="headingThree3"
-                            data-parent="#accordionEx">
-                            <div class="card-body">
-                                Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad
-                                squid. 3
-                                wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa
-                                nesciunt laborum
-                                eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin
-                                coffee nulla
-                                assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson
-                                cred
-                                nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat
-                                craft beer
-                                farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them
-                                accusamus
-                                labore sustainable VHS.
-                            </div>
-                        </div>
-
-                    </div>
-                    <!-- Accordion card -->
-
-                </div>
+               <%@ include file="columna.jsp" %>
                 <!-- Accordion wrapper -->
             </div>
         </div>

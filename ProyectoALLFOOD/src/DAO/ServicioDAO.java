@@ -13,4 +13,5 @@ public interface ServicioDAO {
 	public abstract List<Servicio>ListarServicioUltimos( );
 	public abstract List<Servicio> ListarServicioChef(String usuarioChef);
 	public abstract void ListarImagen(String servicio,HttpServletResponse response);
+	public abstract Servicio BuscarServicio(int codigo);
 }

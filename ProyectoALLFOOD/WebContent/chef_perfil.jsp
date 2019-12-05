@@ -52,7 +52,7 @@
                             <c:forEach items="${LISTASERVICIOCHEF}" var="c">
                             	<tr>
                                     <td>${c.cod_servicio}</td>
-                                    <td>${c.nom_servico}</td>
+                                    <td>${c.nom_servicio}</td>
                                     <td>${c.platillos}</td>
                                     <td>${c.descripcion}</td>
                                     <td>${c.precio_persona}</td>

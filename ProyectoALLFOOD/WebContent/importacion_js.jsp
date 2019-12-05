@@ -8,6 +8,8 @@
 <script type="text/javascript" src="mdb/js/mdb.min.js"></script>
 <!-- DataTables -->
 <script type="text/javascript" src="mdb/js/jquery.dataTables.min.js"></script>
+<!-- DateTimePiker -->
+<script type="text/javascript" src="mdb/js/jquery.datetimepicker.full.min.js"></script>
 <!-- mys js -->
 <script src="js/codigo.js" ></script>
 

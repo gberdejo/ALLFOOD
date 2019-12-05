@@ -80,7 +80,7 @@ public class ServletChef extends HttpServlet {
 		"Servlet - nombre de servicio :"+nombreSer+","+codigochef+","+platillos+","
 		+descripcion+","+imagen+","+precio);
 		
-		servicio.setNom_servico(nombreSer);
+		servicio.setNom_servicio(nombreSer);
 		servicio.setCod_chef(codigochef);
 		servicio.setPlatillos(platillos);
 		servicio.setDescripcion(descripcion);

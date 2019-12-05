@@ -6,7 +6,7 @@ import java.io.InputStream;
 public class Servicio {
 	
 	private int cod_servicio;
-	private String nom_servico;
+	private String nom_servicio;
 	private int cod_chef;
 	private String nombre_chef;
 	private String platillos;
@@ -21,11 +21,11 @@ public class Servicio {
 	public void setCod_servicio(int cod_servicio) {
 		this.cod_servicio = cod_servicio;
 	}
-	public String getNom_servico() {
-		return nom_servico;
+	public String getNom_servicio() {
+		return nom_servicio;
 	}
-	public void setNom_servico(String nom_servico) {
-		this.nom_servico = nom_servico;
+	public void setNom_servicio(String nom_servico) {
+		this.nom_servicio = nom_servico;
 	}
 	public int getCod_chef() {
 		return cod_chef;

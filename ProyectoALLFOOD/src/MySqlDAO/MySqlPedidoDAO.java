@@ -20,21 +20,24 @@ public class MySqlPedidoDAO implements PedidoDAO{
 	ResultSet rs = null;
 	int salida = -1;
 	@Override
-	public int RegistrarPedido(Pedido registraPedido) {
+	public boolean RegistrarPedido(Pedido registraPedido) {
+		boolean respuesta = false;
 		try {
 			con=MysqlBDConexion.getConexion();
-			call=con.prepareCall("call registrarPedido(?,?,?,?,?,?,?)");
-			call.setString(1,registraPedido.getNom_cli());
-			call.setString(2,registraPedido.getNom_chef());
-			call.setString(3,registraPedido.getNom_servicio());
-			call.setInt(4,registraPedido.getCant_personas());
-			call.setString(5,registraPedido.getFec_entrega());
-			call.setDouble(6,registraPedido.getPago_total());
-			call.setInt(7,registraPedido.getValoracion());
+			call=con.prepareCall("call registrarPedido(?,?,?,?,?,?)");
+			call.setInt(1, registraPedido.getCodigo_cliente());
+			call.setInt(2, registraPedido.getCodigo_servicio());
+			call.setInt(3, registraPedido.getCantidad_personas());
+			call.setString(4, registraPedido.getFecha_entrega());
+			call.setDouble(5, registraPedido.getPago_total());
+			call.setString(6, registraPedido.getDireccion_entrega());
 			call.executeUpdate();
-			System.out.print(call);
+			respuesta = true;
+			System.out.print("MySqlPedido - RegistrarPedido ==> "+call);
 		} catch (Exception e) {
+			respuesta = false;
 			e.printStackTrace();
+			System.out.println("Fallo en la sentencia");
 		}finally{
 			try {
 				if(con!=null)con.close();
@@ -44,11 +47,16 @@ public class MySqlPedidoDAO implements PedidoDAO{
 				e2.printStackTrace();
 			}
 		}
-		return 0;
+		return respuesta;
+	}
+	@Override
+	public List<Pedido> ListarPedido() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
-	@Override
-	public List<Pedido> listarPedido(Pedido listarPedido) {
+	
+	/*public List<Pedido> listarPedido(Pedido listarPedido) {
 		ArrayList<Pedido> lista=new ArrayList<Pedido>();
 		try {
 			con=MysqlBDConexion.getConexion();
@@ -79,6 +87,6 @@ public class MySqlPedidoDAO implements PedidoDAO{
 			}
 		}
 		return lista;
-	}
+	}*/
 
 }

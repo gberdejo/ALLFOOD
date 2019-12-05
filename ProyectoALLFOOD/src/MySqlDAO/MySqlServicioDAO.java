@@ -31,7 +31,7 @@ public class MySqlServicioDAO implements ServicioDAO {
 		try {
 			con=MysqlBDConexion.getConexion();
 			call=con.prepareCall("call RegistrarServicio(?,?,?,?,?,?)");
-			call.setString(1,registraServicio.getNom_servico());
+			call.setString(1,registraServicio.getNom_servicio());
 			call.setInt(2,registraServicio.getCod_chef());
 			call.setString(3,registraServicio.getPlatillos());
 			call.setString(4,registraServicio.getDescripcion());
@@ -64,7 +64,7 @@ public class MySqlServicioDAO implements ServicioDAO {
 			while(rs.next()){
 				Servicio ser = new Servicio();
 				ser.setCod_chef(rs.getInt(1));
-				ser.setNom_servico(rs.getString(2));
+				ser.setNom_servicio(rs.getString(2));
 				ser.setCod_chef(rs.getInt(3));
 				ser.setNombre_chef(rs.getString(4));
 				ser.setPlatillos(rs.getString(5));
@@ -72,7 +72,7 @@ public class MySqlServicioDAO implements ServicioDAO {
 				ser.setPrecio_persona(rs.getDouble(7));
 				ser.setFec_publicacion(rs.getString(8));
 				lista.add(ser);
-				System.out.println("MySqlServicio - listarServicio ==> "+ser.getCod_servicio()+" - "+ser.getNom_servico());
+				System.out.println("MySqlServicio - listarServicio ==> "+ser.getCod_servicio()+" - "+ser.getNom_servicio());
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -100,7 +100,7 @@ public class MySqlServicioDAO implements ServicioDAO {
 			while(rs.next()){
 				Servicio ser = new Servicio();
 				ser.setCod_servicio(rs.getInt(1));
-				ser.setNom_servico(rs.getString(2));
+				ser.setNom_servicio(rs.getString(2));
 				ser.setCod_chef(rs.getInt(3));
 				ser.setNombre_chef(rs.getString(4));
 				ser.setPlatillos(rs.getString(5));
@@ -108,7 +108,7 @@ public class MySqlServicioDAO implements ServicioDAO {
 				ser.setPrecio_persona(rs.getDouble(7));
 				ser.setFec_publicacion(rs.getString(8));
 				lista.add(ser);
-				System.out.println("MySqlServicio - listarServicio ==> "+ser.getCod_servicio()+" - "+ser.getNom_servico());
+				System.out.println("MySqlServicio - listarServicio ==> "+ser.getCod_servicio()+" - "+ser.getNom_servicio());
 
 			}
 		} catch (Exception e) {
@@ -172,8 +172,8 @@ public class MySqlServicioDAO implements ServicioDAO {
 			rs = call.executeQuery();
 			while(rs.next()){
 				Servicio ser = new Servicio();
-				ser.setCod_chef(rs.getInt(1));
-				ser.setNom_servico(rs.getString(2));
+				ser.setCod_servicio(rs.getInt(1));
+				ser.setNom_servicio(rs.getString(2));
 				ser.setCod_chef(rs.getInt(3));
 				ser.setNombre_chef(rs.getString(4));
 				ser.setPlatillos(rs.getString(5));
@@ -181,7 +181,7 @@ public class MySqlServicioDAO implements ServicioDAO {
 				ser.setPrecio_persona(rs.getDouble(7));
 				ser.setFec_publicacion(rs.getString(8));
 				lista.add(ser);
-				System.out.println("MySqlServicio - listarServicio ==> "+ser.getCod_servicio()+" - "+ser.getNom_servico());
+				System.out.println("MySqlServicio - listarServicio ==> "+ser.getCod_servicio()+" - "+ser.getNom_servicio());
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -196,6 +196,40 @@ public class MySqlServicioDAO implements ServicioDAO {
 			}
 		}
 		return lista;
+	}
+	@Override
+	public Servicio BuscarServicio(int codigo) {
+		Servicio objServicio = new Servicio();
+		try {
+			con = MysqlBDConexion.getConexion();
+			call = con.prepareCall("call BuscarServicio(?)");
+			call.setInt(1, codigo);
+			rs = call.executeQuery();
+			while(rs.next()){
+				objServicio.setCod_servicio(rs.getInt(1));
+				objServicio.setNom_servicio(rs.getString(2));
+				objServicio.setCod_chef(rs.getInt(3));
+				objServicio.setNombre_chef(rs.getString(4));
+				objServicio.setPlatillos(rs.getString(5));
+				objServicio.setDescripcion(rs.getString(6));
+				objServicio.setPrecio_persona(rs.getDouble(7));
+				objServicio.setFec_publicacion(rs.getString(8));
+				
+			}
+			System.out.println("MySqlServicio - BuscarServicio ==> "+objServicio.getNom_servicio());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				if(con !=null)con.close();
+				if(call !=null)call.close();
+				if(rs !=null)rs.close();
+
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+		return objServicio;
 	}
 
 }
