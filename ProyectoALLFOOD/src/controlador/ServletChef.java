@@ -63,7 +63,26 @@ public class ServletChef extends HttpServlet {
 			EliminarServicio(request,response);
 		}else if(tipo.equalsIgnoreCase("irEditarServicio")){
 			irEditarServicio(request,response);
+		}else if(tipo.equalsIgnoreCase("EditarServicio")){
+			EditarServicio(request,response);
 		}
+	}
+	private void EditarServicio(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+		Servicio servicio = new Servicio();
+		servicio.setCod_servicio(Integer.parseInt(request.getParameter("codigo")));
+		servicio.setNom_servicio(request.getParameter("nombre"));
+		servicio.setPlatillos(request.getParameter("platos"));
+		servicio.setDescripcion(request.getParameter("descrip"));
+		Part part = request.getPart("imagen");
+		InputStream imagen = part.getInputStream();
+		servicio.setLogo(imagen);
+		servicio.setPrecio_persona(Double.parseDouble(request.getParameter("precio")));
+		if(servicioDAO.ActualizarServicio(servicio)){
+			inicio(request, response);
+		}else{
+			request.getRequestDispatcher("/servicio_editar.jsp").forward(request, response);
+		}
+		
 	}
 	private void irEditarServicio(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		int codigoServicio = Integer.parseInt(request.getParameter("codigo"));

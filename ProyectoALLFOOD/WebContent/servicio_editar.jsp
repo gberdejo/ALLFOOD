@@ -10,13 +10,13 @@
         <!--Card content-->
         <div class="card-body px-lg-5 pt-0">
             <!-- Form -->
-            <form class="text-center" style="color: #757575;" action="ServletCliente" method="POST"
+            <form class="text-center" style="color: #757575;" action="ServletChef" method="POST"
                 enctype="multipart/form-data">
-                <input type="hidden" name="tipo" value="actualizarCliente">
-                <input type="hidden" name="codigo" value="">
+                <input type="hidden" name="tipo" value="EditarServicio">
+                <input type="hidden" name="codigo" value="${SERVICIO.cod_servicio}">
                 <!-- Name -->
                 <div class="md-form mt-3">
-                    <input type="text" id="nombreServicio" class="form-control" value="${SERVICIO.nom_servicio}" >
+                    <input type="text" name="nombre" id="nombreServicio" class="form-control" value="${SERVICIO.nom_servicio}" >
                     <label for="nombreServicio">Nombre del Servicio</label>
                 </div>
                 <div class="md-form mt-3">
@@ -24,11 +24,11 @@
                     <label for="chef">Usuario Propietario</label>
                 </div>
                 <div class="md-form mt-3">
-                    <input type="text" id="platillos" class="form-control" value="${SERVICIO.platillos}" >
+                    <input type="text" name="platos" id="platillos" class="form-control" value="${SERVICIO.platillos}" >
                     <label for="platillos">Platillos del Servicio</label>
                 </div>
                 <div class="md-form mt-3">
-                    <input type="text" id="descripcion" class="form-control" value="${SERVICIO.descripcion}" >
+                    <input type="text" name="descrip" id="descripcion" class="form-control" value="${SERVICIO.descripcion}" >
                     <label for="descripcion">Descripción del Servicio</label>
                 </div>
                 <div class="custom-file">
@@ -36,7 +36,7 @@
                     <label class="custom-file-label" for="customFileLang">Seleccionar una nueva imagen de Servicio</label>
                 </div>
                 <div class="md-form mt-3">
-                    <input type="number" id="precio" class="form-control" value="${SERVICIO.precio_persona}" >
+                    <input type="number" name="precio" id="precio" class="form-control" value="${SERVICIO.precio_persona}" >
                     <label for="precio">Precio del Servicio</label>
                 </div>
                 <div class="md-form mt-3">
@@ -47,7 +47,7 @@
                 <button class="btn btn-outline-info btn-rounded z-depth-0 my-4 waves-effect"
                     type="submit">Guardar</button>
                 <a class="btn btn-outline-info btn-rounded z-depth-0 my-4 waves-effect"
-                    href="usuario_pagina.jsp">Cancelar</a>
+                    href="chef_pagina.jsp">Cancelar</a>
 
             </form>
             <!-- Form -->
