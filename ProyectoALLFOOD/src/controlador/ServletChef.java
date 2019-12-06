@@ -14,6 +14,7 @@ import javax.servlet.http.Part;
 
 import com.sun.org.apache.bcel.internal.generic.IndexedInstruction;
 import com.sun.xml.internal.fastinfoset.sax.SAXDocumentSerializer;
+import com.sun.xml.internal.ws.api.model.wsdl.editable.EditableWSDLBoundFault;
 
 import DAO.ChefDAO;
 import DAO.ServicioDAO;
@@ -56,7 +57,54 @@ public class ServletChef extends HttpServlet {
 			imagenServicio(request,response);
 		}else if(tipo.equalsIgnoreCase("inicio")){
 			inicio(request,response);
+		}else if(tipo.equalsIgnoreCase("actualizarChef")){
+			ActualizarChef(request,response);
+		}else if(tipo.equalsIgnoreCase("eliminarServicio")){
+			EliminarServicio(request,response);
+		}else if(tipo.equalsIgnoreCase("irEditarServicio")){
+			irEditarServicio(request,response);
 		}
+	}
+	private void irEditarServicio(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+		int codigoServicio = Integer.parseInt(request.getParameter("codigo"));
+		HttpSession session = request.getSession();
+		session.setAttribute("SERVICIO", servicioDAO.BuscarServicio(codigoServicio));
+		request.getRequestDispatcher("/servicio_editar.jsp").forward(request, response);
+	}
+	private void EliminarServicio(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+		int codigo = Integer.parseInt(request.getParameter("codigo"));
+		servicioDAO.EliminarServicio(codigo);
+		inicio(request, response);
+		
+	}
+	private void ActualizarChef(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+		String codigo = request.getParameter("codigo");
+		String password = request.getParameter("password");
+		String nombre = request.getParameter("nombre");
+		String apellido = request.getParameter("apellido");
+		Part part = request.getPart("imagen");
+		InputStream imagen = part.getInputStream();
+		String presentacion = request.getParameter("presentacion");
+		String celular = request.getParameter("celular");
+		String direccion = request.getParameter("direccion");
+		System.out.println(
+		"input:"+codigo+","+password+","+nombre+","+apellido+","+imagen+","+presentacion+","+celular+","+direccion);
+		Chef chef = new Chef();
+		chef.setCod_chef(Integer.parseInt(codigo));
+		chef.setPassword(password);
+		chef.setNom_chef(nombre);
+		chef.setApe_chef(apellido);
+		chef.setAvatar(imagen);
+		chef.setPresentacion(presentacion);
+		chef.setCelular(celular);
+		chef.setDieccion(direccion);
+		if(chefDAO.ActualizarChef(chef)){
+			request.getRequestDispatcher("/chef_pagina.jsp").forward(request, response);
+		}else{
+			request.getRequestDispatcher("/chef_editar.jsp").forward(request, response);
+		}
+		
+		
 	}
 	private void inicio(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		String usuariochef  = request.getParameter("chef");

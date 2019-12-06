@@ -55,6 +55,35 @@ public class MySqlServicioDAO implements ServicioDAO {
 		return respuesta;
 	}
 	@Override
+	public boolean ActualizarServicio(Servicio servicio) {
+		boolean respuesta = false;
+		try {
+			con=MysqlBDConexion.getConexion();
+			call=con.prepareCall("call ActualizarServicio(?,?,?,?,?,?)");
+			call.setInt(1, servicio.getCod_servicio());
+			call.setString(2, servicio.getNom_servicio());
+			call.setString(3, servicio.getPlatillos());
+			call.setString(4, servicio.getDescripcion());
+			call.setBlob(5, servicio.getLogo());
+			call.setDouble(6, servicio.getPrecio_persona());
+			call.executeUpdate();
+			System.out.println("MySqlServicio - ActualizarServicio ==> "+call);
+			respuesta= true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			respuesta= false;
+		}finally {
+			try {
+				if(con !=null)con.close();
+				if(call !=null)call.close();
+				if(rs !=null)rs.close();
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+		return respuesta;
+	}
+	@Override
 	public List<Servicio> listarServicio() {
 		List<Servicio> lista = new ArrayList<Servicio>();
 		try {
@@ -231,5 +260,27 @@ public class MySqlServicioDAO implements ServicioDAO {
 		}
 		return objServicio;
 	}
+	@Override
+	public void EliminarServicio(int codigo) {
+		try {
+			con = MysqlBDConexion.getConexion();
+			call = con.prepareCall("call EliminarServicio(?)");
+			call.setInt(1, codigo);
+			call.executeUpdate();
+			System.out.println("MySqlServicio - EliminarServicio ==> "+call);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				if(con !=null)con.close();
+				if(call !=null)call.close();
+				if(rs !=null)rs.close();
+
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+	}
+	
 
 }

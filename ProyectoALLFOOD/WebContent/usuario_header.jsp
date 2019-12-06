@@ -22,14 +22,15 @@
                     <a  class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-55" data-toggle="dropdown"
                         aria-haspopup="true" aria-expanded="false">
                         
-                        <img src="https://mdbootstrap.com/img/Photos/Avatars/avatar-2.jpg"
+                        <img src="ServletChef?tipo=imagen&usuario=${USUARIOCHEF.usuario}"
                             class="rounded-circle z-depth-0" width="35px" height="35px" alt="avatar image">
                             ${USUARIOCHEF.usuario}
                     </a>
                     <div class="dropdown-menu dropdown-menu-lg-right dropdown-secondary"
                         aria-labelledby="navbarDropdownMenuLink-55">
-                        <a class="dropdown-item" href="#">Perfil</a>
-                        <a class="dropdown-item" href="#">Cartera</a>
+                        <a class="dropdown-item" href="#">ir Perfil</a>
+                        <a class="dropdown-item" href="chef_editar.jsp">editar Perfil</a>
+                        <!--  <a class="dropdown-item" href="#">Cartera</a>-->
                         <a class="dropdown-item" href="ServletChef?tipo=salir">Salir</a>
                     </div>
                 </li>
@@ -67,7 +68,7 @@
                         
                         <a class="dropdown-item" href="usuario_perfil.jsp">ir a Perfil</a>
                         <a class="dropdown-item" href="usuario_editar.jsp">editar Perfil</a>
-                        <a class="dropdown-item" href="usuario_cartera.jsp">Cartera</a>
+                        <!--  <a class="dropdown-item" href="usuario_cartera.jsp">Cartera</a>-->
                         <a class="dropdown-item" href="ServletCliente?tipo=salir">Salir</a>
                     </div>
                 </li>

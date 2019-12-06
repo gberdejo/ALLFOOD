@@ -7,7 +7,7 @@
 
     <div class="container-fluid" style="margin-top:79px;">
         <div class="row">
-            <div class="col-md-9">
+            <div class="col-md-10">
                 <div class="row">
                     <div class="col-2 px-0">
                         <div class="list-group" id="list-tab" role="tablist">
@@ -82,36 +82,34 @@
                                 <!-- Inicio -->
                               
                              <h2 class="text-center text-primary">Mis Servicios</h2>
-                             <h4>Publicar un nuevo servicio: <a href="servicio.jsp" class="btn btn-outline-default waves-effect">New</a></h4>
+                              <h4>Publicar un nuevo servicio: <a href="servicio.jsp" class="btn btn-outline-success waves-effect">New</a></h4>
                               <hr>
                               <h4 class="mt-md-3">Lista de mis Servicios:</h4>
-                               <table id="tableProducto" class="table table-striped table-bordered " style="width:100%">
+                               <table id="tableProducto" class="table table-striped table-bordered table-responsive" style="width:100%">
                             <thead>
-                                <th>Codigo de Servicio</th>
                                 <th>Nombre de Servicio</th>
-                                <th>Platillos</th>
-                                <th>Descripcion</th>
+                                <th>Platillos Ofrecidos</th>
+                                <th>Descripción del Servicio</th>
                                 <th>Precio por Persona</th>
                                 <th>Fecha de Publicación</th>
+                                <th>Eliminar Servicio</th>
+                                <th>Editar Servicio</th>
                                 
                             </thead>
                             <tbody>
                             <c:forEach items="${LISTASERVICIOCHEF}" var="c">
                             	<tr>
-                                    <td>${c.cod_servicio}</td>
                                     <td>${c.nom_servicio}</td>
                                     <td>${c.platillos}</td>
                                     <td>${c.descripcion}</td>
                                     <td>${c.precio_persona}</td>
                                     <td>${c.fec_publicacion}</td>
+                                    <td><a href="ServletChef?tipo=eliminarServicio&codigo=${c.cod_servicio}" class="btn btn-outline-danger btn-sm btn-block waves-effect"><i class="fas fa-trash-alt fa-2x"></i></a></td>
+                                    <td><a href="ServletChef?tipo=irEditarServicio&codigo=${c.cod_servicio}" class="btn btn-outline-info btn-sm btn-block waves-effect"><i class="fas fa-edit fa-2x"></i></a></td>
                                 </tr>
                             </c:forEach>
-                                
-                                
                             </tbody>
-
                         </table>
-
 
                                 <!-- fin -->
                             </div>
@@ -132,7 +130,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-3 px-0">
+            <div class="col-md-2 px-0">
                 <!--Accordion wrapper-->
                <%@ include file="columna.jsp" %>
                 <!-- Accordion wrapper -->

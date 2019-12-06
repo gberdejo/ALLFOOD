@@ -3,9 +3,7 @@
 <h1>Es ta la pagina  del servicio</h1>
 	<%@ include file="usuario_header.jsp" %>
 	       <!-- Registrar Servicio -->
-<div class="row justify-content-center">
-    <div class="col-md-8">
-
+	       <div class="container" style="margin-top:79px;">
         <!-- Material form register -->
         <div class="card">
 
@@ -71,7 +69,8 @@
 
         </div>
     </div>
-</div>
+
+
 <%@ include file="importacion_js.jsp" %>
 </body>
 </html>

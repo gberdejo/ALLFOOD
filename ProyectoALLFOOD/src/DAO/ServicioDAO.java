@@ -14,4 +14,6 @@ public interface ServicioDAO {
 	public abstract List<Servicio> ListarServicioChef(String usuarioChef);
 	public abstract void ListarImagen(String servicio,HttpServletResponse response);
 	public abstract Servicio BuscarServicio(int codigo);
+	public abstract void EliminarServicio(int codigo);
+	public abstract boolean ActualizarServicio(Servicio servicio);
 }

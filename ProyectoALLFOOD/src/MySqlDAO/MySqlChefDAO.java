@@ -59,7 +59,39 @@ public class MySqlChefDAO implements ChefDAO{
 		}
 		return respuesta;
 	}
-
+	@Override
+	public boolean ActualizarChef(Chef chef) {
+		boolean respuesta = false;
+		try {
+			con = MysqlBDConexion.getConexion();
+			call = con.prepareCall("call ActualizarChef(?,?,?,?,?,?,?,?)");
+			call.setInt(1,chef.getCod_chef());
+			call.setString(2, chef.getPassword());
+			call.setString(3, chef.getNom_chef());
+			call.setString(4, chef.getApe_chef());
+			call.setBlob(5, chef.getAvatar());
+			call.setString(6, chef.getPresentacion());
+			call.setString(7, chef.getCelular());
+			call.setString(8, chef.getDieccion());
+			call.executeUpdate();
+			System.out.println("MySqlChef - ActualizarChef ==> "+call);
+			respuesta = true;
+		} catch (Exception e) {
+			respuesta = false;
+			e.printStackTrace();
+			
+		}finally {
+				try {
+					if(con != null) con.close();
+					if(call != null) call.close();
+					if(rs != null) rs.close();
+				} catch (Exception e2) {
+					e2.printStackTrace();
+				}
+			
+		}
+		return respuesta;
+	}
 	@Override
 	public List<Chef> listarChef() {
 		ArrayList<Chef> lista = new ArrayList<Chef>();
@@ -101,15 +133,21 @@ public class MySqlChefDAO implements ChefDAO{
 		Chef objchef = null;
 		try {
 			con = MysqlBDConexion.getConexion();
-			call = con.prepareCall("call ValidarChef (?,?)");
+			call = con.prepareCall("call ValidarChef(?,?)");
 			call.setString(1, usuario);
 			call.setString(2, password);
 			rs = call.executeQuery();
 			while(rs.next()){
 				objchef = new Chef();
-				objchef.setCod_chef(rs.getInt("cod_chef"));
-				objchef.setUsuario(rs.getString("usuario"));
-				objchef.setPassword(rs.getString("contra"));
+				objchef.setCod_chef(rs.getInt(1));
+				objchef.setUsuario(rs.getString(2));
+				objchef.setPassword(rs.getString(3));
+				objchef.setNom_chef(rs.getString(4));
+				objchef.setApe_chef(rs.getString(5));
+				objchef.setPresentacion(rs.getString(7));
+				objchef.setEdad(rs.getInt(8));
+				objchef.setCelular(rs.getString(9));
+				objchef.setDieccion(rs.getString(10));
 			}
 			System.out.println("MySqlChef - ValidarChef ==> "+objchef.getCod_chef()+", "+objchef.getUsuario()+", "+objchef.getPassword());
 		} catch (Exception e) {
@@ -190,6 +228,8 @@ public class MySqlChefDAO implements ChefDAO{
 		}
 		
 	}
+
+	
 
 	
 
