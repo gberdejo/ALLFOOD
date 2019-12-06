@@ -57,7 +57,36 @@ public class MySqlClienteDAO implements ClienteDAO{
 		}
 		return respuesta;
 	}
-
+	@Override
+	public boolean ActualizarCliente(Cliente cliente) {
+		boolean respuesta = false;
+		try {
+			con = MysqlBDConexion.getConexion();
+			call = con.prepareCall("call ActualizarCliente(?,?,?,?,?,?)");
+			call.setInt(1,cliente.getCod_cli());
+			call.setString(2, cliente.getPassword());
+			call.setString(3, cliente.getNom_cli());
+			call.setString(4, cliente.getApe_cli());
+			call.setBlob(5, cliente.getAvatar());
+			call.setString(6, cliente.getCelular_cli());
+			call.executeUpdate();
+			System.out.println("MySqlCliente - ActualizarCliente ==> "+call);
+			respuesta = true;
+		} catch (Exception e) {
+				e.printStackTrace();
+				System.out.println("Fallo de sentencia actualizar");
+				respuesta = false;
+			}finally {
+				try {
+					if(con != null) con.close();
+					if(call != null) call.close();
+					if(rs != null) rs.close();
+				} catch (Exception e2) {
+					e2.printStackTrace();
+				}
+		}
+		return respuesta;
+	}
 	@Override
 	public List<Cliente> listarCliente() {
 		List<Cliente> lista = new ArrayList<Cliente>();
@@ -109,9 +138,9 @@ public class MySqlClienteDAO implements ClienteDAO{
 				cliente.setPassword(rs.getString(3));
 				cliente.setNom_cli(rs.getString(4));
 				cliente.setApe_cli(rs.getString(5));
-				cliente.setEdad(rs.getInt(6));
-				cliente.setCelular_cli(rs.getString(7));
-				cliente.setSaldo_cli(rs.getDouble(8));
+				cliente.setEdad(rs.getInt(7));
+				cliente.setCelular_cli(rs.getString(8));
+				cliente.setSaldo_cli(rs.getDouble(9));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -136,16 +165,16 @@ public class MySqlClienteDAO implements ClienteDAO{
 			rs = call.executeQuery();
 			while(rs.next()){
 				objCliente = new Cliente();
-				objCliente.setCod_cli(rs.getInt("cod_cli"));
-				objCliente.setUsuario(rs.getString("usuario"));
-				objCliente.setPassword(rs.getString("contra"));
-				objCliente.setNom_cli(rs.getString("nom_cli"));
-				objCliente.setApe_cli(rs.getString("ape_cli"));
-				objCliente.setEdad(rs.getInt("edad_cli"));
-				objCliente.setCelular_cli(rs.getString("celular_cli"));
-				objCliente.setSaldo_cli(rs.getDouble("saldo_cli"));
+				objCliente.setCod_cli(rs.getInt(1));
+				objCliente.setUsuario(rs.getString(2));
+				objCliente.setPassword(rs.getString(3));
+				objCliente.setNom_cli(rs.getString(4));
+				objCliente.setApe_cli(rs.getString(5));
+				objCliente.setEdad(rs.getInt(7));
+				objCliente.setCelular_cli(rs.getString(8));
+				objCliente.setSaldo_cli(rs.getDouble(9));
 			}
-			System.out.println("MySqlCliente - BuscarClienteUsuario ==> "+objCliente.getUsuario());
+			System.out.println("MySqlCliente - BuscarClienteUsuario ==> "+objCliente.getUsuario()+"edad:"+objCliente.getEdad());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}finally {
@@ -188,5 +217,7 @@ public class MySqlClienteDAO implements ClienteDAO{
 		}
 		
 	}
+
+	
 
 }

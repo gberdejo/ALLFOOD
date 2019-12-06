@@ -64,7 +64,9 @@
                     </a>
                     <div class="dropdown-menu dropdown-menu-lg-right dropdown-secondary"
                         aria-labelledby="navbarDropdownMenuLink-55">
-                        <a class="dropdown-item" href="ServletCliente?tipo=perfil&usuario=${USUARIOCLIENTE.usuario}">Perfil</a>
+                        
+                        <a class="dropdown-item" href="usuario_perfil.jsp">ir a Perfil</a>
+                        <a class="dropdown-item" href="usuario_editar.jsp">editar Perfil</a>
                         <a class="dropdown-item" href="usuario_cartera.jsp">Cartera</a>
                         <a class="dropdown-item" href="ServletCliente?tipo=salir">Salir</a>
                     </div>

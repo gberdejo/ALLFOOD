@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
+import com.mysql.fabric.xmlrpc.Client;
+
 import DAO.ChefDAO;
 import DAO.ClienteDAO;
 import DAO.PedidoDAO;
@@ -62,7 +64,34 @@ public class ServletCliente extends HttpServlet {
 			irpedido(request,response);
 		}else if (tipo.equalsIgnoreCase("compra")){
 			CompraPedido(request,response);
+		}else if(tipo.equalsIgnoreCase("actualizarCliente")){
+			ActualizarCliente(request,response);
 		}
+	}
+	private void ActualizarCliente(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+		Cliente cliente = new Cliente();
+		int codigo = Integer.parseInt(request.getParameter("codigo"));
+		String password = request.getParameter("password");
+		String nombre = request.getParameter("nombre");
+		String apellido = request.getParameter("apellido");
+		String celular = request.getParameter("celular");
+		Part part = request.getPart("imagen");
+		InputStream imagen = part.getInputStream();
+		//
+		cliente.setCod_cli(codigo);
+		cliente.setPassword(password);
+		cliente.setNom_cli(nombre);
+		cliente.setApe_cli(apellido);
+		cliente.setAvatar(imagen);
+		cliente.setCelular_cli(celular);
+		if(clienteDAO.ActualizarCliente(cliente)){
+			inicio(request,response);
+		}else{
+			request.getRequestDispatcher("/usuario_editar.jsp").forward(request, response);
+		}
+			
+		
+		
 	}
 	private void CompraPedido(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		Pedido pedido = new Pedido();

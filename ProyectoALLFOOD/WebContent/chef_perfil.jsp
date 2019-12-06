@@ -10,7 +10,7 @@
             <div class="fondo-perfil-cliente3"></div>
             <div class="offset-md-1 col-md-3">
                 <img alt="Aquí se supone que va la imagen del usuario" 
-                src="ServletChef?tipo=imagen&usuario=<jsp:getProperty property="usuario" name="CHEF" />" width="300px" height="300px" class="rounded-circle float-right">
+                src="ServletChef?tipo=imagen&usuario=${CHEF.usuario}" width="300px" height="300px" class="rounded-circle float-right">
             </div>
             <div class="col-md-7">
                 <h1>

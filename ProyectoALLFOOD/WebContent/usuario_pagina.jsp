@@ -47,7 +47,7 @@
                                                     <h5 class="card-subtitle"><i class="fab fa-free-code-camp"></i> ${s.nombre_chef}</h5>
                                                     <span>Platillo: ${s.platillos}</span>
                                                     <p class="card-text">Descripción: ${s.descripcion}</p>
-
+													<a class="btn btn-outline-info btn-rounded btn-sm z-depth-0 float-right waves-effect" href="ServletCliente?tipo=irpedido&codigo=${s.cod_servicio}">Comprar</a>
                                                 </div>
                                             </div>
                                             <!-- Card -->
@@ -72,6 +72,7 @@
                                                     <h4 class="card-title"><i class="fab fa-free-code-camp"></i> ${x.usuario}</h4>
                                                     <h5 class="card-subtitle">${x.nom_chef} ${x.ape_chef}(${x.edad})</h5>
                                                     <p class="card-text"><i class="fas fa-quote-left"></i>${x.presentacion}</p>
+                                                    <a class="btn btn-outline-info btn-rounded btn-sm z-depth-0 float-right waves-effect" href="ServletChef?tipo=perfil&chef=${x.usuario}">Conócelo</a>
                                                 </div>
                                             </div>
                                             <!-- Card -->
@@ -158,7 +159,7 @@
                             <c:forEach items="${LISTASERVICIOCHEF}" var="c">
                             	<tr>
                                     <td>${c.cod_servicio}</td>
-                                    <td>${c.nom_servico}</td>
+                                    <td>${c.nom_servicio}</td>
                                     <td>${c.platillos}</td>
                                     <td>${c.descripcion}</td>
                                     <td>${c.precio_persona}</td>
@@ -183,7 +184,6 @@
         	</div>
         </div>
             
-
         </div>
 <%@ include file="importacion_js.jsp" %>
 </body>

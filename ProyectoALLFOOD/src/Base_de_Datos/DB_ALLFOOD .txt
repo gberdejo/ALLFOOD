@@ -2,6 +2,8 @@
 drop DATABASE ALLFOOD;
 CREATE DATABASE ALLFOOD;
 USE ALLFOOD;
+/*SELECT table_schema ALLFOOD, sum(data_length + index_length)/1024/1024 "size in MB" 
+FROM information_schema.TABLES GROUP BY table_schema;*/
 CREATE TABLE CLIENTE
 (
 cod_cli int NOT NULL auto_increment PRIMARY KEY,
@@ -14,7 +16,7 @@ edad_cli int NOT NULL,
 celular_cli varchar(9) NOT NULL,
 saldo_cli decimal default 0.0
 );
-
+select * from cliente;
 CREATE TABLE CHEF
 (
 cod_chef int NOT NULL AUTO_INCREMENT PRIMARY KEY ,
@@ -52,6 +54,7 @@ fecha_compra TIMESTAMP DEFAULT CURRENT_TIMESTAMP on update current_timestamp,
 fecha_entrega TIMESTAMP ,
 pago_total decimal (9,2),
 direccion_entrega varchar(50) not null,
+estado varchar(10) default 'PENDIENTE',
 /*valoracion INT CHECK (valoracion >=1 and valoracion <=5),*/
 CONSTRAINT FOREIGN KEY fk_COD_CLI (cod_cli) REFERENCES CLIENTE (cod_cli),
 CONSTRAINT FOREIGN KEY fk_COD_SERVICIO(cod_servicio) REFERENCES SERVICIO (cod_servicio)
@@ -74,7 +77,7 @@ begin
 insert into chef values (null,usuario,contra,nom_chef,ape_chef,avatar,presentacion,edad_chef,celular_chef,direccion,0.0);
 end @@
 delimiter ;
-call RegistrarChef ('cuchicu','cuchi123','cuchi','cu',null,'soy mu responsable',20,'996006381','27 de marzo');
+/*call RegistrarChef ('cuchicu','cuchi123','cuchi','cu',null,'soy mu responsable',20,'996006381','27 de marzo');*/
 
 /*
 call RegistrarChef('timy','timy123','Timy','Ramos',35,'986574123','Av.Los Jardines 1547');
@@ -104,7 +107,7 @@ begin
 select * from chef where usuario = chef;
 end @@
 delimiter ;
-call BuscarChefUsuario('cuchicu');
+/*call BuscarChefUsuario('cuchicu');*/
 /*CLIENTE********************************************************************/
 /* -Registrar Cliente - */
 delimiter @@
@@ -121,8 +124,8 @@ begin
 insert into cliente values (null,usuario,contra,nom_cli ,ape_cli,avatar ,edad_cli ,celular_cli ,saldo_cli );
 end @@
 delimiter ;
-call RegistrarCliente('Pastel','74g5','Mario','Fernandez',null,25,'974652001',198);
-call RegistrarCliente('eli','el12','Mario','Fernandez',null,25,'974652001',198);
+/*call RegistrarCliente('Pastel','74g5','Mario','Fernandez',null,25,'974652001',198);
+call RegistrarCliente('eli','el12','Mario','Fernandez',null,25,'974652001',198);*/
 select * from cliente;
 /* validacion  del cliente*/
 delimiter @@
@@ -140,14 +143,37 @@ begin
 select * from cliente;
 end @@
 delimiter ;
-
+---
+delimiter @@
+create procedure ActualizarCliente
+(
+codigo int,
+pass varchar(10),
+nom_cliente varchar(50),
+ape_cliente varchar(50),
+logo longblob,
+celular_cliente  varchar(9))
+begin
+update cliente set 
+contra = pass,
+nom_cli = nom_cliente ,
+ape_cli =ape_cliente,
+avatar=logo,
+celular_cli=celular_cliente
+where cod_cli = codigo;
+end @@
+delimiter ;
+drop procedure  ActualizarCliente;
+call ActualizarCliente(1,'eli12','Elizabeth','Ramirez Huamas',null,'996006381');
+select * from cliente;
+--
 delimiter @@
 create procedure BuscarClienteUsuario(cliente varchar(20))
 begin 
 select * from cliente where usuario = cliente;
 end @@
 delimiter ;
-call BuscarClienteUsuario('zeref');
+call BuscarClienteUsuario('eli');
 /* SERVICIO  **************************************************************/
 /* -Registrar SERVICIO - */
 delimiter @@
@@ -165,12 +191,7 @@ insert into servicio (nom_servicio,cod_chef,platillos ,descripcion,logo ,precio_
 values (nom_servicio,cod_chef,platillos ,descripcion,logo ,precio_persona );
 end @@
 delimiter ;
-call RegistrarServicio('Almuerzo marino',1,'Ceviche, Chicharon de pota','platillos frescos con variantes de acuerd al comensal',null,50);
-
-call RegistrarServicio('Pedido Especial',1,'aji de gallina, arroz con pollo','Disfruta de nuestro especial:bla bla bla',null,10);
-call RegistrarServicio('Pedido Especial 2',1,'aji de gallina, arroz con pollo','Disfruta de nuestro especial:bla bla bla',null,10);
-call RegistrarServicio('Pedido Especial 3',1,'aji de gallina, arroz con pollo','Disfruta de nuestro especial:bla bla bla',null,10);
-call RegistrarServicio('Pedido Especial 4',1,'aji de gallina, arroz con pollo','Disfruta de nuestro especial:bla bla bla',null,10);
+/*call RegistrarServicio('Almuerzo marino',1,'Ceviche, Chicharon de pota','platillos frescos con variantes de acuerd al comensal',null,50);*/
 
 
 /*Listar Servicio*/ 
@@ -198,8 +219,15 @@ select t2.cod_servicio,t2.nom_servicio,t1.cod_chef,t1.nom_chef,t2.platillos,t2.d
 from  chef t1 inner join servicio t2 on t1.cod_chef=t2.cod_chef where t1.usuario = chef;
 end @@
 delimiter ;
-select * from chef
-
+call ListarServicioChef ('cuchicu')
+delimiter @@
+create procedure BuscarServicio(codigo int)
+begin 
+select t2.cod_servicio,t2.nom_servicio,t1.cod_chef,t1.nom_chef,t2.platillos,t2.descripcion,t2.precio_persona,t2.fec_publicacion 
+from  chef t1 inner join servicio t2 on t1.cod_chef=t2.cod_chef where t2.cod_servicio = codigo;
+end @@
+delimiter ;
+call BuscarServicio (1);
 /*PEDIDO*****************************************************/
 /*Registrar Pedido*/
 delimiter @@
@@ -216,8 +244,7 @@ insert into pedido (cod_cli,cod_servicio,cant_personas,fecha_entrega,pago_total,
 values (cod_cli,cod_servicio,cant_personas,fec_entrega,pago_total,direccion_entrega);
 end@@
 delimiter ;
-call RegistrarPedido(1,1,20,'2019-12-20 10:02:52',500,'las lomas de zapallal 293');
-select * from pedido;
+/*call RegistrarPedido(1,1,20,'2019-12-20 10:02:52',500,'las lomas de zapallal 293');*/
 /*Listar pedido*/
 /*drop procedure ListarPedido;*/
 delimiter @@
