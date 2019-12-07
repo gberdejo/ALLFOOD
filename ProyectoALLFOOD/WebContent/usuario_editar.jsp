@@ -16,6 +16,7 @@
         <form class="text-center" style="color: #757575;" action="ServletCliente" method="POST" enctype="multipart/form-data">
         			<input type="hidden" name="tipo" value="actualizarCliente">
 					<input type="hidden" name="codigo" value="${USUARIOCLIENTE.cod_cli}">
+					<input type="hidden" name="usuario" value="${USUARIOCLIENTE.usuario}">
             <!-- Name -->
             <div class="md-form mt-3">
                 <input type="text" id="materialContactFormName" 

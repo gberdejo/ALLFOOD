@@ -17,10 +17,14 @@ import com.sun.xml.internal.fastinfoset.sax.SAXDocumentSerializer;
 import com.sun.xml.internal.ws.api.model.wsdl.editable.EditableWSDLBoundFault;
 
 import DAO.ChefDAO;
+import DAO.ClienteDAO;
+import DAO.PedidoDAO;
 import DAO.ServicioDAO;
 import Entidades.Chef;
 import Entidades.Servicio;
 import fabricas.ChefFabrica;
+import fabricas.ClienteFabrica;
+import fabricas.PedidoFabrica;
 import fabricas.ServicioFabrica;
 
 
@@ -32,11 +36,17 @@ import fabricas.ServicioFabrica;
 public class ServletChef extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
+	ClienteFabrica cliFabrica = ClienteFabrica.ElegirBaseDatos(ClienteFabrica.MYSQL);
+	ClienteDAO clienteDAO = cliFabrica.getClienteDAO();
+	//
 	ChefFabrica chefFabrica = ChefFabrica.ElegirBaseDatos(ChefFabrica.MYSQL);
 	ChefDAO chefDAO = chefFabrica.getChefDAO();
 	//
 	ServicioFabrica servicioFabnrica = ServicioFabrica.TipoDeConexion(ServicioFabrica.MYSQL);
 	ServicioDAO servicioDAO = servicioFabnrica.getServicioDAO();
+	//
+	PedidoFabrica perdidoFabrica = PedidoFabrica.tipoConexion(PedidoFabrica.MYSQL);
+	PedidoDAO pedidoDAO = perdidoFabrica.getPedidoDAO();
 	Servicio servicio = new Servicio();
 	
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -69,6 +79,7 @@ public class ServletChef extends HttpServlet {
 	}
 	private void EditarServicio(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		Servicio servicio = new Servicio();
+		String usuariochef = request.getParameter("chef"); 
 		servicio.setCod_servicio(Integer.parseInt(request.getParameter("codigo")));
 		servicio.setNom_servicio(request.getParameter("nombre"));
 		servicio.setPlatillos(request.getParameter("platos"));
@@ -78,7 +89,16 @@ public class ServletChef extends HttpServlet {
 		servicio.setLogo(imagen);
 		servicio.setPrecio_persona(Double.parseDouble(request.getParameter("precio")));
 		if(servicioDAO.ActualizarServicio(servicio)){
-			inicio(request, response);
+			HttpSession sesion = request.getSession();
+			sesion.setAttribute("LISTASERVICIOCHEF", servicioDAO.ListarServicioChef(usuariochef));
+			sesion.setAttribute("LISTAPEDIDOSCHEF", pedidoDAO.ListarPedidoChef(usuariochef));
+
+			//
+			sesion.setAttribute("LISTATOPCHEF", chefDAO.listarTopChef());
+			sesion.setAttribute("LISTASERVICIOULTIMOS", servicioDAO.ListarServicioUltimos());
+			sesion.setAttribute("LISTACHEFULTIMOS", chefDAO.listarChefUltimos());
+			sesion.setAttribute("LISTACLIENTE", clienteDAO.listarClienteUltimos());
+			request.getRequestDispatcher("/chef_pagina.jsp").forward(request, response);
 		}else{
 			request.getRequestDispatcher("/servicio_editar.jsp").forward(request, response);
 		}
@@ -97,6 +117,7 @@ public class ServletChef extends HttpServlet {
 		
 	}
 	private void ActualizarChef(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+		String usuariochef = request.getParameter("chef"); 
 		String codigo = request.getParameter("codigo");
 		String password = request.getParameter("password");
 		String nombre = request.getParameter("nombre");
@@ -118,18 +139,32 @@ public class ServletChef extends HttpServlet {
 		chef.setCelular(celular);
 		chef.setDieccion(direccion);
 		if(chefDAO.ActualizarChef(chef)){
+			HttpSession sesion = request.getSession();
+			sesion.setAttribute("LISTASERVICIOCHEF", servicioDAO.ListarServicioChef(usuariochef));
+			sesion.setAttribute("LISTAPEDIDOSCHEF", pedidoDAO.ListarPedidoChef(usuariochef));
+
+			//
+			sesion.setAttribute("LISTATOPCHEF", chefDAO.listarTopChef());
+			sesion.setAttribute("LISTASERVICIOULTIMOS", servicioDAO.ListarServicioUltimos());
+			sesion.setAttribute("LISTACHEFULTIMOS", chefDAO.listarChefUltimos());
+			sesion.setAttribute("LISTACLIENTE", clienteDAO.listarClienteUltimos());
 			request.getRequestDispatcher("/chef_pagina.jsp").forward(request, response);
 		}else{
 			request.getRequestDispatcher("/chef_editar.jsp").forward(request, response);
 		}
-		
-		
+
 	}
 	private void inicio(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		String usuariochef  = request.getParameter("chef");
 		HttpSession sesion = request.getSession();
 		sesion.setAttribute("LISTASERVICIOCHEF", servicioDAO.ListarServicioChef(usuariochef));
-		sesion.setAttribute("LISTASERVICIO", servicioDAO.ListarServicioUltimos());
+		sesion.setAttribute("LISTAPEDIDOSCHEF", pedidoDAO.ListarPedidoChef(usuariochef));
+
+		//
+		sesion.setAttribute("LISTATOPCHEF", chefDAO.listarTopChef());
+		sesion.setAttribute("LISTASERVICIOULTIMOS", servicioDAO.ListarServicioUltimos());
+		sesion.setAttribute("LISTACHEFULTIMOS", chefDAO.listarChefUltimos());
+		sesion.setAttribute("LISTACLIENTE", clienteDAO.listarClienteUltimos());
 		request.getRequestDispatcher("/chef_pagina.jsp").forward(request, response);
 		
 	}
@@ -157,11 +192,15 @@ public class ServletChef extends HttpServlet {
 		if(servicioDAO.RegistrarServicio(servicio)){
 			HttpSession sesion = request.getSession();
 			sesion.setAttribute("LISTASERVICIOCHEF", servicioDAO.ListarServicioChef(usuariochef));
-			sesion.setAttribute("LISTASERVICIO", servicioDAO.ListarServicioUltimos());
+			sesion.setAttribute("LISTAPEDIDOSCHEF", pedidoDAO.ListarPedidoChef(usuariochef));
+			//
+			sesion.setAttribute("LISTATOPCHEF", chefDAO.listarTopChef());
+			sesion.setAttribute("LISTASERVICIOULTIMOS", servicioDAO.ListarServicioUltimos());
+			sesion.setAttribute("LISTACHEFULTIMOS", chefDAO.listarChefUltimos());
+			sesion.setAttribute("LISTACLIENTE", clienteDAO.listarClienteUltimos());
 			request.getRequestDispatcher("/chef_pagina.jsp").forward(request, response);
 		}else{
 			request.getRequestDispatcher("/servicio.jsp").forward(request, response);
-			session.setAttribute("MENSAJEREGISTROSERVICIO", "El servicio no se ha registrado");
 		}
 		
 	}
@@ -171,14 +210,12 @@ public class ServletChef extends HttpServlet {
 		request.getRequestDispatcher("/index.jsp").forward(request, response);
 	}
 	private void perfil(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-		ServicioFabrica serFa = ServicioFabrica.TipoDeConexion(ServicioFabrica.MYSQL);
-		ServicioDAO serDAO = serFa.getServicioDAO();
-		
+
 		String chef = request.getParameter("chef");
-		System.out.println(chef);
 		HttpSession sesion = request.getSession();
-		sesion.setAttribute("CHEF", chefDAO.BuscarChefUsuario(chef));
-		sesion.setAttribute("LISTASERVICIOCHEF", serDAO.ListarServicioChef(chef));
+		sesion.setAttribute("LISTAPEDIDOSCHEF", pedidoDAO.ListarPedidoChef(chef));
+		sesion.setAttribute("CHEFPERFIL", chefDAO.BuscarChefUsuario(chef));
+		sesion.setAttribute("LISTASERVICIOCHEF", servicioDAO.ListarServicioChef(chef));
 		request.getRequestDispatcher("/chef_perfil.jsp").forward(request, response);
 	}
 	private void imagen(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
@@ -237,9 +274,13 @@ public class ServletChef extends HttpServlet {
 		}else{
 			HttpSession sesion = request.getSession();
 			sesion.setAttribute("LISTASERVICIOCHEF", servicioDAO.ListarServicioChef(usuario));
-			sesion.setAttribute("LISTASERVICIO", servicioDAO.ListarServicioUltimos());
-			sesion.setAttribute("LISTACHEF", chefDAO.listarChef());
 			sesion.setAttribute("USUARIOCHEF",objchef);
+			//
+			sesion.setAttribute("LISTASERVICIOULTIMOS", servicioDAO.ListarServicioUltimos());
+			sesion.setAttribute("LISTACHEFULTIMOS", chefDAO.listarChefUltimos());
+			sesion.setAttribute("LISTACLIENTE", clienteDAO.listarClienteUltimos());
+			sesion.setAttribute("LISTATOPCHEF", chefDAO.listarTopChef());
+			sesion.setAttribute("LISTAPEDIDOSCHEF", pedidoDAO.ListarPedidoChef(usuario));
 			request.getRequestDispatcher("/chef_pagina.jsp").forward(request, response);
 		}
 	}

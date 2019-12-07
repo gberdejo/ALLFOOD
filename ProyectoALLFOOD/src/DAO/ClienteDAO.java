@@ -11,6 +11,7 @@ public interface ClienteDAO {
 	public abstract boolean RegistrarCliente(Cliente registraCli);
 	public abstract boolean ActualizarCliente(Cliente cliente);
 	public abstract List<Cliente>listarCliente();
+	public abstract List<Cliente>listarClienteUltimos();
 	public abstract Cliente BuscarClienteUsuario(String usuario);
 	public abstract void ListarImagen(String usuario,HttpServletResponse response);
 }

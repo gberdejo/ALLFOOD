@@ -72,8 +72,8 @@
                             <div class="mask rgba-black-light"></div>
                         </div>
                         <div class="carousel-caption">
-                            <h3 class="h1-responsive">Encuentra tu servicio ideal</h3>
-                            <p>First text</p>
+                            <h3 class="h1-responsive badge badge-success text-wrap">Encuentra tu servicio ideal</h3>
+                            <p></p>
                         </div>
                     </div>
                     <div class="carousel-item">
@@ -83,8 +83,8 @@
                             <div class="mask rgba-black-strong"></div>
                         </div>
                         <div class="carousel-caption">
-                            <h3 class="h1-responsive">Todo lo que buscabas en un solo lugar</h3>
-                            <p>Secondary text</p>
+                            <h3 class="h1-responsive badge badge-success text-wrap">Todo lo que buscabas en un solo lugar</h3>
+                            <p></p>
                         </div>
                     </div>
                     <div class="carousel-item">
@@ -94,8 +94,8 @@
                             <div class="mask rgba-black-slight"></div>
                         </div>
                         <div class="carousel-caption">
-                            <h3 class="h1-responsive">Para ese momento especial</h3>
-                            <p>Third text</p>
+                            <h3 class="h1-responsive badge badge-success text-wrap" >Para ese momento especial</h3>
+                            <p></p>
                         </div>
                     </div>
                 </div>
@@ -138,8 +138,7 @@
                             <!-- Title -->
                             <h4 class="card-title green-text">1. Busca un Chef</h4>
                             <!-- Text -->
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk
-                                of the card's content.</p>
+                            <p class="card-text">Elije un chef que más se adecue a tus gustos culinarios.</p>
                         </div>
                     </div>
                     <!-- Card -->
@@ -161,10 +160,9 @@
                         <div class="card-body">
 
                             <!-- Title -->
-                            <h4 class="card-title green-text">2. Haz tu reserva!</h4>
+                            <h4 class="card-title green-text">2. Haz tu pedido!</h4>
                             <!-- Text -->
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk
-                                of the card's content.</p>
+                            <p class="card-text">Contrata uno de los servicios de los chef con un solo click.</p>
                         </div>
                     </div>
                 </div>
@@ -187,97 +185,15 @@
                             <!-- Title -->
                             <h4 class="card-title green-text">3. Disfruta!</h4>
                             <!-- Text -->
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk
-                                of the card's content.</p>
+                            <p class="card-text">Tu pedido llegara directamente a tu casa.</p>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
-        <!--  
-        <div class="contenedor-aliados d-flex">
-             contenedor de   alidos 
-            <div class="container align-self-center">
-                <h2>Ellos son algunos de nuestros Aliados:</h2>
-                <section class="row justify-content-around align-items-center mt-md-5">
-                    <div class="col-md-5 p-3  aliados">
-                        aliado 1
-                        <div class="row">
-                            <div class="col-md-3">
-                                <div class="face">
-                                    <img src="img/face.jpg" alt="">
-                                </div>
-                            </div>
-                            <div class="col-md-9">
-                                <h5><strong>Lorenzo Palacios Quispe</strong></h6>
-                                    <ul class="estrellas">
-                                        <li><i class="fas fa-star"></i></li>
-                                        <li><i class="fas fa-star"></i></li>
-                                        <li><i class="fas fa-star"></i></li>
-                                        <li><i class="fas fa-star"></i></li>
-                                        <li><i class="fas fa-star"></i></li>
-                                    </ul>
-                                    <span>80 Servicios Cumplidos</span>
-                            </div>
-                        </div>
-                        <h6 class="py-md-2">Especialidades: </h6>
-                        <div class="row">
-                            <div class="col-md-4 text-center">
-                                <i class="fas fa-birthday-cake fa-3x "></i>
-                                <span>cumpleaños</span>
-                            </div>
-                            <div class="col-md-4 text-center">
-                                <i class="fas fa-user-graduate fa-3x"></i>
-                                <span>Graduacion</span>
-                            </div>
-                            <div class="col-md-4 text-center">
-                                <i class="fas fa-laugh-squint fa-3x"></i><br>
-                                <span>Party</span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="col-md-5 p-3 aliados">
-                        <div class="row">
-                            <div class="col-md-3">
-                                <div class="face">
-                                    <img src="img/img3.jpg" alt="">
-                                </div>
-                            </div>
-                            <div class="col-md-9">
-                                <h5><strong>Lorenzo Palacios Quispe</strong></h6>
-                                    <ul class="estrellas">
-                                        <li><i class="fas fa-star"></i></li>
-                                        <li><i class="fas fa-star"></i></li>
-                                        <li><i class="fas fa-star"></i></li>
-                                        <li><i class="fas fa-star"></i></li>
-                                        <li><i class="fas fa-star"></i></li>
-                                    </ul>
-                                    <span>80 Servicios Cumplidos</span>
-                            </div>
-                        </div>
-                        <h6 class="py-md-2">Especialidades: </h6>
-                        <div class="row">
-                            <div class="col-md-4 text-center">
-                                <i class="fas fa-birthday-cake fa-3x "></i>
-                                <span>cumpleaños</span>
-                            </div>
-                            <div class="col-md-4 text-center">
-                                <i class="fas fa-user-graduate fa-3x"></i>
-                                <span>Graduacion</span>
-                            </div>
-                            <div class="col-md-4 text-center">
-                                <i class="fas fa-laugh-squint fa-3x"></i><br>
-                                <span>Party</span>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-            </div>
-        </div> 
-        -->
+
         <!--  Registrar aliados    -->
-        <section class="container">
+        <section class="container my-5">
             <div class="row align-items-center contenedor-reg-aliados justify-content-center">
                 <div class="col-md-4">
                     <img src="img/img2.jpg" class="img-fluid" alt="">
@@ -290,7 +206,7 @@
             </div>
         </section>
         <!-- Footer -->
-<footer class="page-footer font-small light-green darken-1">
+<footer class="page-footer font-small light-green darken-1 mt-5">
 
   <!-- Footer Elements -->
   <div class="container">

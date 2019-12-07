@@ -70,6 +70,7 @@ public class ServletCliente extends HttpServlet {
 	}
 	private void ActualizarCliente(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		Cliente cliente = new Cliente();
+		String usuario = request.getParameter("usuario");
 		int codigo = Integer.parseInt(request.getParameter("codigo"));
 		String password = request.getParameter("password");
 		String nombre = request.getParameter("nombre");
@@ -85,7 +86,16 @@ public class ServletCliente extends HttpServlet {
 		cliente.setAvatar(imagen);
 		cliente.setCelular_cli(celular);
 		if(clienteDAO.ActualizarCliente(cliente)){
-			inicio(request,response);
+			HttpSession sesion = request.getSession();
+			sesion.setAttribute("LISTASERVICIO", servicioDAO.listarServicio());
+			sesion.setAttribute("LISTAPEDIDO", pedidoDAO.ListarPedidoCliente(usuario));
+			sesion.setAttribute("LISTACHEF", chefDAO.listarChef());
+			//Globales
+			sesion.setAttribute("LISTATOPCHEF", chefDAO.listarTopChef());
+			sesion.setAttribute("LISTASERVICIOULTIMOS", servicioDAO.ListarServicioUltimos());
+			sesion.setAttribute("LISTACHEFULTIMOS", chefDAO.listarChefUltimos());
+			sesion.setAttribute("LISTACLIENTE", clienteDAO.listarClienteUltimos());
+			request.getRequestDispatcher("/usuario_pagina.jsp").forward(request, response);	
 		}else{
 			request.getRequestDispatcher("/usuario_editar.jsp").forward(request, response);
 		}
@@ -95,6 +105,7 @@ public class ServletCliente extends HttpServlet {
 	}
 	private void CompraPedido(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		Pedido pedido = new Pedido();
+		String usuario = request.getParameter("usuario");
 		int codigoCliente = Integer.parseInt(request.getParameter("codigoCliente"));
 		int codigoServicio = Integer.parseInt(request.getParameter("codigoServicio"));
 		int cantidad = Integer.parseInt(request.getParameter("cantidad"));
@@ -109,7 +120,16 @@ public class ServletCliente extends HttpServlet {
 		pedido.setDireccion_entrega(direccion);
 		pedido.setFecha_entrega(fecha);
 		if(pedidoDAO.RegistrarPedido(pedido)){
-			inicio(request,response);
+			HttpSession sesion = request.getSession();
+			sesion.setAttribute("LISTASERVICIO", servicioDAO.listarServicio());
+			sesion.setAttribute("LISTAPEDIDO", pedidoDAO.ListarPedidoCliente(usuario));
+			sesion.setAttribute("LISTACHEF", chefDAO.listarChef());
+			//Globales
+			sesion.setAttribute("LISTATOPCHEF", chefDAO.listarTopChef());
+			sesion.setAttribute("LISTASERVICIOULTIMOS", servicioDAO.ListarServicioUltimos());
+			sesion.setAttribute("LISTACHEFULTIMOS", chefDAO.listarChefUltimos());
+			sesion.setAttribute("LISTACLIENTE", clienteDAO.listarClienteUltimos());
+			request.getRequestDispatcher("/usuario_pagina.jsp").forward(request, response);	
 		}else {
 			request.getRequestDispatcher("/pedidos.jsp").forward(request, response);
 		}
@@ -135,13 +155,22 @@ public class ServletCliente extends HttpServlet {
 		String usuario = request.getParameter("usuario");
 		Cliente objCliente = clienteDAO.BuscarClienteUsuario(usuario);
 		HttpSession sesion = request.getSession();
+		sesion.setAttribute("LISTAPEDIDO", pedidoDAO.ListarPedidoCliente(usuario));
+		sesion.setAttribute("CLIENTEPERFIL", objCliente);
 		request.getRequestDispatcher("/usuario_perfil.jsp").forward(request, response);
 			
 	}
 	private void inicio(HttpServletRequest request, HttpServletResponse response)  throws ServletException, IOException{
-
+			String usuario = request.getParameter("usuario");
 			HttpSession sesion = request.getSession();
-			sesion.setAttribute("LISTARCHEF", chefDAO.listarChef());
+			sesion.setAttribute("LISTASERVICIO", servicioDAO.listarServicio());
+			sesion.setAttribute("LISTAPEDIDO", pedidoDAO.ListarPedidoCliente(usuario));
+			sesion.setAttribute("LISTACHEF", chefDAO.listarChef());
+			//Globales
+			sesion.setAttribute("LISTATOPCHEF", chefDAO.listarTopChef());
+			sesion.setAttribute("LISTASERVICIOULTIMOS", servicioDAO.ListarServicioUltimos());
+			sesion.setAttribute("LISTACHEFULTIMOS", chefDAO.listarChefUltimos());
+			sesion.setAttribute("LISTACLIENTE", clienteDAO.listarClienteUltimos());
 			request.getRequestDispatcher("/usuario_pagina.jsp").forward(request, response);	
 					
 	}
@@ -152,7 +181,6 @@ public class ServletCliente extends HttpServlet {
 		
 	}
 	private void registro(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-	
 	
 		objCliente.setUsuario(request.getParameter("usuario"));
 		objCliente.setPassword(request.getParameter("password"));
@@ -177,9 +205,10 @@ public class ServletCliente extends HttpServlet {
 	protected void login(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		Cliente cliente = null;
+		String usuario = null;
 				
 		try {
-			String usuario = request.getParameter("usuario");
+			 usuario = request.getParameter("usuario");
 			String password = request.getParameter("password");
 			cliente = clienteDAO.ValidarCliente(usuario, password);
 		} catch (Exception e) {
@@ -192,9 +221,15 @@ public class ServletCliente extends HttpServlet {
 		}else{
 			HttpSession sesion = request.getSession();
 			sesion.setAttribute("USUARIOCLIENTE",cliente);
-			//ENVIANDO LA LISTA DE SERVICIO PEDIDOS CHEFS
-			sesion.setAttribute("LISTASERVICIO", servicioDAO.ListarServicioUltimos());
+			//datos del cliente
+			sesion.setAttribute("LISTASERVICIO", servicioDAO.listarServicio());
+			sesion.setAttribute("LISTAPEDIDO", pedidoDAO.ListarPedidoCliente(usuario));
 			sesion.setAttribute("LISTACHEF", chefDAO.listarChef());
+			//Globales
+			sesion.setAttribute("LISTATOPCHEF", chefDAO.listarTopChef());
+			sesion.setAttribute("LISTASERVICIOULTIMOS", servicioDAO.ListarServicioUltimos());
+			sesion.setAttribute("LISTACHEFULTIMOS", chefDAO.listarChefUltimos());
+			sesion.setAttribute("LISTACLIENTE", clienteDAO.listarClienteUltimos());
 			request.getRequestDispatcher("/usuario_pagina.jsp").forward(request, response);
 		}
 		

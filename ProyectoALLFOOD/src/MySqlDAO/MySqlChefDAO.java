@@ -179,10 +179,11 @@ public class MySqlChefDAO implements ChefDAO{
 				objchef.setPassword(rs.getString(3));
 				objchef.setNom_chef(rs.getString(4));
 				objchef.setApe_chef(rs.getString(5));
-				objchef.setEdad(rs.getInt(6));
-				objchef.setDieccion(rs.getString(7));
-				objchef.setCelular(rs.getString(8));
-				objchef.setSaldo_chef(rs.getDouble(9));
+				objchef.setPresentacion(rs.getString(7));
+				objchef.setEdad(rs.getInt(8));
+				objchef.setCelular(rs.getString(9));
+				objchef.setDieccion(rs.getString(10));
+				objchef.setSaldo_chef(rs.getDouble(11));
 			}
 			System.out.println("MySqlChef - BuscarChefUsuario ==> "+objchef.getCod_chef()+", "+objchef.getUsuario()+", "+objchef.getPassword());
 
@@ -227,6 +228,67 @@ public class MySqlChefDAO implements ChefDAO{
 			e.printStackTrace(); 
 		}
 		
+	}
+	@Override
+	public List<Chef> listarChefUltimos() {
+		ArrayList<Chef> lista = new ArrayList<Chef>();
+		try {
+			con = MysqlBDConexion.getConexion();
+			call = con.prepareCall("call ListarChefUltimos");
+			rs = call.executeQuery();
+			while(rs.next()){
+				Chef objchef = new Chef();
+				objchef.setCod_chef(rs.getInt(1));
+				objchef.setUsuario(rs.getString(2));
+				objchef.setPassword(rs.getString(3));
+				objchef.setNom_chef(rs.getString(4));
+				objchef.setApe_chef(rs.getString(5));
+				objchef.setAvatar(rs.getBinaryStream(6));
+				objchef.setPresentacion(rs.getString(7));
+				objchef.setEdad(rs.getInt(8));
+				objchef.setCelular(rs.getString(9));
+				objchef.setDieccion(rs.getString(10));
+				objchef.setSaldo_chef(rs.getDouble(11));
+				lista.add(objchef);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				if(con != null) con.close();
+				if(call != null) call.close();
+				if(rs != null) rs.close();
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+		return lista;
+	}
+	@Override
+	public List<Chef> listarTopChef() {
+		ArrayList<Chef> lista = new ArrayList<Chef>();
+		try {
+			con = MysqlBDConexion.getConexion();
+			call = con.prepareCall("call ListarTopChef");
+			rs = call.executeQuery();
+			while(rs.next()){
+				Chef objchef = new Chef();
+				objchef.setUsuario(rs.getString(2));
+				objchef.setPresentacion(rs.getString(3));
+				lista.add(objchef);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				if(con != null) con.close();
+				if(call != null) call.close();
+				if(rs != null) rs.close();
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+		return lista;
 	}
 
 	

@@ -4,7 +4,7 @@
 <c:choose>
 	<c:when test ="${USUARIOCLIENTE.usuario == null}">
 			    <!--Navbar del chef -->
-    <nav class="mb-1 navbar navbar-expand-lg navbar-dark secondary-color lighten-1 fixed-top scrolling-navbar">
+    <nav class="mb-1 navbar navbar-expand-lg navbar-dark purple-gradient fixed-top scrolling-navbar">
         <a class="navbar-brand text-white" >AllFooDPerú</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-555"
             aria-controls="navbarSupportedContent-555" aria-expanded="false" aria-label="Toggle navigation">
@@ -15,7 +15,7 @@
             <ul class="navbar-nav ml-auto nav-flex-icons">
                 <li class="nav-item">
                     <a href="ServletChef?tipo=inicio&chef=${USUARIOCHEF.usuario}" class="nav-link waves-effect waves-light">
-                        <i class="fas fa-envelope"></i>Inicio
+                        <i class="fas fa-home"></i>Inicio
                     </a>
                 </li>
                 <li class="nav-item avatar dropdown">
@@ -28,7 +28,7 @@
                     </a>
                     <div class="dropdown-menu dropdown-menu-lg-right dropdown-secondary"
                         aria-labelledby="navbarDropdownMenuLink-55">
-                        <a class="dropdown-item" href="#">ir Perfil</a>
+                        <a class="dropdown-item" href="ServletChef?tipo=perfil&chef=${USUARIOCHEF.usuario}">ir Perfil</a>
                         <a class="dropdown-item" href="chef_editar.jsp">editar Perfil</a>
                         <!--  <a class="dropdown-item" href="#">Cartera</a>-->
                         <a class="dropdown-item" href="ServletChef?tipo=salir">Salir</a>
@@ -42,7 +42,7 @@
 	 <c:otherwise>
 			
 <!-- contentttt -->
-<nav class="mb-1 navbar navbar-expand-lg navbar-dark secondary-color lighten-1 fixed-top scrolling-navbar">
+<nav class="mb-1 navbar navbar-expand-lg navbar-dark blue-gradient fixed-top scrolling-navbar">
         <a class="navbar-brand" href="#">AllFooDPerú</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-555"
             aria-controls="navbarSupportedContent-555" aria-expanded="false" aria-label="Toggle navigation">
@@ -52,8 +52,8 @@
             
             <ul class="navbar-nav ml-auto nav-flex-icons">
                 <li class="nav-item">
-                    <a href="usuario_pagina.jsp" class="nav-link waves-effect waves-light">
-                        <i class="fas fa-envelope"></i>Inicio
+                    <a href="ServletCliente?tipo=inicio&usuario=${USUARIOCLIENTE.usuario}" class="nav-link waves-effect waves-light">
+                        <i class="fas fa-home"></i>Inicio
                     </a>
                 </li>
                 <li class="nav-item avatar dropdown">
@@ -66,7 +66,7 @@
                     <div class="dropdown-menu dropdown-menu-lg-right dropdown-secondary"
                         aria-labelledby="navbarDropdownMenuLink-55">
                         
-                        <a class="dropdown-item" href="usuario_perfil.jsp">ir a Perfil</a>
+                        <a class="dropdown-item" href="ServletCliente?tipo=perfil&usuario=${USUARIOCLIENTE.usuario}">ir a Perfil</a>
                         <a class="dropdown-item" href="usuario_editar.jsp">editar Perfil</a>
                         <!--  <a class="dropdown-item" href="usuario_cartera.jsp">Cartera</a>-->
                         <a class="dropdown-item" href="ServletCliente?tipo=salir">Salir</a>

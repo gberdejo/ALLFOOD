@@ -58,6 +58,7 @@
 							<input type="hidden" name="tipo" value="compra">
 				            <input type="hidden" name="codigoCliente" value="${USUARIOCLIENTE.cod_cli}">
 							<input type="hidden" name="codigoServicio" value="${OBJSERVICIO.cod_servicio}">
+							<input type="hidden" name="usuario" value="${USUARIOCLIENTE.usuario}">
 				            <!-- E-mail -->
 				          
 							<div class="md-form">

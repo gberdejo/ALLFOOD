@@ -1,6 +1,7 @@
 <%@ include file="importacion_head.jsp" %>
 <body>
 <div class="container">
+<a class="btn btn-outline-danger waves-effect" href="index.jsp"><i class="fas fa-house-damage"></i> Regrasar</a>
 <form class="text-center border border-light p-5" action="ServletChef" method="POST" enctype="multipart/form-data">
 <input type="hidden" name="tipo" value="registro" >
     <p class="h4 mb-4">Registro de Chef</p>
@@ -30,9 +31,9 @@
 		   
 	    </div>
 		
-		
-		<div class="form-group">
-			<input type="file" name="imagen" class="form-control">
+		<div class="custom-file mb-3">
+			  <input type="file" name="imagen" class="custom-file-input" id="customFileLang" lang="es" >
+			  <label class="custom-file-label" for="customFileLang">Seleccionar imagen </label>
 		</div>
 		
 		  <div class="form-group">

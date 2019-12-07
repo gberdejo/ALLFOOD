@@ -217,6 +217,40 @@ public class MySqlClienteDAO implements ClienteDAO{
 		}
 		
 	}
+	@Override
+	public List<Cliente> listarClienteUltimos() {
+		List<Cliente> lista = new ArrayList<Cliente>();
+		Cliente listarcli=null;
+		try {
+			con=MysqlBDConexion.getConexion();
+			call= con.prepareCall("call ListarClienteUltimos");
+			rs=call.executeQuery();
+			while(rs.next()){
+				listarcli=new Cliente();
+				listarcli.setCod_cli(rs.getInt(1));
+				listarcli.setUsuario(rs.getString(2));
+				listarcli.setPassword(rs.getString(3));
+				listarcli.setNom_cli(rs.getString(4));
+				listarcli.setApe_cli(rs.getString(5));
+				listarcli.setEdad(rs.getInt(7));
+				listarcli.setCelular_cli(rs.getString(8));
+				listarcli.setSaldo_cli(rs.getDouble(9));
+				lista.add(listarcli);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally{
+			try {
+				if(con !=null)con.close();
+				if(call !=null)call.close();
+				if(rs !=null)rs.close();
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+		return lista;
+	}
 
 	
 

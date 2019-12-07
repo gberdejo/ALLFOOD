@@ -1,6 +1,7 @@
 <%@  include file="importacion_head.jsp" %>
 <body>
 <div class="container">
+	<a class="btn btn-outline-danger waves-effect" href="index.jsp"><i class="fas fa-house-damage"></i> Regrasar</a>
 	<form class="text-center border border-light p-5" action="ServletChef">
 	<input type="hidden" name="tipo" value="login" >
     <p class="h4 mb-4">Inicio de Sesion como Chef</p>

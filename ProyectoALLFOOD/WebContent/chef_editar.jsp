@@ -14,9 +14,10 @@
         <form class="text-center" style="color: #757575;" action="ServletChef" method="POST" enctype="multipart/form-data">
         			<input type="hidden" name="tipo" value="actualizarChef">
 					<input type="hidden" name="codigo" value="${USUARIOCHEF.cod_chef}">
+					<input type="hidden" name="chef" value="${USUARIOCHEF.usuario}">
             <!-- Name -->
             <div class="md-form mt-3">
-                <input type="text" id="materialContactFormName" 
+                <input type="text"  id="materialContactFormName" 
                 		class="form-control" value="${USUARIOCHEF.usuario}" disabled>
                 <label for="materialContactFormName">Usuario</label>
             </div>
@@ -33,7 +34,7 @@
                 <label for="apellidoChef">Apellidos</label>
             </div>
 			<div class="custom-file">
-			  <input type="file" name="imagen" class="custom-file-input" id="customFileLang" lang="es">
+			  <input type="file" name="imagen" class="custom-file-input" id="customFileLang" lang="es" >
 			  <label class="custom-file-label" for="customFileLang">Seleccionar nueva imagen de Perfil</label>
 			</div>
 			<div class="md-form">

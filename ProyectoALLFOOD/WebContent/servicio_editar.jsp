@@ -14,6 +14,7 @@
                 enctype="multipart/form-data">
                 <input type="hidden" name="tipo" value="EditarServicio">
                 <input type="hidden" name="codigo" value="${SERVICIO.cod_servicio}">
+                <input type="hidden" name="chef" value="${USUARIOCHEF.usuario}">
                 <!-- Name -->
                 <div class="md-form mt-3">
                     <input type="text" name="nombre" id="nombreServicio" class="form-control" value="${SERVICIO.nom_servicio}" >

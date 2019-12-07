@@ -1,6 +1,7 @@
 <%@ include file="importacion_head.jsp" %>
 <body>
 <div class="container">
+	<a class="btn btn-outline-danger waves-effect" href="index.jsp"><i class="fas fa-house-damage"></i> Regresar</a>
 	<section>
 		<!-- Default form login -->
 	<form class="text-center border border-light p-5" action="ServletCliente">

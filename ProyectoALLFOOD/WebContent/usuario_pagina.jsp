@@ -6,7 +6,7 @@
  <%@include file="usuario_header.jsp" %>
         <div class="container-fluid" style="margin-top:79px;">
         <div class="row">
-        	<div class="col-md-9">
+        	<div class="col-md-10">
         		<div class="row">
                 <div class="col-2 px-0">
                     <div class="list-group" id="list-tab" role="tablist">
@@ -25,7 +25,7 @@
                         <div class="tab-pane fade show active" id="list-home" role="tabpanel" aria-labelledby="list-home-list">
                             <h2>Ultimos Servicios Publicados</h2>
                             <div class="row">
-                            	<c:forEach items="${LISTASERVICIO}" var="s">
+                            	<c:forEach items="${LISTASERVICIOULTIMOS}" var="s">
                                         <div class="col-md-4 mb-5">
                                             <!-- Card -->
                                             <div class="card">
@@ -54,9 +54,10 @@
                                         </div>
                                     </c:forEach>
                             </div>
+                            <hr>
                             <h2>Ultimos CHEFS Registrados</h2>
                             <div class="row">
-                                <c:forEach items="${LISTACHEF}" var="x">
+                                <c:forEach items="${LISTACHEFULTIMOS}" var="x">
                                         <div class="col-md-4 mb-5">
                                             <!-- Card -->
                                             <div class="card">
@@ -72,6 +73,8 @@
                                                     <h4 class="card-title"><i class="fab fa-free-code-camp"></i> ${x.usuario}</h4>
                                                     <h5 class="card-subtitle">${x.nom_chef} ${x.ape_chef}(${x.edad})</h5>
                                                     <p class="card-text"><i class="fas fa-quote-left"></i>${x.presentacion}</p>
+                                                    <p class="card-text">${x.dieccion}</p>
+                                                    <p class="card-text">${x.celular}</p>
                                                     <a class="btn btn-outline-info btn-rounded btn-sm z-depth-0 float-right waves-effect" href="ServletChef?tipo=perfil&chef=${x.usuario}">Conócelo</a>
                                                 </div>
                                             </div>
@@ -80,6 +83,31 @@
                                     </c:forEach>
                             </div>
                             <hr>
+                            <h2>Ultimos Clientes Registrados</h2>
+                            <div class="row">
+                                <c:forEach items="${LISTACLIENTE}" var="x">
+                                        <div class="col-md-4 mb-5">
+                                            <!-- Card -->
+                                            <div class="card">
+                                                <div class="view overlay">
+                                                    <img class="card-img-top"
+                                                        src="ServletCliente?tipo=imagen&usuario=${x.usuario}"
+                                                        alt="Card image cap">
+                                                    <a href="ServletChef?tipo=perfil&chef=${x}">
+                                                        <div class="mask rgba-white-slight"></div>
+                                                    </a>
+                                                </div>
+                                                <div class="card-body">
+                                                    <h4 class="card-title"><i class="fas fa-utensils"></i></i> ${x.usuario}</h4>
+                                                    <h5 class="card-subtitle">${x.nom_cli} ${x.ape_cli} (${x.edad})</h5>
+                                                    <p class="card-text">${x.celular_cli}</p>
+                                                    <a class="btn btn-outline-info btn-rounded btn-sm z-depth-0 float-right waves-effect" href="ServletCliente?tipo=perfil&usuario=${x.usuario}">Conócelo</a>
+                                                </div>
+                                            </div>
+                                            <!-- Card -->
+                                        </div>
+                                    </c:forEach>
+                            </div>
 
                         </div>
                         <div class="tab-pane fade" id="list-profile" role="tabpanel" aria-labelledby="list-profile-list">
@@ -134,6 +162,8 @@
                                                     <h4 class="card-title"><i class="fab fa-free-code-camp"></i> ${x.usuario}</h4>
                                                     <h5 class="card-subtitle">${x.nom_chef} ${x.ape_chef}(${x.edad})</h5>
                                                     <p class="card-text"><i class="fas fa-quote-left"></i>${x.presentacion}</p>
+                                                    <p class="card-text">${x.dieccion}</p>
+                                                     <p class="card-text">${x.celular}</p>
                                                 </div>
                                             </div>
                                             <!-- Card -->
@@ -142,28 +172,34 @@
                             </div>
                         </div>
                         <div class="tab-pane fade" id="list-settings" role="tabpanel" aria-labelledby="list-settings-list">
-                           <div class="table-responsive">
-                          <table id="tableProducto" class="table table-striped table-bordered" style="width:100%">
+                           
+                          <table id="tableProducto" class="table table-striped table-bordered table-responsive" style="width:100%">
                             <thead>
-                                <th>Codigo Pedido</th>
-                                <th>Nombre Cliente</th>
-                                <th>Nombre Chef</th>
-                                <th>Nombre de servicio</th>
-                                <th>Cantidad de personas</th>
-                                <th>Fecha de compra</th>
-                                <th>Fecha de entrega</th>
-                                <th>Fecha de Publicación</th>
+                                <th>Codigo de Servicio</th>
+                                <th>Nombre de Servicio</th>
+                                <th>Usuario Chef</th>
+                                <th>Nombres y Apellidos de Chef</th>
+                                <th>Precio por Persona</th>
+                                <th>Cantidad de Personas</th>
+                                <th>Pago Total</th>
+                                <th>Fecha de Compra</th>
+                                <th>Fecha de Entrega</th>
+                                 <th>Dirección de Entrega</th>
                                 
                             </thead>
                             <tbody>
-                            <c:forEach items="${LISTASERVICIOCHEF}" var="c">
+                            <c:forEach items="${LISTAPEDIDO}" var="c">
                             	<tr>
-                                    <td>${c.cod_servicio}</td>
-                                    <td>${c.nom_servicio}</td>
-                                    <td>${c.platillos}</td>
-                                    <td>${c.descripcion}</td>
+                                    <td>${c.codigo_servicio}</td>
+                                    <td>${c.nombre_servicio}</td>
+                                    <td>${c.usuario_chef}</td>
+                                    <td>${c.nombre_chef} ${c.apellido_chef}</td>
                                     <td>${c.precio_persona}</td>
-                                    <td>${c.fec_publicacion}</td>
+                                    <td>${c.cantidad_personas}</td>
+                                    <td>${c.pago_total}</td>
+                                    <td>${c.fecha_compra}</td>
+                                    <td>${c.fecha_entrega}</td>
+                                    <td>${c.direccion_entrega}</td>
                                 </tr>
                             </c:forEach>
                                 
@@ -171,13 +207,13 @@
                             </tbody>
 
                         </table>
-                        </div>
+                    
                         </div>
                     </div>
                 </div>
             </div>
         	</div>
-        	<div class="col-md-3 px-0">
+        	<div class="col-md-2 px-0">
         		 <!--Accordion wrapper-->
                <%@ include file="columna.jsp" %>
                 <!-- Accordion wrapper -->

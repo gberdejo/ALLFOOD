@@ -59,8 +59,7 @@ estado varchar(10) default 'PENDIENTE',
 CONSTRAINT FOREIGN KEY fk_COD_CLI (cod_cli) REFERENCES CLIENTE (cod_cli),
 CONSTRAINT FOREIGN KEY fk_COD_SERVICIO(cod_servicio) REFERENCES SERVICIO (cod_servicio)
 );
-select * from pedido;
-/*CHEF*/
+/****************************  CHEF  ****************************/
 /* -Registrar Chef ------------------- */
 delimiter @@
 create procedure RegistrarChef
@@ -77,23 +76,41 @@ begin
 insert into chef values (null,usuario,contra,nom_chef,ape_chef,avatar,presentacion,edad_chef,celular_chef,direccion,0.0);
 end @@
 delimiter ;
-/*call RegistrarChef ('cuchicu','cuchi123','cuchi','cu',null,'soy mu responsable',20,'996006381','27 de marzo');*/
+delimiter @@
+create procedure ActualizarChef(codigo int,
+								pass varchar(10),
+								nombre_chef varchar(50),
+								apellido_chef varchar(50),
+								foto longblob ,
+								presen varchar(100) ,
+								celular varchar(9),
+								dir varchar(50))
+begin 
+update chef set 
+contra = pass,
+nom_chef = nombre_chef,
+ape_chef = apellido_chef,
+avatar = foto,
+presentacion = presen,
+celular_chef = celular,
+direccion = dir where cod_chef = codigo;
+select * from chef;
+end @@
+delimiter ;
+select * from chef;
+call ActualizarChef(1,'123','Cuchi','Cu',null,'So pro','996006381','Las magnolias');
 
-/*
-call RegistrarChef('timy','timy123','Timy','Ramos',35,'986574123','Av.Los Jardines 1547');
-call RegistrarChef('gufi','gufi123','gufi','Ramos',23,'986574123','Av.Los Jardines 1547');
-call RegistrarChef('amil','amil','Tito','Ramos',23,'986574123','Av.Los Jardines 1547');
-call RegistrarChef('torencio','amil','Tito','Ramos',23,'986574123','Av.Los Jardines 1547');/
+
 /*validar CHEF ----------------------- */
-
 delimiter @@
 create procedure ValidarChef(usuario1 varchar(20),contra1 varchar(10))
 begin
 select * from Chef where usuario = usuario1 and contra = contra1;
 end @@
 delimiter ;
-call ValidarChef ('cuchicu','cuchi123');
-
+call ValidarChef ('cuchicu','123');
+select * from chef;
+order by cod_servicio desc limit 6
 delimiter @@
 create procedure ListarChef()
 begin
@@ -101,13 +118,22 @@ select * from chef  ;
 end @@
 delimiter ;
 call ListarChef;
+--
+delimiter @@
+create procedure ListarChefUltimos()
+begin
+select * from chef  order by cod_chef desc limit 6;
+end @@
+delimiter ;
+call ListarChefUltimos;
+--
 delimiter @@
 create procedure BuscarChefUsuario(chef varchar(20))
 begin
 select * from chef where usuario = chef;
 end @@
 delimiter ;
-/*call BuscarChefUsuario('cuchicu');*/
+call BuscarChefUsuario('cuchicu');
 /*CLIENTE********************************************************************/
 /* -Registrar Cliente - */
 delimiter @@
@@ -145,6 +171,13 @@ end @@
 delimiter ;
 ---
 delimiter @@
+create procedure ListarClienteUltimos()
+begin
+select * from cliente order by cod_cli desc limit 6;
+end @@
+delimiter ;
+---
+delimiter @@
 create procedure ActualizarCliente
 (
 codigo int,
@@ -163,8 +196,6 @@ celular_cli=celular_cliente
 where cod_cli = codigo;
 end @@
 delimiter ;
-drop procedure  ActualizarCliente;
-call ActualizarCliente(1,'eli12','Elizabeth','Ramirez Huamas',null,'996006381');
 select * from cliente;
 --
 delimiter @@
@@ -178,13 +209,13 @@ call BuscarClienteUsuario('eli');
 /* -Registrar SERVICIO - */
 delimiter @@
 create procedure RegistrarServicio
-(
-nom_servicio varchar(50),
-cod_chef int,
-platillos varchar(200) ,
-descripcion varchar(200),
-logo longblob,
-precio_persona decimal
+								(
+								nom_servicio varchar(50),
+								cod_chef int,
+								platillos varchar(200) ,
+								descripcion varchar(200),
+								logo longblob,
+								precio_persona decimal
 )
 begin
 insert into servicio (nom_servicio,cod_chef,platillos ,descripcion,logo ,precio_persona )  
@@ -192,21 +223,44 @@ values (nom_servicio,cod_chef,platillos ,descripcion,logo ,precio_persona );
 end @@
 delimiter ;
 /*call RegistrarServicio('Almuerzo marino',1,'Ceviche, Chicharon de pota','platillos frescos con variantes de acuerd al comensal',null,50);*/
-
-
+delimiter @@
+create procedure ActualizarServicio(
+									codigo int,
+									nombre varchar(50),
+									platos varchar(200) ,
+									descrip varchar(200),
+									foto longblob,
+									precio decimal
+)
+begin 
+update servicio set nom_servicio = nombre ,platillos = platos,descripcion = descrip ,logo = foto,precio_persona = precio
+where cod_servicio = codigo;
+end @@
+delimiter ;
+call ActualizarServicio (1,'Almuerzo Mediterraneo','Bistec a lo rico','Ingrediente selectos',null,30.00);
+select * from servicio;
+delimiter @@
+create procedure EliminarServicio(
+								  codigo int)
+begin 
+delete from servicio where  cod_servicio = codigo;
+end  @@                            
+delimiter ;
+call EliminarServicio(1);
 /*Listar Servicio*/ 
 delimiter @@
 create procedure ListarServicio()
 begin
-select t2.cod_servicio,t2.nom_servicio,t1.cod_chef,t1.nom_chef,t2.platillos,t2.descripcion,t2.precio_persona,t2.fec_publicacion 
+select t2.cod_servicio,t2.nom_servicio,t1.cod_chef,t1.usuario,t2.platillos,t2.descripcion,t2.precio_persona,t2.fec_publicacion 
 from  chef t1 inner join servicio t2 on t1.cod_chef=t2.cod_chef;
 end @@
 delimiter ;
-----
+drop procedure BuscarServicio
+
 delimiter @@
 create procedure ListarServicioUltimos()
 begin
-select t2.cod_servicio,t2.nom_servicio,t1.cod_chef,t1.nom_chef,t2.platillos,t2.descripcion,t2.precio_persona,t2.fec_publicacion 
+select t2.cod_servicio,t2.nom_servicio,t1.cod_chef,t1.usuario,t2.platillos,t2.descripcion,t2.precio_persona,t2.fec_publicacion 
 from  chef t1 inner join servicio t2 on t1.cod_chef=t2.cod_chef order by cod_servicio desc limit 6;
 end @@
 delimiter ;
@@ -215,7 +269,7 @@ call ListarServicioUltimos;
 delimiter @@
 create procedure ListarServicioChef(chef varchar(20))
 begin
-select t2.cod_servicio,t2.nom_servicio,t1.cod_chef,t1.nom_chef,t2.platillos,t2.descripcion,t2.precio_persona,t2.fec_publicacion 
+select t2.cod_servicio,t2.nom_servicio,t1.cod_chef,t1.usuario,t2.platillos,t2.descripcion,t2.precio_persona,t2.fec_publicacion 
 from  chef t1 inner join servicio t2 on t1.cod_chef=t2.cod_chef where t1.usuario = chef;
 end @@
 delimiter ;
@@ -223,7 +277,7 @@ call ListarServicioChef ('cuchicu')
 delimiter @@
 create procedure BuscarServicio(codigo int)
 begin 
-select t2.cod_servicio,t2.nom_servicio,t1.cod_chef,t1.nom_chef,t2.platillos,t2.descripcion,t2.precio_persona,t2.fec_publicacion 
+select t2.cod_servicio,t2.nom_servicio,t1.cod_chef,t1.usuario,t2.platillos,t2.descripcion,t2.precio_persona,t2.fec_publicacion 
 from  chef t1 inner join servicio t2 on t1.cod_chef=t2.cod_chef where t2.cod_servicio = codigo;
 end @@
 delimiter ;
@@ -258,3 +312,39 @@ inner join chef t4 on t3.cod_chef=t4.cod_chef;
 end @@
 delimiter ;
 call ListarPedido;
+--
+delimiter @@
+create procedure ListarPedidoCliente(usuarioCliente varchar(20))
+begin
+select t2.cod_pedido,t1.cod_cli,t1.nom_cli,t1.ape_cli,t3.cod_servicio,t3.nom_servicio,t3.precio_persona,t4.cod_chef,t4.usuario,t4.nom_chef,t4.ape_chef,
+t2.cant_personas,t2.fecha_compra,t2.fecha_entrega,t2.direccion_entrega,t2.pago_total
+from cliente t1 inner join pedido t2 on t1.cod_cli=t2.cod_cli
+inner join servicio t3 on t2.cod_servicio=t3.cod_servicio 
+inner join chef t4 on t3.cod_chef=t4.cod_chef where t1.usuario = usuarioCliente;
+end @@
+delimiter ;
+call ListarPedidoCliente('eli');
+--
+delimiter @@
+create procedure ListarPedidoChef(usuarioChef varchar(20))
+begin
+select t2.cod_pedido,t1.cod_cli,t1.nom_cli,t1.ape_cli,t3.cod_servicio,t3.nom_servicio,t3.precio_persona,t4.cod_chef,t4.usuario,t4.nom_chef,t4.ape_chef,
+t2.cant_personas,t2.fecha_compra,t2.fecha_entrega,t2.direccion_entrega,t2.pago_total
+from cliente t1 inner join pedido t2 on t1.cod_cli=t2.cod_cli
+inner join servicio t3 on t2.cod_servicio=t3.cod_servicio 
+inner join chef t4 on t3.cod_chef=t4.cod_chef where t4.usuario = usuarioChef;
+end @@
+delimiter ;
+call ListarPedidoChef('cuchicu');
+
+--
+delimiter @@
+create procedure ListarTopChef()
+begin
+select count(cod_pedido) ,t4.usuario ,t4.presentacion
+from cliente t1 inner join pedido t2 on t1.cod_cli=t2.cod_cli
+inner join servicio t3 on t2.cod_servicio=t3.cod_servicio 
+inner join chef t4 on t3.cod_chef=t4.cod_chef group by t4.usuario ,t4.presentacion order by count(cod_pedido) desc  limit 5;
+end @@
+delimiter ;
+call ListarTopChef;
