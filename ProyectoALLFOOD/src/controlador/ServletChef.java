@@ -112,8 +112,18 @@ public class ServletChef extends HttpServlet {
 	}
 	private void EliminarServicio(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		int codigo = Integer.parseInt(request.getParameter("codigo"));
+		String usuariochef = request.getParameter("chef");
 		servicioDAO.EliminarServicio(codigo);
-		inicio(request, response);
+		HttpSession sesion = request.getSession();
+		sesion.setAttribute("LISTASERVICIOCHEF", servicioDAO.ListarServicioChef(usuariochef));
+		sesion.setAttribute("LISTAPEDIDOSCHEF", pedidoDAO.ListarPedidoChef(usuariochef));
+
+		//
+		sesion.setAttribute("LISTATOPCHEF", chefDAO.listarTopChef());
+		sesion.setAttribute("LISTASERVICIOULTIMOS", servicioDAO.ListarServicioUltimos());
+		sesion.setAttribute("LISTACHEFULTIMOS", chefDAO.listarChefUltimos());
+		sesion.setAttribute("LISTACLIENTE", clienteDAO.listarClienteUltimos());
+		request.getRequestDispatcher("/chef_pagina.jsp").forward(request, response);
 		
 	}
 	private void ActualizarChef(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{

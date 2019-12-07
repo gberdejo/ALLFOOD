@@ -135,7 +135,7 @@
                                     <td>${c.descripcion}</td>
                                     <td>${c.precio_persona}</td>
                                     <td>${c.fec_publicacion}</td>
-                                    <td><a href="ServletChef?tipo=eliminarServicio&codigo=${c.cod_servicio}" class="btn btn-outline-danger btn-sm btn-block waves-effect"><i class="fas fa-trash-alt fa-2x"></i></a></td>
+                                    <td><a href="ServletChef?tipo=eliminarServicio&codigo=${c.cod_servicio}&chef=${USUARIOCHEF.usuario}" class="btn btn-outline-danger btn-sm btn-block waves-effect"><i class="fas fa-trash-alt fa-2x"></i></a></td>
                                     <td><a href="ServletChef?tipo=irEditarServicio&codigo=${c.cod_servicio}" class="btn btn-outline-info btn-sm btn-block waves-effect"><i class="fas fa-edit fa-2x"></i></a></td>
                                 </tr>
                             </c:forEach>

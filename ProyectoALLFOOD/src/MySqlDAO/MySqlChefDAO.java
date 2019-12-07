@@ -273,6 +273,7 @@ public class MySqlChefDAO implements ChefDAO{
 			rs = call.executeQuery();
 			while(rs.next()){
 				Chef objchef = new Chef();
+				objchef.setPodio(rs.getInt(1));
 				objchef.setUsuario(rs.getString(2));
 				objchef.setPresentacion(rs.getString(3));
 				lista.add(objchef);

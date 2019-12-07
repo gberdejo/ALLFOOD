@@ -20,20 +20,21 @@
                                     <c:forEach items="${LISTATOPCHEF}" var="c">
                                         <div class="col-md-12 mb-3">
                                             <!-- Card -->
-                                            <div class="card">
+                                            <div class="card border border-warning">
                                                 <!-- Card image -->
                                                 <div class="view overlay">
 
                                                     <img class="card-img-top"
                                                         src="ServletChef?tipo=imagen&usuario=${c.usuario}"
                                                         alt="Card image cap">
-                                                    <a href="index.jsp">
+                                                    <a href="ServletChef?tipo=perfil&chef=${c.usuario}">
                                                         <div class="mask rgba-white-slight"></div>
                                                     </a>
                                                 </div>
                                                 <div class="card-body p-2">
                                                     <!-- Name -->
-                                                    <h4 class="card-title">${c.usuario}</h4>
+                                                    <h1 class="yellow-text"><i class="fas fa-award"></i>${c.podio}</h1>
+                                                    <h4 class="card-title">Chef: ${c.usuario}</h4>
                                                     <hr>
                                                     <!-- Quotation -->
                                                     <span><i class="fas fa-quote-left"></i>${c.presentacion}</span>

@@ -6,7 +6,7 @@
         <!--Navbar -->
         <div>
             <nav class="mb-1 navbar navbar-expand-lg navbar-dark light-green darken-1 fixed-top scrolling-navbar">
-                <a class="navbar-brand" href="#">ALLFOOD</a>
+                <a class="navbar-brand" href="#">AllFooDPerú</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse"
                     data-target="#navbarSupportedContent-4" aria-controls="navbarSupportedContent-4"
                     aria-expanded="false" aria-label="Toggle navigation">

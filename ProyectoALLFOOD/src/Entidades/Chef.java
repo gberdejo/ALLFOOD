@@ -14,6 +14,7 @@ private int edad;
 private String celular;
 private String dieccion;
 private double saldo_chef;
+private int podio;
 public int getCod_chef() {
 	return cod_chef;
 }
@@ -79,6 +80,12 @@ public String getPresentacion() {
 }
 public void setPresentacion(String presentacion) {
 	this.presentacion = presentacion;
+}
+public int getPodio() {
+	return podio;
+}
+public void setPodio(int podio) {
+	this.podio = podio;
 }
 
 
