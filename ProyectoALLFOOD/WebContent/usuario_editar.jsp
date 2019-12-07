@@ -20,32 +20,32 @@
             <!-- Name -->
             <div class="md-form mt-3">
                 <input type="text" id="materialContactFormName" 
-                		class="form-control" disabled>
-                <label for="materialContactFormName">Usuario: ${USUARIOCLIENTE.usuario}</label>
+                		class="form-control" value="${USUARIOCLIENTE.usuario}" disabled>
+                <label for="materialContactFormName">Usuario</label>
             </div>
             <div class="md-form">
-                <input type="password" name="password" id="passwordCliente" class="form-control">
-                <label for="passwordCliente">*********************</label>
+                <input type="password" name="password" id="passwordCliente" value="${USUARIOCLIENTE.password}" class="form-control">
+                <label for="passwordCliente">Contraseña</label>
             </div>
             <div class="md-form">
-                <input type="text" name="nombre" id="nombreCliente" class="form-control">
-                <label for="nombreCliente">${USUARIOCLIENTE.nom_cli}</label>
+                <input type="text" name="nombre" id="nombreCliente" value="${USUARIOCLIENTE.nom_cli}" class="form-control">
+                <label for="nombreCliente">Nombres</label>
             </div>
             <div class="md-form">
-                <input type="text" name="apellido" id="apellidoCliente" class="form-control">
-                <label for="apellidoCliente">${USUARIOCLIENTE.ape_cli}</label>
+                <input type="text" name="apellido" id="apellidoCliente" value="${USUARIOCLIENTE.ape_cli}" class="form-control">
+                <label for="apellidoCliente">Apellidos</label>
             </div>
 			<div class="custom-file">
 			  <input type="file" name="imagen" class="custom-file-input" id="customFileLang" lang="es">
 			  <label class="custom-file-label" for="customFileLang">Seleccionar nueva imagen de Perfil</label>
 			</div>
 			<div class="md-form">
-                <input type="text"id="edadCliente" class="form-control" >
-                <label for="edadCliente">${USUARIOCLIENTE.edad} años</label>
+                <input type="text"id="edadCliente" class="form-control" value="${USUARIOCLIENTE.edad}" disabled>
+                <label for="edadCliente">Edad</label>
             </div>
             <div class="md-form">
-                <input type="text" name="celular" id="celularCliente" class="form-control" >
-                <label for="celularCliente">${USUARIOCLIENTE.celular_cli}</label>
+                <input type="text" name="celular" id="celularCliente" value="${USUARIOCLIENTE.celular_cli}" class="form-control" >
+                <label for="celularCliente">Celular</label>
             </div>
 
             <button class="btn btn-outline-info btn-rounded z-depth-0 my-4 waves-effect" type="submit">Guardar</button>
